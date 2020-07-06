@@ -12,9 +12,9 @@ import java.time.LocalDateTime;
 public class Club {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long clubId;
     @NotNull
-    private String name;
+    private String clubName;
     @CreationTimestamp
     private LocalDateTime createDate;
     private String location;
@@ -26,8 +26,8 @@ public class Club {
     @JoinColumn(name = "leader_id")
     private Member leader;
 
-    public Club(String name, Member leader) {
-        this.name = name;
+    public Club(String clubName, Member leader) {
+        this.clubName = clubName;
         this.leader = leader;
         this.rudeCnt = 0;
         this.point = 0;

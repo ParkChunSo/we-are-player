@@ -5,6 +5,7 @@ import com.wap.chun.domain.enums.DisclosureScopeState;
 import com.wap.chun.domain.enums.MemberRole;
 import com.wap.chun.domain.enums.PositionType;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.Entity;
@@ -15,6 +16,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity(name = "member_tbl")
+@NoArgsConstructor
 @Getter
 public class Member {
     @Id

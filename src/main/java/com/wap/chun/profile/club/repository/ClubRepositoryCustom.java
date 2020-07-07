@@ -6,4 +6,6 @@ import java.util.Optional;
 
 public interface ClubRepositoryCustom {
     Optional<Club> findByClubNameAndLocationAndLeader(String clubName, String Location, String LeaderId);
+
+    boolean isExisted(String clubName, String location);
 }

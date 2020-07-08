@@ -20,6 +20,7 @@ public class Club {
     private LocalDateTime createDate;
     private String location;
     private String logoUri;
+    private Integer likeCnt;
     private Integer rudeCnt;
     private Integer point;
 
@@ -32,6 +33,7 @@ public class Club {
         this.clubName = clubName;
         this.location = location;
         this.leader = leader;
+        this.likeCnt = 0;
         this.rudeCnt = 0;
         this.point = 0;
     }
@@ -42,6 +44,10 @@ public class Club {
 
     public void setLogoUri(String logoUri) {
         this.logoUri = logoUri;
+    }
+
+    public void setLikeCnt(Integer likeCnt) {
+        this.likeCnt = likeCnt;
     }
 
     public void setRudeCnt(Integer rudeCnt) {

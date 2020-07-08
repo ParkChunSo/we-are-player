@@ -1,6 +1,7 @@
 package com.wap.chun.domain.entitys;
 
 import com.wap.chun.domain.enums.PositionType;
+import lombok.Builder;
 import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -25,6 +26,7 @@ public class ClubMember {
     @Enumerated(value = EnumType.STRING)
     private PositionType position;
 
+    @Builder
     public ClubMember(Club club, Member member) {
         this.club = club;
         this.member = member;

@@ -2,6 +2,7 @@ package com.wap.chun.domain.entitys;
 
 import com.sun.istack.NotNull;
 import com.wap.chun.domain.enums.PostCategory;
+import lombok.Builder;
 import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -32,6 +33,7 @@ public class Post {
     private LocalDateTime endDate;
     private String message;
 
+    @Builder
     public Post(PostCategory category, Club club, Member writer, LocalDateTime startDate, LocalDateTime endDate) {
         this.category = category;
         this.club = club;

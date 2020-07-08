@@ -2,6 +2,7 @@ package com.wap.chun.domain.entitys;
 
 import com.sun.istack.NotNull;
 import com.wap.chun.domain.enums.MatchState;
+import lombok.Builder;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -28,6 +29,7 @@ public class Match {
     @Enumerated(value = EnumType.STRING)
     private MatchState state;
 
+    @Builder
     public Match(LocalDateTime date, String location, Club homeClub, Club awayClub) {
         this.date = date;
         this.location = location;

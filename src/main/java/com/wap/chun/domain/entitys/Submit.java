@@ -3,6 +3,7 @@ package com.wap.chun.domain.entitys;
 import com.sun.istack.NotNull;
 import com.wap.chun.domain.enums.SubmitState;
 import com.wap.chun.domain.enums.SubmitType;
+import lombok.Builder;
 import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -31,6 +32,7 @@ public class Submit {
     @Enumerated(value = EnumType.STRING)
     private SubmitState state;
 
+    @Builder
     public Submit(Club club, Member member, SubmitType type) {
         this.club = club;
         this.member = member;

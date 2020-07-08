@@ -1,5 +1,6 @@
 package com.wap.chun.domain.entitys;
 
+import lombok.Builder;
 import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -25,6 +26,7 @@ public class Board {
 
     private String message;
 
+    @Builder
     public Board(Club club, Member writer, String message) {
         this.clubId = club;
         this.writer = writer;

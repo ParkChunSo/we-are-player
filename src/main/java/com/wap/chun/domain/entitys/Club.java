@@ -1,6 +1,7 @@
 package com.wap.chun.domain.entitys;
 
 import com.sun.istack.NotNull;
+import lombok.Builder;
 import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -26,8 +27,10 @@ public class Club {
     @JoinColumn(name = "leader_id")
     private Member leader;
 
-    public Club(String clubName, Member leader) {
+    @Builder
+    public Club(String clubName,String location, Member leader) {
         this.clubName = clubName;
+        this.location = location;
         this.leader = leader;
         this.rudeCnt = 0;
         this.point = 0;

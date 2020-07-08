@@ -4,6 +4,7 @@ import com.sun.istack.NotNull;
 import com.wap.chun.domain.enums.DisclosureScopeState;
 import com.wap.chun.domain.enums.MemberRole;
 import com.wap.chun.domain.enums.PositionType;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -38,6 +39,7 @@ public class Member {
     @Enumerated(value = EnumType.STRING)
     private DisclosureScopeState disclosureScopeState;
 
+    @Builder
     public Member(String id, String password, String name) {
         this.id = id;
         this.password = password;

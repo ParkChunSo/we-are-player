@@ -1,5 +1,6 @@
 package com.wap.chun.domain.entitys;
 
+import com.wap.chun.domain.enums.ClubMemberType;
 import com.wap.chun.domain.enums.PositionType;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,6 +26,8 @@ public class ClubMember {
     private Integer uniformNum;
     @Enumerated(value = EnumType.STRING)
     private PositionType position;
+    @Enumerated(value = EnumType.STRING)
+    private ClubMemberType clubMemberType; //용병인지, 팀원인지 구분.
 
     @Builder
     public ClubMember(Club club, Member member) {

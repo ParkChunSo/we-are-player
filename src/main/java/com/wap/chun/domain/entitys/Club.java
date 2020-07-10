@@ -1,6 +1,7 @@
 package com.wap.chun.domain.entitys;
 
 import com.sun.istack.NotNull;
+import com.wap.chun.profile.club.dtos.ClubInfoDto;
 import lombok.Builder;
 import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -32,6 +33,16 @@ public class Club {
     public Club(String clubName,String location, Member leader) {
         this.clubName = clubName;
         this.location = location;
+        this.leader = leader;
+        this.likeCnt = 0;
+        this.rudeCnt = 0;
+        this.point = 0;
+    }
+
+    public Club(ClubInfoDto dto, Member leader){
+        this.clubName = dto.getClubName();
+        this.location = dto.getLocation();
+        this.logoUri = dto.getLogoUri();
         this.leader = leader;
         this.likeCnt = 0;
         this.rudeCnt = 0;

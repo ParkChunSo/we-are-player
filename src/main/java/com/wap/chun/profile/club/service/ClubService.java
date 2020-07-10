@@ -1,13 +1,16 @@
 package com.wap.chun.profile.club.service;
 
-import com.wap.chun.domain.entitys.ClubMember;
-import com.wap.chun.profile.club.converter.ClubBasicInfoDtoConverter;
-import com.wap.chun.profile.club.dtos.ClubBasicInfoDto;
 import com.wap.chun.domain.entitys.Club;
+import com.wap.chun.domain.entitys.ClubMember;
 import com.wap.chun.domain.entitys.Member;
+import com.wap.chun.domain.enums.ClubMemberType;
 import com.wap.chun.error.ClubAlreadyExistException;
 import com.wap.chun.error.ClubCannotFindException;
+import com.wap.chun.error.ClubMemberCannotFindException;
 import com.wap.chun.error.MemberCannotFindException;
+import com.wap.chun.profile.club.dtos.ClubInfoDto;
+import com.wap.chun.profile.club.dtos.ClubInfoUpdateDto;
+import com.wap.chun.profile.club.dtos.ClubLeaderUpdateDto;
 import com.wap.chun.profile.club.dtos.ClubMemberDto;
 import com.wap.chun.profile.club.repository.ClubMemberRepository;
 import com.wap.chun.profile.club.repository.ClubRepository;
@@ -16,77 +19,90 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 //TODO("AWS S3 추가하며 로고 저장하는 로직 구현")
 
-/**
- * Club querydsl이 필요할까?
- * 클럽 팀원 제공하기(용병, 팀원)
- *  - 제공할 범위는?
- *  - QueryDsl을 사용하기
- * 기존 용병 및 지난 용병 보여주기
- *
- * 경기 기록 및 경기 일정은 Match에서 보여주자
- *
- * 팀원 용병 신청 기능도 여기서 하자
- * 팀원 CRUD(주의는 권한)
- *  - 일반 팀원은 읽기만.
- *  - 리더는 모두
- * 신청 목록 불러오기
- *
- */
 @Service
 @RequiredArgsConstructor
 public class ClubService {
     private final ClubRepository clubRepository;
     private final MemberRepository memberRepository;
     private final ClubMemberRepository clubMemberRepository;
-    private ClubBasicInfoDtoConverter converter;
 
-    private Member findMemberById(String memberId){
-        return memberRepository.findById(memberId)
-                .orElseThrow(MemberCannotFindException::new);
-    }
-
-    private Club findClubByClubNameAndLocationAndLeaderId(String clubName, String location, String leaderId){
-        return clubRepository.findByClubNameAndLocationAndLeader(clubName, location, leaderId)
-                .orElseThrow(ClubCannotFindException::new);
-    }
-
-    public void createClub(ClubBasicInfoDto dto){
-        if(clubRepository.isExisted(dto.getClubName(), dto.getLocation())) {
+    public void createClub(ClubInfoDto dto){
+        if(clubRepository.existsByClubNameAndLocation(dto.getClubName(), dto.getLocation())) {
             throw new ClubAlreadyExistException();
         }
 
-        converter = new ClubBasicInfoDtoConverter(findMemberById(dto.getLeaderId()));
-        clubRepository.save(converter.convertToEntity(dto));
+        Member member = memberRepository.findById(dto.getLeaderId())
+                .orElseThrow(MemberCannotFindException::new);
+
+        clubRepository.save(new Club(dto, member));
     }
 
-    public ClubBasicInfoDto getClubBasicInfo(String clubName, String location, String leaderId){
-        Club club = findClubByClubNameAndLocationAndLeaderId(clubName, location, leaderId);
-        return converter.convertToDto(club);
+    public ClubInfoDto getClubInfo(String clubName, String clubLocation){
+        Club club = clubRepository.findByClubNameAndLocation(clubName, clubLocation)
+                .orElseThrow(ClubCannotFindException::new);
+        return new ClubInfoDto(club);
     }
 
-    public void updateClubLeader(String clubName, String location, String preLeaderId, String newLeaderId){
-        Club club = findClubByClubNameAndLocationAndLeaderId(clubName, location, preLeaderId);
-        club.setLeader(findMemberById(newLeaderId));
+    public List<ClubInfoDto> findByClubName(String clubName){
+        List<Club> clubList = clubRepository.findByClubName(clubName)
+                .orElseThrow(ClubCannotFindException::new);
+
+        return clubList.stream()
+                .map(ClubInfoDto::new)
+                .collect(Collectors.toList());
+    }
+
+    public List<ClubInfoDto> findByLocation(String clubLocation){
+        List<Club> clubList = clubRepository.findByLocation(clubLocation)
+                .orElseThrow(ClubCannotFindException::new);
+
+        return clubList.stream()
+                .map(ClubInfoDto::new)
+                .collect(Collectors.toList());
+    }
+
+    public void updateClubLeader(ClubLeaderUpdateDto dto){
+        Club club = clubRepository.findByClubNameAndLocation(dto.getClubName(), dto.getLocation())
+                .orElseThrow(ClubCannotFindException::new);
+
+        club.setLeader(memberRepository.findById(dto.getNewLeaderId())
+                    .orElseThrow(MemberCannotFindException::new));
+
         clubRepository.save(club);
     }
 
-    public void updateClubLogoUri(String clubName, String location, String leaderId, String logoUri){
-        Club club = findClubByClubNameAndLocationAndLeaderId(clubName, location, leaderId);
-        club.setLogoUri(logoUri);
+    public void updateClubLogoUri(ClubInfoUpdateDto dto){
+        Club club = clubRepository.findByClubNameAndLocation(dto.getClubName(), dto.getLocation())
+                .orElseThrow(ClubCannotFindException::new);
+        club.setLogoUri(dto.getLogoUri());
         clubRepository.save(club);
     }
 
-    public void updateLikeAndRudeCnt(String clubName, String location, String leaderId, Integer likeCnt, Integer rudeCnt){
-        Club club = findClubByClubNameAndLocationAndLeaderId(clubName, location, leaderId);
-        club.setLikeCnt(likeCnt);
-        club.setRudeCnt(rudeCnt);
+    public void updateLikeAndRudeCnt(ClubInfoUpdateDto dto){
+        Club club = clubRepository.findByClubNameAndLocation(dto.getClubName(), dto.getLocation())
+                .orElseThrow(ClubCannotFindException::new);
+        club.setLikeCnt(dto.getLikeCnt());
+        club.setRudeCnt(dto.getRudeCnt());
         clubRepository.save(club);
     }
 
-    public List<ClubMemberDto> getClubMembers(String clubName, String location, String leaderId){
-        return null;
+    public List<ClubMemberDto> getClubMembers(String clubName, String clubLocation, ClubMemberType type){
+        Club club = clubRepository.findByClubNameAndLocation(clubName, clubLocation)
+                .orElseThrow(ClubCannotFindException::new);
+
+        List<ClubMember> memberList = clubMemberRepository.findByClubAndClubMemberType(club, type)
+                .orElseThrow(ClubMemberCannotFindException::new);
+
+        return memberList.stream()
+                .map(ClubMemberDto::new)
+                .collect(Collectors.toList());
+    }
+
+    public void deleteClub(String clubName, String clubLocation){
+        clubRepository.deleteByClubNameAndLocation(clubName, clubLocation);
     }
 }

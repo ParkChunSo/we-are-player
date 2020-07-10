@@ -4,6 +4,7 @@ import com.wap.chun.domain.enums.ClubMemberType;
 import com.wap.chun.domain.enums.PositionType;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -15,17 +16,26 @@ public class ClubMember {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @ManyToOne
     @JoinColumn(name = "club_id")
     private Club club;
+
     @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
+
     @CreationTimestamp
     private LocalDateTime registDate;
+
+    @Setter
     private Integer uniformNum;
+
+    @Setter
     @Enumerated(value = EnumType.STRING)
     private PositionType position;
+
+    @Setter
     @Enumerated(value = EnumType.STRING)
     private ClubMemberType clubMemberType; //용병인지, 팀원인지 구분.
 
@@ -34,13 +44,5 @@ public class ClubMember {
         this.club = club;
         this.member = member;
         this.position = member.getPosition();
-    }
-
-    public void setUniformNum(Integer uniformNum) {
-        this.uniformNum = uniformNum;
-    }
-
-    public void setPosition(PositionType position) {
-        this.position = position;
     }
 }

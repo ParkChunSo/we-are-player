@@ -7,6 +7,7 @@ import com.wap.chun.domain.enums.PositionType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.Entity;
@@ -22,20 +23,36 @@ import java.time.LocalDateTime;
 public class Member {
     @Id
     private String id;
+
     @NotNull
     private String password;
+
     @NotNull
     private String name;
+
+    @Setter
     private String location;
+
     @CreationTimestamp
     private LocalDateTime createDate;
+
+    @Setter
     private Integer likeCnt;
+
+    @Setter
     private Integer rudeCnt;
+
+    @Setter
     private String pictureUri;
+
     @Enumerated(value = EnumType.STRING)
     private MemberRole role;
+
+    @Setter
     @Enumerated(value = EnumType.STRING)
     private PositionType position;
+
+    @Setter
     @Enumerated(value = EnumType.STRING)
     private DisclosureScopeState disclosureScopeState;
 
@@ -48,29 +65,5 @@ public class Member {
         this.rudeCnt = 0;
         this.role = MemberRole.CLIENT;
         this.disclosureScopeState = DisclosureScopeState.PUBLIC;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public void setLikeCnt(Integer likeCnt) {
-        this.likeCnt = likeCnt;
-    }
-
-    public void setRudeCnt(Integer rudeCnt) {
-        this.rudeCnt = rudeCnt;
-    }
-
-    public void setPictureUri(String pictureUri) {
-        this.pictureUri = pictureUri;
-    }
-
-    public void setPosition(PositionType position) {
-        this.position = position;
-    }
-
-    public void setDisclosureScopeState(DisclosureScopeState disclosureScopeState) {
-        this.disclosureScopeState = disclosureScopeState;
     }
 }

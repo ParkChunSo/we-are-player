@@ -4,6 +4,7 @@ import com.sun.istack.NotNull;
 import com.wap.chun.profile.club.dtos.ClubInfoDto;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -15,16 +16,29 @@ public class Club {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long clubId;
+
     @NotNull
     private String clubName;
+
     @CreationTimestamp
     private LocalDateTime createDate;
+
+    @Setter
     private String location;
+
+    @Setter
     private String logoUri;
+
+    @Setter
     private Integer likeCnt;
+
+    @Setter
     private Integer rudeCnt;
+
+    @Setter
     private Integer point;
 
+    @Setter
     @OneToOne
     @JoinColumn(name = "leader_id")
     private Member leader;
@@ -47,29 +61,5 @@ public class Club {
         this.likeCnt = 0;
         this.rudeCnt = 0;
         this.point = 0;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public void setLogoUri(String logoUri) {
-        this.logoUri = logoUri;
-    }
-
-    public void setLikeCnt(Integer likeCnt) {
-        this.likeCnt = likeCnt;
-    }
-
-    public void setRudeCnt(Integer rudeCnt) {
-        this.rudeCnt = rudeCnt;
-    }
-
-    public void setPoint(Integer point) {
-        this.point = point;
-    }
-
-    public void setLeader(Member leader) {
-        this.leader = leader;
     }
 }

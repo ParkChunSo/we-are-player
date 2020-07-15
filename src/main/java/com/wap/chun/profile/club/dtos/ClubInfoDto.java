@@ -1,6 +1,7 @@
 package com.wap.chun.profile.club.dtos;
 
 import com.wap.chun.domain.entitys.Club;
+import com.wap.chun.domain.entitys.ClubMember;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,5 +23,9 @@ public class ClubInfoDto {
         this.logoUri = club.getLogoUri();
         this.leaderId = club.getLeader().getId();
         this.leaderName = club.getLeader().getName();
+    }
+
+    public ClubInfoDto(ClubMember entity){
+        this(entity.getClub());
     }
 }

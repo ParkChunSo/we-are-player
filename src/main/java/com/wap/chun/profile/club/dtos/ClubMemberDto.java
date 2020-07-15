@@ -1,5 +1,6 @@
 package com.wap.chun.profile.club.dtos;
 
+import com.wap.chun.domain.entitys.Club;
 import com.wap.chun.domain.entitys.ClubMember;
 import com.wap.chun.domain.enums.ClubMemberType;
 import com.wap.chun.domain.enums.PositionType;

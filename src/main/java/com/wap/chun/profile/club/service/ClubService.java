@@ -4,10 +4,10 @@ import com.wap.chun.domain.entitys.Club;
 import com.wap.chun.domain.entitys.ClubMember;
 import com.wap.chun.domain.entitys.Member;
 import com.wap.chun.domain.enums.ClubMemberType;
-import com.wap.chun.error.ClubAlreadyExistException;
-import com.wap.chun.error.ClubCannotFindException;
-import com.wap.chun.error.ClubMemberCannotFindException;
-import com.wap.chun.error.MemberCannotFindException;
+import com.wap.chun.error.exception.ClubAlreadyExistException;
+import com.wap.chun.error.exception.ClubNotFoundException;
+import com.wap.chun.error.exception.ClubMemberNotFoundException;
+import com.wap.chun.error.exception.MemberNotFoundException;
 import com.wap.chun.profile.club.dtos.ClubInfoDto;
 import com.wap.chun.profile.club.dtos.ClubInfoUpdateDto;
 import com.wap.chun.profile.club.dtos.ClubLeaderUpdateDto;
@@ -36,20 +36,20 @@ public class ClubService {
         }
 
         Member member = memberRepository.findById(dto.getLeaderId())
-                .orElseThrow(MemberCannotFindException::new);
+                .orElseThrow(MemberNotFoundException::new);
 
         clubRepository.save(new Club(dto, member));
     }
 
     public ClubInfoDto getClubInfo(String clubName, String clubLocation){
         Club club = clubRepository.findByClubNameAndLocation(clubName, clubLocation)
-                .orElseThrow(ClubCannotFindException::new);
+                .orElseThrow(ClubNotFoundException::new);
         return new ClubInfoDto(club);
     }
 
     public List<ClubInfoDto> findByClubName(String clubName){
         List<Club> clubList = clubRepository.findByClubName(clubName)
-                .orElseThrow(ClubCannotFindException::new);
+                .orElseThrow(ClubNotFoundException::new);
 
         return clubList.stream()
                 .map(ClubInfoDto::new)
@@ -58,7 +58,7 @@ public class ClubService {
 
     public List<ClubInfoDto> findByLocation(String clubLocation){
         List<Club> clubList = clubRepository.findByLocation(clubLocation)
-                .orElseThrow(ClubCannotFindException::new);
+                .orElseThrow(ClubNotFoundException::new);
 
         return clubList.stream()
                 .map(ClubInfoDto::new)
@@ -67,24 +67,24 @@ public class ClubService {
 
     public void updateClubLeader(ClubLeaderUpdateDto dto){
         Club club = clubRepository.findByClubNameAndLocation(dto.getClubName(), dto.getLocation())
-                .orElseThrow(ClubCannotFindException::new);
+                .orElseThrow(ClubNotFoundException::new);
 
         club.setLeader(memberRepository.findById(dto.getNewLeaderId())
-                    .orElseThrow(MemberCannotFindException::new));
+                    .orElseThrow(MemberNotFoundException::new));
 
         clubRepository.save(club);
     }
 
     public void updateClubLogoUri(ClubInfoUpdateDto dto){
         Club club = clubRepository.findByClubNameAndLocation(dto.getClubName(), dto.getLocation())
-                .orElseThrow(ClubCannotFindException::new);
+                .orElseThrow(ClubNotFoundException::new);
         club.setLogoUri(dto.getLogoUri());
         clubRepository.save(club);
     }
 
     public void updateLikeAndRudeCnt(ClubInfoUpdateDto dto){
         Club club = clubRepository.findByClubNameAndLocation(dto.getClubName(), dto.getLocation())
-                .orElseThrow(ClubCannotFindException::new);
+                .orElseThrow(ClubNotFoundException::new);
         club.setLikeCnt(dto.getLikeCnt());
         club.setRudeCnt(dto.getRudeCnt());
         clubRepository.save(club);
@@ -92,10 +92,10 @@ public class ClubService {
 
     public List<ClubMemberDto> getClubMembers(String clubName, String clubLocation, ClubMemberType type){
         Club club = clubRepository.findByClubNameAndLocation(clubName, clubLocation)
-                .orElseThrow(ClubCannotFindException::new);
+                .orElseThrow(ClubNotFoundException::new);
 
         List<ClubMember> memberList = clubMemberRepository.findByClubAndClubMemberType(club, type)
-                .orElseThrow(ClubMemberCannotFindException::new);
+                .orElseThrow(ClubMemberNotFoundException::new);
 
         return memberList.stream()
                 .map(ClubMemberDto::new)

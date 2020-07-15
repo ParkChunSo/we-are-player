@@ -1,4 +1,4 @@
-package com.wap.chun.security.error;
+package com.wap.chun.error.exception;
 
 import lombok.AllArgsConstructor;
 

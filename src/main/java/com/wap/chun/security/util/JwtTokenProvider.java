@@ -1,7 +1,7 @@
 package com.wap.chun.security.util;
 
 import com.wap.chun.domain.enums.MemberRole;
-import com.wap.chun.security.error.InvalidJwtAuthenticationException;
+import com.wap.chun.error.exception.InvalidJwtAuthenticationException;
 import com.wap.chun.profile.member.service.MemberService;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
@@ -16,9 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 @Component
-@RequiredArgsConstructor
 public class JwtTokenProvider {
-    private final MemberService memberService;
     private final String secretKey = Base64.getEncoder().encodeToString("secret".getBytes());
     private final long validityInMilliseconds = 3600000L;
     public String createToken(String username, Set<MemberRole> roles) {

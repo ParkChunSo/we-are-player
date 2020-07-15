@@ -1,7 +1,6 @@
 plugins {
     id 'org.springframework.boot' version '2.3.1.RELEASE'
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
-    id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
     id "io.franzbecker.gradle-lombok" version "3.0.0"
     id 'java'
 }
@@ -35,42 +34,10 @@ dependencies {
 
     testImplementation 'org.springframework.security:spring-security-test'
 
-//    compile("com.querydsl:querydsl-jpa") // querydsl
-//    annotationProcessor("com.querydsl:querydsl-jpa")
-//    compile('com.querydsl:querydsl-core')
-//    compile("com.querydsl:querydsl-apt") // querydsl
-//    annotationProcessor("com.querydsl:querydsl-apt")
-
-
     compile 'mysql:mysql-connector-java'
 }
 
 test {
     useJUnitPlatform()
 }
-//
-///**** QueryDSL Class Generate Script ****/
-//def querydslSrcDir = 'src/main/generated'
-//
-//querydsl {
-//    library = "com.querydsl:querydsl-apt"
-//    jpa = true
-//    querydslSourcesDir = querydslSrcDir
-//}
-//
-//sourceSets {
-//    main {
-//        java {
-//            srcDirs = ['src/main/java', querydslSrcDir]
-//        }
-//    }
-//}
-//
-//compileQuerydsl{
-//    options.annotationProcessorPath = configurations.querydsl
-//}
-//
-//configurations {
-//    querydsl.extendsFrom compileClasspath
-//}
 

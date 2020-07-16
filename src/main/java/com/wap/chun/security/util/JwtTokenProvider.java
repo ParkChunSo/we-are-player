@@ -2,9 +2,7 @@ package com.wap.chun.security.util;
 
 import com.wap.chun.domain.enums.MemberRole;
 import com.wap.chun.error.exception.InvalidJwtAuthenticationException;
-import com.wap.chun.profile.member.service.MemberService;
 import io.jsonwebtoken.*;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -90,7 +88,7 @@ public class JwtTokenProvider {
 
             return true;
         } catch (JwtException | IllegalArgumentException e) {
-            throw new InvalidJwtAuthenticationException("Expired or invalid JWT token");
+            throw new InvalidJwtAuthenticationException();
         }
     }
 }

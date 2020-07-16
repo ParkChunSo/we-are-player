@@ -15,8 +15,6 @@ public class MemberSignUpDto {
     private String name;
     private String location;
     private String pictureUri;
-    @Setter
-    private Set<MemberRole> roleSet;
     private PositionType position;
     @Setter
     private DisclosureScopeState disclosureScopeState;

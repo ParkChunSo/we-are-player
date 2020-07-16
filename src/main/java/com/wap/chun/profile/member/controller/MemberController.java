@@ -1,10 +1,15 @@
 package com.wap.chun.profile.member.controller;
 
 import com.wap.chun.domain.enums.MemberRole;
+import com.wap.chun.error.exception.ClubAlreadyExistException;
 import com.wap.chun.profile.member.dtos.*;
 import com.wap.chun.profile.member.service.MemberService;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequestMapping("/member")
 @RestController
@@ -50,5 +55,10 @@ public class MemberController {
     @PostMapping("/delete")
     public void deleteMember(@RequestBody MemberDeleteDto dto){
         memberService.deleteMember(dto);
+    }
+
+    @GetMapping("/all")
+    public List<MemberInfoDto> getAllMember(){
+        return memberService.getAllMember();
     }
 }

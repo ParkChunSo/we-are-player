@@ -5,15 +5,11 @@ import com.wap.chun.domain.entitys.ClubMember;
 import com.wap.chun.domain.entitys.Member;
 import com.wap.chun.domain.enums.ClubMemberType;
 import com.wap.chun.domain.enums.MemberRole;
-import com.wap.chun.error.exception.ClubNotFoundException;
-import com.wap.chun.error.exception.ClubMemberNotFoundException;
-import com.wap.chun.error.exception.MemberAlreadyExistException;
-import com.wap.chun.error.exception.MemberNotFoundException;
+import com.wap.chun.error.exception.*;
 import com.wap.chun.profile.club.repository.ClubMemberRepository;
 import com.wap.chun.profile.club.repository.ClubRepository;
 import com.wap.chun.profile.member.dtos.*;
 import com.wap.chun.profile.member.repository.MemberRepository;
-import com.wap.chun.error.exception.AuthenticationException;
 import com.wap.chun.security.util.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -47,8 +43,8 @@ public class MemberService {
     }
 
     public void signUp(MemberSignUpDto dto, MemberRole role) {
-        memberRepository.findById(dto.getId())
-                .orElseThrow(MemberAlreadyExistException::new);
+        if(memberRepository.findById(dto.getId()).isPresent())
+            throw new MemberAlreadyExistException();
 
         Set<MemberRole> roles = new HashSet<>();
         roles.add(MemberRole.CLIENT);
@@ -87,7 +83,7 @@ public class MemberService {
 
         //리더와 본인만 가능
         if (!userId.equals(requestId) || (clubMembers.isEmpty() && !isLeader(clubMembers, requestId))) {
-            throw new AuthenticationException("It is not accessible.");
+            throw new AccessDenideAuthenticationException();
         }
 
         return new MemberDetailsInfoDto(member, clubMembers);
@@ -147,4 +143,9 @@ public class MemberService {
     }
 
 
+    public List<MemberInfoDto> getAllMember() {
+        return memberRepository.findAll().stream()
+                .map(MemberInfoDto::new)
+                .collect(Collectors.toList());
+    }
 }

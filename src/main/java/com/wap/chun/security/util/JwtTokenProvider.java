@@ -70,6 +70,20 @@ public class JwtTokenProvider {
         return roles;
     }
 
+    public boolean hasRole(String token, MemberRole role){
+        List list = Jwts.parser()
+                .setSigningKey(secretKey)
+                .parseClaimsJws(token)
+                .getBody()
+                .get("roles", List.class);
+
+        for(Object o : list){
+            if(String.valueOf(o).equals(role.toString()))
+                return true;
+        }
+        return false;
+    }
+
     public String resolveToken(HttpServletRequest req) {
         String bearerToken = req.getHeader("Authorization");
         if (bearerToken != null && bearerToken.startsWith("Bearer ")) {

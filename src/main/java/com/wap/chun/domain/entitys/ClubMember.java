@@ -44,5 +44,6 @@ public class ClubMember {
         this.club = club;
         this.member = member;
         this.position = member.getPosition();
+        this.clubMemberType = ClubMemberType.MEMBER;
     }
 }

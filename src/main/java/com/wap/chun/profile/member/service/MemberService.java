@@ -43,7 +43,7 @@ public class MemberService {
     }
 
     public void signUp(MemberSignUpDto dto, MemberRole role) {
-        if(memberRepository.findById(dto.getId()).isPresent())
+        if(memberRepository.existsById(dto.getId()))
             throw new MemberAlreadyExistException();
 
         Set<MemberRole> roles = new HashSet<>();
@@ -82,11 +82,14 @@ public class MemberService {
         String requestId = jwtTokenProvider.getUsername(token);
 
         //리더와 본인만 가능
-        if (!userId.equals(requestId) || (clubMembers.isEmpty() && !isLeader(clubMembers, requestId))) {
-            throw new AccessDenideAuthenticationException();
+        if (userId.equals(requestId) //본인
+                || (!clubMembers.isEmpty() && isLeader(clubMembers, requestId)) //리더
+                || jwtTokenProvider.hasRole(token, MemberRole.ADMIN)) { //관리자
+
+            return new MemberDetailsInfoDto(member, clubMembers.stream().map(ClubMember::getClub).collect(Collectors.toList()));
         }
 
-        return new MemberDetailsInfoDto(member, clubMembers);
+        throw new AccessDenideAuthenticationException();
     }
 
     private boolean isLeader(List<ClubMember> list, String requestId) {

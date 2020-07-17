@@ -30,6 +30,9 @@ public enum ErrorCode {
     //Security
     INVALID_TOKEN(403, "Expired or invalid JWT token"),
     HANDLE_ACCESS_DENIED(403, "Access is Denied"),
+
+    //Match
+    MATCH_NOT_FOUND(400, "Can't found match") ;
     ;
     private final int status;
     private final String message;

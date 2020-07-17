@@ -1,5 +1,6 @@
 package com.wap.chun.profile.member.dtos;
 
+import com.wap.chun.domain.entitys.Club;
 import com.wap.chun.domain.entitys.ClubMember;
 import com.wap.chun.domain.entitys.Member;
 import com.wap.chun.profile.club.dtos.ClubInfoDto;
@@ -16,10 +17,12 @@ public class MemberDetailsInfoDto extends MemberInfoDto {
         super(entity);
     }
 
-    public MemberDetailsInfoDto(Member member, List<ClubMember> entityList) {
+    public MemberDetailsInfoDto(Member member, List<Club> entityList) {
         super(member);
-        this.clubInfoDtoList = entityList.stream()
-                .map(ClubInfoDto::new)
-                .collect(Collectors.toList());
+        if(!entityList.isEmpty()) {
+            this.clubInfoDtoList = entityList.stream()
+                    .map(ClubInfoDto::new)
+                    .collect(Collectors.toList());
+        }
     }
 }

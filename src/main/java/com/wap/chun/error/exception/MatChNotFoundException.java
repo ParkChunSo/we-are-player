@@ -2,7 +2,7 @@ package com.wap.chun.error.exception;
 
 import com.wap.chun.error.ErrorCode;
 
-public class MatChNotFoundException extends NotFoundException {
+public class MatChNotFoundException extends ErrorCodeException {
     public MatChNotFoundException(){
         this(ErrorCode.MATCH_NOT_FOUND);
     }

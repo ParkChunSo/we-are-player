@@ -7,8 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
-@Getter
-@Builder
+@Getter @Builder
 @AllArgsConstructor
 public class ClubMemberDto {
     private String memberId;

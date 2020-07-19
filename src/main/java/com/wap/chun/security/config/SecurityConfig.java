@@ -30,7 +30,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic().disable()
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-
                 .and()
                 .authorizeRequests()
                     .antMatchers(HttpMethod.POST, "/member/login").permitAll()
@@ -39,6 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers(HttpMethod.GET, "/member/all").hasRole(MemberRole.ADMIN.toString())
 
                     .antMatchers("/member/**").authenticated()
+                    .antMatchers("/club/**").authenticated()
                 //TODO("추가적인 URL 고려 및 ENUM으로 뺴는거 생각해보기")
                     .anyRequest().anonymous()
 

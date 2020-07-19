@@ -42,12 +42,12 @@ public class ClubController {
         return clubService.getClubMembers(clubName, clubLocation, type);
     }
 
-    @PostMapping(value = "/update/leader")
+    @PutMapping(value = "/update/leader")
     public void updateLeader(@RequestBody ClubLeaderUpdateDto dto){
         clubService.updateClubLeader(dto);
     }
 
-    @PostMapping(value = "/update")
+    @PutMapping (value = "/update")
     public void updateClub(@RequestBody ClubInfoUpdateDto dto){
         clubService.updateClubLogoUri(dto);
         clubService.updateLikeAndRudeCnt(dto);

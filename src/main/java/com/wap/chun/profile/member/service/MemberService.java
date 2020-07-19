@@ -16,9 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -42,21 +40,19 @@ public class MemberService {
         return jwtTokenProvider.createToken(member.getId(), member.getRoleSet());
     }
 
-    public void signUp(MemberSignUpDto dto, MemberRole role) {
+    public void signUp(String token, MemberSignUpDto dto) {
         if(memberRepository.existsById(dto.getId()))
             throw new MemberAlreadyExistException();
 
-        Set<MemberRole> roles = new HashSet<>();
-        roles.add(MemberRole.CLIENT);
-        if (role.equals(MemberRole.ADMIN)) {
-            roles.add(MemberRole.ADMIN);
-        }
+        MemberRole role = Enum.valueOf(MemberRole.class, dto.getType().toString());
+        if(!jwtTokenProvider.hasRole(token, role))
+            throw new AccessDeniedAuthenticationException();
 
         Member member = Member.builder()
                 .id(dto.getId())
                 .password(passwordEncoder.encode(dto.getPassword()))
                 .name(dto.getName())
-                .roleSet(roles)
+                .roleSet(dto.getType().getRoles())
                 .location(dto.getLocation())
                 .pictureUri(dto.getPictureUri())
                 .position(dto.getPosition())
@@ -72,8 +68,8 @@ public class MemberService {
         return new MemberInfoDto(member);
     }
 
-    public MemberDetailsInfoDto getMemberDetailsInfo(String userId, String token) {
-        Member member = memberRepository.findById(userId)
+    public MemberDetailsInfoDto getMemberDetailsInfo(String memberId, String token) {
+        Member member = memberRepository.findById(memberId)
                 .orElseThrow(MemberNotFoundException::new);
 
         List<ClubMember> clubMembers = clubMemberRepository.findByMemberAndClubMemberType(member, ClubMemberType.MEMBER)
@@ -82,14 +78,15 @@ public class MemberService {
         String requestId = jwtTokenProvider.getUsername(token);
 
         //리더와 본인만 가능
-        if (userId.equals(requestId) //본인
-                || (!clubMembers.isEmpty() && isLeader(clubMembers, requestId)) //리더
-                || jwtTokenProvider.hasRole(token, MemberRole.ADMIN)) { //관리자
-
-            return new MemberDetailsInfoDto(member, clubMembers.stream().map(ClubMember::getClub).collect(Collectors.toList()));
+        if (isAdmin(token) || checkSelfOrLeader(memberId, requestId, clubMembers)) {
+            return new MemberDetailsInfoDto(member,
+                    clubMembers.stream().map(ClubMember::getClub).collect(Collectors.toList()));
         }
 
-        throw new AccessDenideAuthenticationException();
+        throw new AccessDeniedAuthenticationException();
+    }
+    private boolean checkSelfOrLeader(String memberId, String requestId, List<ClubMember> clubMembers){
+        return (memberId.equals(requestId) || isLeader(clubMembers, requestId));
     }
 
     private boolean isLeader(List<ClubMember> list, String requestId) {
@@ -101,15 +98,8 @@ public class MemberService {
                 .anyMatch(s -> s.equals(requestId));
     }
 
-    //TODO("삭제 고려, 해당 클래스에 있을 필요가 없지않을까?")
-    public List<MemberInfoDto> findMembersByClub(String clubName, String clubLocation, ClubMemberType type) {
-        Club club = clubRepository.findByClubNameAndLocation(clubName, clubLocation)
-                .orElseThrow(ClubNotFoundException::new);
-        List<ClubMember> clubMembers = clubMemberRepository.findByClubAndClubMemberType(club, type)
-                .orElseThrow(ClubMemberNotFoundException::new);
-        return clubMembers.stream()
-                .map(clubMember -> new MemberInfoDto(clubMember.getMember()))
-                .collect(Collectors.toList());
+    private boolean isAdmin(String token){
+        return jwtTokenProvider.hasRole(token, MemberRole.ADMIN);
     }
 
     public void updateMemberInfo(MemberInfoUpdateDto dto) {

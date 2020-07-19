@@ -1,5 +1,6 @@
 package com.wap.chun.security;
 
+import com.wap.chun.error.exception.AccessDeniedAuthenticationException;
 import com.wap.chun.security.util.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -12,6 +13,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.file.AccessDeniedException;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 public class JwtTokenFilter extends OncePerRequestFilter {
@@ -19,10 +22,10 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-            throws ServletException, IOException {
-        final String token = jwtTokenProvider.resolveToken(request);
-        if (token != null && jwtTokenProvider.validateToken(token)) {
-            Authentication auth = jwtTokenProvider.getAuthentication(token);
+            throws AccessDeniedAuthenticationException,ServletException, IOException {
+        final Optional<String> token = jwtTokenProvider.resolveToken(request);
+        if (token.isPresent() && jwtTokenProvider.validateToken(token.get())) {
+            Authentication auth = jwtTokenProvider.getAuthentication(token.get());
             SecurityContextHolder.getContext().setAuthentication(auth);
         }
         filterChain.doFilter(request, response);

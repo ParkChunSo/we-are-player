@@ -3,6 +3,7 @@ package com.wap.chun.domain.entitys;
 import com.sun.istack.NotNull;
 import com.wap.chun.profile.club.dtos.ClubInfoDto;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -12,9 +13,10 @@ import java.time.LocalDateTime;
 
 @Entity(name = "club_tbl")
 @Getter
+@EqualsAndHashCode(of = "clubId")
 public class Club {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long clubId;
 
     @NotNull

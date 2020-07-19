@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
-@AllArgsConstructor
 public class ClubInfoUpdateDto {
     // final 키워드 삽입 고려(Gson이 역직렬화할 수 있는지)
     private String clubName;

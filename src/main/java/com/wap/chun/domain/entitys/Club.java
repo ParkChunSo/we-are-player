@@ -2,17 +2,14 @@ package com.wap.chun.domain.entitys;
 
 import com.sun.istack.NotNull;
 import com.wap.chun.profile.club.dtos.ClubInfoDto;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity(name = "club_tbl")
-@Getter
+@Getter @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EqualsAndHashCode(of = "clubId")
 public class Club {
     @Id
@@ -41,14 +38,15 @@ public class Club {
     private Integer point;
 
     @Setter
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "leader_id")
     private Member leader;
 
     @Builder
-    public Club(String clubName,String location, Member leader) {
+    protected Club(String clubName,String location, String logoUri, Member leader) {
         this.clubName = clubName;
         this.location = location;
+        this.logoUri = logoUri;
         this.leader = leader;
         this.likeCnt = 0;
         this.rudeCnt = 0;

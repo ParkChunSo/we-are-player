@@ -62,12 +62,9 @@ public class JwtTokenProvider {
 
         Collection<SimpleGrantedAuthority> roles = new HashSet<>();
         for (Object o : list) {
-            if (String.valueOf(o).equals("CLIENT")) {
-                roles.add(new SimpleGrantedAuthority("ROLE_" + MemberRole.CLIENT.toString()));
-            } else {
-                roles.add(new SimpleGrantedAuthority("ROLE_" + MemberRole.ADMIN.toString()));
-            }
+            roles.add(new SimpleGrantedAuthority("ROLE_" + o));
         }
+
         return roles;
     }
 

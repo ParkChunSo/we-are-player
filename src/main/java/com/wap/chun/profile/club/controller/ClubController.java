@@ -1,10 +1,8 @@
 package com.wap.chun.profile.club.controller;
 
 import com.wap.chun.domain.enums.ClubMemberType;
-import com.wap.chun.profile.club.dtos.ClubInfoDto;
-import com.wap.chun.profile.club.dtos.ClubInfoUpdateDto;
-import com.wap.chun.profile.club.dtos.ClubLeaderUpdateDto;
-import com.wap.chun.profile.club.dtos.ClubMemberDto;
+import com.wap.chun.profile.club.dtos.*;
+import com.wap.chun.profile.club.service.ClubMemberService;
 import com.wap.chun.profile.club.service.ClubService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +14,7 @@ import java.util.List;
 @RequestMapping(value = "/club")
 public class ClubController {
     private final ClubService clubService;
+    private final ClubMemberService clubMemberService;
 
     @PostMapping(value = "/create")
     public void createClub(@RequestBody ClubInfoDto dto){
@@ -38,8 +37,13 @@ public class ClubController {
     }
 
     @GetMapping(value = "/member/club-name/{clubName}/club-location/{clubLocation}/type/{type}")
-    public List<ClubMemberDto> getClubMembers(@PathVariable String clubName, @PathVariable String clubLocation, @PathVariable ClubMemberType type){
-        return clubService.getClubMembers(clubName, clubLocation, type);
+    public List<ClubMemberDto> getClubMembers(@RequestHeader(name = "Authorize") String token, @PathVariable String clubName, @PathVariable String clubLocation, @PathVariable ClubMemberType type){
+        return clubMemberService.getClubMembers(clubName, clubLocation, type);
+    }
+
+    @PostMapping(value = "/member/save")
+    public void saveClubMembers(@RequestHeader(name = "Authorize") String token, @RequestBody ClubMemberSaveDto dto){
+        clubMemberService.saveClubMember(token, dto);
     }
 
     @PutMapping(value = "/update/leader")

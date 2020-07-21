@@ -1,11 +1,13 @@
 package com.wap.chun.profile.member.service;
 
-import com.wap.chun.domain.entitys.Club;
 import com.wap.chun.domain.entitys.ClubMember;
 import com.wap.chun.domain.entitys.Member;
 import com.wap.chun.domain.enums.ClubMemberType;
 import com.wap.chun.domain.enums.MemberRole;
-import com.wap.chun.error.exception.*;
+import com.wap.chun.domain.enums.MemberType;
+import com.wap.chun.error.exception.AccessDeniedAuthenticationException;
+import com.wap.chun.error.exception.MemberAlreadyExistException;
+import com.wap.chun.error.exception.MemberNotFoundException;
 import com.wap.chun.profile.club.repository.ClubMemberRepository;
 import com.wap.chun.profile.club.repository.ClubRepository;
 import com.wap.chun.profile.member.dtos.*;
@@ -26,7 +28,6 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
 
     private final MemberRepository memberRepository;
-    private final ClubRepository clubRepository;
     private final ClubMemberRepository clubMemberRepository;
 
     public String login(MemberLoginDto dto) {
@@ -40,11 +41,31 @@ public class MemberService {
         return jwtTokenProvider.createToken(member.getId(), member.getRoleSet());
     }
 
+    public void signUp(MemberSignUpDto dto) {
+        if(memberRepository.existsById(dto.getId()))
+            throw new MemberAlreadyExistException();
+
+        if(dto.getType().equals(MemberType.ADMIN))
+            throw new AccessDeniedAuthenticationException();
+
+        Member member = Member.builder()
+                .id(dto.getId())
+                .password(passwordEncoder.encode(dto.getPassword()))
+                .name(dto.getName())
+                .roleSet(dto.getType().getRoles())
+                .location(dto.getLocation())
+                .pictureUri(dto.getPictureUri())
+                .position(dto.getPosition())
+                .build();
+
+        memberRepository.save(member);
+    }
+
     public void signUp(String token, MemberSignUpDto dto) {
         if(memberRepository.existsById(dto.getId()))
             throw new MemberAlreadyExistException();
 
-        MemberRole role = Enum.valueOf(MemberRole.class, dto.getType().toString());
+        MemberRole role = Enum.valueOf(MemberRole.class, dto.getType().name());
         if(!jwtTokenProvider.hasRole(token, role))
             throw new AccessDeniedAuthenticationException();
 

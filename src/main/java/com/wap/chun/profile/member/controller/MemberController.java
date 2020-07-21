@@ -19,7 +19,11 @@ public class MemberController {
 
     @PostMapping("/signUp")
     public void signUp(@RequestHeader(name = "Authorization") String token, @RequestBody MemberSignUpDto dto){
-        memberService.signUp(token, dto);
+        if (token == null) {
+            memberService.signUp(dto);
+        } else {
+            memberService.signUp(token, dto);
+        }
     }
 
     @PostMapping("/login")

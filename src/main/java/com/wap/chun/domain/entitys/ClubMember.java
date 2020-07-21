@@ -2,26 +2,24 @@ package com.wap.chun.domain.entitys;
 
 import com.wap.chun.domain.enums.ClubMemberType;
 import com.wap.chun.domain.enums.PositionType;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity(name = "club_member_tbl")
-@Getter
+@Getter @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ClubMember {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "club_id")
     private Club club;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "member_id")
     private Member member;
 

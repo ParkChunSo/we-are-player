@@ -32,6 +32,7 @@ public enum ErrorCode {
     INVALID_TOKEN(403, "invalid JWT token"),
     EXPIRED_TOKEN(403, "Expired JWT token"),
     HANDLE_ACCESS_DENIED(403, "Access is Denied"),
+    AUTHORIZATION(403, "No permission"),
 
     //Match
     MATCH_NOT_FOUND(400, "Can't found match") ;

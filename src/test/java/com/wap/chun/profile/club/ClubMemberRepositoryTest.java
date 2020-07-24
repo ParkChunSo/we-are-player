@@ -35,7 +35,7 @@ public class ClubMemberRepositoryTest {
         //given
         Member leader = memberRepository.saveAndFlush(MemberInfoSetUp.toClientEntity(MemberInfoSetUp.park));
         Member memberKim = memberRepository.saveAndFlush(MemberInfoSetUp.toClientEntity(MemberInfoSetUp.kim));
-        Club club = clubRepository.saveAndFlush(new Club(ClubInfoSetUp.yangpyeongFC, leader));
+        Club club = clubRepository.saveAndFlush(new Club(ClubInfoSetUp.yangpyeongFC));
 
         //when
         ClubMember save = clubMemberRepository.saveAndFlush(ClubMemberBuilder.build(memberKim, club));
@@ -54,7 +54,7 @@ public class ClubMemberRepositoryTest {
         Member leader = memberRepository.save(MemberInfoSetUp.toClientEntity(MemberInfoSetUp.park));
         Member memberKim = memberRepository.save(MemberInfoSetUp.toClientEntity(MemberInfoSetUp.kim));
         Member memberJeoung = memberRepository.save(MemberInfoSetUp.toClientEntity(MemberInfoSetUp.jeoung));
-        Club club = clubRepository.save(new Club(ClubInfoSetUp.yangpyeongFC, leader));
+        Club club = clubRepository.save(new Club(ClubInfoSetUp.yangpyeongFC));
         clubMemberRepository.save(ClubMemberBuilder.build(memberJeoung, club));
         clubMemberRepository.save(ClubMemberBuilder.build(memberKim, club));
 

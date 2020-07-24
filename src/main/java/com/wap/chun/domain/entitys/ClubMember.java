@@ -31,18 +31,18 @@ public class ClubMember {
 
     @Setter
     @Enumerated(value = EnumType.STRING)
-    private PositionType position;
+    private PositionType positionType;
 
     @Setter
     @Enumerated(value = EnumType.STRING)
     private ClubMemberType clubMemberType;
 
     @Builder
-    public ClubMember(Club club, Member member, Integer uniformNum, PositionType position, ClubMemberType clubMemberType) {
+    public ClubMember(Club club, Member member, Integer uniformNum, PositionType positionType, ClubMemberType clubMemberType) {
         this.club = club;
         this.member = member;
         this.uniformNum = uniformNum;
-        this.position = position;
+        this.positionType = positionType;
         this.clubMemberType = clubMemberType;
     }
 }

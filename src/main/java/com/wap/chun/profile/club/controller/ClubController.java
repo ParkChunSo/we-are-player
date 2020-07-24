@@ -48,7 +48,7 @@ public class ClubController {
 
     @PutMapping(value = "/update/leader")
     public void updateLeader(@RequestBody ClubLeaderUpdateDto dto){
-        clubService.updateClubLeader(dto);
+        clubMemberService.updateClubLeader(dto);
     }
 
     @PutMapping (value = "/update")

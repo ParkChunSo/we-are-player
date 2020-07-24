@@ -32,22 +32,37 @@ public class ClubService {
         if(clubRepository.existsByClubNameAndLocation(dto.getClubName(), dto.getLocation())) {
             throw new ClubAlreadyExistException();
         }
+        Club save = clubRepository.save(new Club(dto));
+        List<Member> member = memberRepository.findAllById(dto.getMembers().stream()
+                .map(ClubMemberDto::getMemberId)
+                .collect(Collectors.toList()));
 
-        Member member = memberRepository.findById(dto.getLeaderId())
-                .orElseThrow(MemberNotFoundException::new);
+        List<ClubMember> clubMembers = member.stream()
+                .map(m -> {
+                    ClubMember clubMember = null;
+                    for (ClubMemberDto clubMemberDto : dto.getMembers()) {
+                        if (clubMemberDto.getMemberId().equals(m.getId())) {
+                            clubMember = ClubMember.builder()
+                                    .club(save)
+                                    .clubMemberType(clubMemberDto.getType())
+                                    .member(m)
+                                    .positionType(clubMemberDto.getPosition())
+                                    .uniformNum(0)
+                                    .build();
+                            break;
+                        }
+                    }
+                    if (clubMember == null)
+                        throw new MemberNotFoundException();
 
-        Club save = clubRepository.save(new Club(dto, member));
-        clubMemberRepository.save(ClubMember.builder()
-                .club(save)
-                .clubMemberType(ClubMemberType.MEMBER)
-                .member(member)
-                .position(member.getPosition())
-                .uniformNum(0)
-                .build());
+                    return clubMember;
+                }).collect(Collectors.toList());
+
+        clubMemberRepository.saveAll(clubMembers);
     }
 
     public ClubInfoDto getClubInfo(String clubName, String clubLocation){
-        Club club = clubRepository.findByClubNameAndLocation(clubName, clubLocation)
+        Club club = clubRepository.findByClubNameAndLocationAndDeleteFlagFalse(clubName, clubLocation)
                 .orElseThrow(ClubNotFoundException::new);
         return new ClubInfoDto(club);
     }
@@ -70,25 +85,15 @@ public class ClubService {
                 .collect(Collectors.toList());
     }
 
-    public void updateClubLeader(ClubLeaderUpdateDto dto){
-        Club club = clubRepository.findByClubNameAndLocation(dto.getClubName(), dto.getLocation())
-                .orElseThrow(ClubNotFoundException::new);
-
-        club.setLeader(memberRepository.findById(dto.getNewLeaderId())
-                    .orElseThrow(MemberNotFoundException::new));
-
-        clubRepository.save(club);
-    }
-
     public void updateClubLogoUri(ClubInfoUpdateDto dto){
-        Club club = clubRepository.findByClubNameAndLocation(dto.getClubName(), dto.getLocation())
+        Club club = clubRepository.findByClubNameAndLocationAndDeleteFlagFalse(dto.getClubName(), dto.getLocation())
                 .orElseThrow(ClubNotFoundException::new);
         club.setLogoUri(dto.getLogoUri());
         clubRepository.save(club);
     }
 
     public void updateLikeAndRudeCnt(ClubInfoUpdateDto dto){
-        Club club = clubRepository.findByClubNameAndLocation(dto.getClubName(), dto.getLocation())
+        Club club = clubRepository.findByClubNameAndLocationAndDeleteFlagFalse(dto.getClubName(), dto.getLocation())
                 .orElseThrow(ClubNotFoundException::new);
         club.setLikeCnt(dto.getLikeCnt());
         club.setRudeCnt(dto.getRudeCnt());
@@ -96,6 +101,9 @@ public class ClubService {
     }
 
     public void deleteClub(String clubName, String clubLocation){
-        clubRepository.deleteByClubNameAndLocation(clubName, clubLocation);
+        Club club = clubRepository.findByClubNameAndLocationAndDeleteFlagFalse(clubName, clubLocation)
+                .orElseThrow(ClubNotFoundException::new);
+        club.deleteClub();
+        clubRepository.save(club);
     }
 }

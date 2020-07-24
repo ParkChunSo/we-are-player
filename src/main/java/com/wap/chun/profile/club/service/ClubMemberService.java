@@ -8,6 +8,7 @@ import com.wap.chun.error.exception.AuthorizationException;
 import com.wap.chun.error.exception.ClubMemberNotFoundException;
 import com.wap.chun.error.exception.ClubNotFoundException;
 import com.wap.chun.error.exception.MemberNotFoundException;
+import com.wap.chun.profile.club.dtos.ClubLeaderUpdateDto;
 import com.wap.chun.profile.club.dtos.ClubMemberDto;
 import com.wap.chun.profile.club.dtos.ClubMemberSaveDto;
 import com.wap.chun.profile.club.repository.ClubMemberRepository;
@@ -29,7 +30,7 @@ public class ClubMemberService {
     private final JwtTokenProvider jwtTokenProvider;
 
 
-    public List<ClubMemberDto> getClubMembers(String clubName, String clubLocation, ClubMemberType type){
+    public List<ClubMemberDto> getClubMembers(String clubName, String clubLocation, ClubMemberType type) {
         List<ClubMember> clubMembers = clubMemberRepository.findByClub_ClubNameAndClub_LocationAndClubMemberType(clubName, clubLocation, type)
                 .orElseThrow(ClubMemberNotFoundException::new);
 
@@ -38,12 +39,19 @@ public class ClubMemberService {
                 .collect(Collectors.toList());
     }
 
-    public void saveClubMember(String token, ClubMemberSaveDto dto){
-        Club club = clubRepository.findByClubNameAndLocation(dto.getClubName(), dto.getClubLocation())
+    public void saveClubMember(String token, ClubMemberSaveDto dto) {
+        Club club = clubRepository.findByClubNameAndLocationAndDeleteFlagFalse(dto.getClubName(), dto.getClubLocation())
                 .orElseThrow(ClubNotFoundException::new);
 
+        //DataBase에 접근을 줄이기 위해서 따로 쿼리를 날리지 않고 Eager로 받아온 데이터를 활용
+        Member leader = club.getClubMembers().stream()
+                .filter(clubMember -> clubMember.getClubMemberType().equals(ClubMemberType.LEADER))
+                .findFirst()
+                .map(ClubMember::getMember)
+                .orElseThrow(ClubMemberNotFoundException::new);
+
         String requestId = jwtTokenProvider.getUsername(token);
-        if(!requestId.equals(club.getLeader().getId())) {
+        if (!requestId.equals(leader.getId())) {
             throw new AuthorizationException();
         }
 
@@ -51,5 +59,19 @@ public class ClubMemberService {
                 .orElseThrow(MemberNotFoundException::new);
 
         clubMemberRepository.save(new ClubMember(club, member, dto.getUniformNum(), dto.getPositionType(), dto.getClubMemberType()));
+    }
+
+
+    public void updateClubLeader(ClubLeaderUpdateDto dto) {
+        List<ClubMember> clubMembers = clubMemberRepository.findByClub_ClubNameAndClub_Location(dto.getClubName(), dto.getLocation())
+                .orElseThrow(ClubMemberNotFoundException::new);
+        clubMemberRepository.saveAll(clubMembers.stream()
+                .peek(clubMember -> {
+                    if (clubMember.getMember().getId().equals(dto.getNewLeaderId())) {
+                        clubMember.setClubMemberType(ClubMemberType.LEADER);
+                    } else {
+                        clubMember.setClubMemberType(ClubMemberType.MEMBER);
+                    }
+                }).collect(Collectors.toList()));
     }
 }

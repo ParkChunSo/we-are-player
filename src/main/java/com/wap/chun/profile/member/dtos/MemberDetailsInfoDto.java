@@ -6,6 +6,7 @@ import com.wap.chun.domain.entitys.Member;
 import com.wap.chun.profile.club.dtos.ClubInfoDto;
 import lombok.Getter;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,10 +20,7 @@ public class MemberDetailsInfoDto extends MemberInfoDto {
 
     public MemberDetailsInfoDto(Member member, List<Club> entityList) {
         super(member);
-        if(!entityList.isEmpty()) {
-            this.clubInfoDtoList = entityList.stream()
-                    .map(ClubInfoDto::new)
-                    .collect(Collectors.toList());
-        }
+        this.clubInfoDtoList = entityList.isEmpty() ? Collections.emptyList()
+                : entityList.stream().map(ClubInfoDto::new).collect(Collectors.toList());
     }
 }

@@ -1,4 +1,4 @@
-package com.wap.chun.domain;
+package com.wap.chun.domain.builder;
 
 import com.wap.chun.domain.entitys.Club;
 import com.wap.chun.domain.entitys.ClubMember;

@@ -1,11 +1,11 @@
 package com.wap.chun.error.exception;
 
 import com.wap.chun.error.ErrorCode;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
-@AllArgsConstructor
-public class AuthenticationException extends RuntimeException{
+@RequiredArgsConstructor
+public class ErrorCodeException extends RuntimeException{
     private final ErrorCode errorCode;
 }

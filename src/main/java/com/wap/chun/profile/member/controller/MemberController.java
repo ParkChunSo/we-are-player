@@ -17,14 +17,13 @@ import java.util.List;
 public class MemberController {
     private final MemberService memberService;
 
-    @PostMapping("/client/signUp")
-    public void signUpForClient(@RequestBody MemberSignUpDto dto){
-        memberService.signUp(dto, MemberRole.CLIENT);
-    }
-
-    @PostMapping("/admin/signUp")
-    public void signUpForAdmin(@RequestBody MemberSignUpDto dto){
-        memberService.signUp(dto, MemberRole.ADMIN);
+    @PostMapping("/signUp")
+    public void signUp(@RequestHeader(name = "Authorization") String token, @RequestBody MemberSignUpDto dto){
+        if (token == null) {
+            memberService.signUp(dto);
+        } else {
+            memberService.signUp(token, dto);
+        }
     }
 
     @PostMapping("/login")
@@ -42,17 +41,17 @@ public class MemberController {
         return memberService.getMemberDetailsInfo(userId, token);
     }
 
-    @PostMapping("/update")
+    @PutMapping("/update")
     public void updateMemberInfo(@RequestBody MemberInfoUpdateDto dto){
         memberService.updateMemberInfo(dto);
     }
 
-    @PostMapping("/update/password")
+    @PutMapping("/update/password")
     public void updatePassword(@RequestBody MemberPasswordUpdateDto dto){
         memberService.updateMemberPassword(dto);
     }
 
-    @PostMapping("/delete")
+    @DeleteMapping("/delete")
     public void deleteMember(@RequestBody MemberDeleteDto dto){
         memberService.deleteMember(dto);
     }

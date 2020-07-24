@@ -1,10 +1,9 @@
 package com.wap.chun.profile.member.dtos;
 
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
-@Getter
-@AllArgsConstructor
+@Getter @Builder
 public class MemberLoginDto {
     private String id;
     private String password;

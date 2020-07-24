@@ -3,8 +3,7 @@ package com.wap.chun.error.exception;
 import com.wap.chun.error.ErrorCode;
 import lombok.Getter;
 
-@Getter
-public class ClubAlreadyExistException extends AlreadyExistException {
+public class ClubAlreadyExistException extends ErrorCodeException {
     public ClubAlreadyExistException(){
         this(ErrorCode.CLUB_DUPLICATION);
     }

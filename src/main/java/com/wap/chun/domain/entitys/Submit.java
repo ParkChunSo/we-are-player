@@ -3,19 +3,17 @@ package com.wap.chun.domain.entitys;
 import com.sun.istack.NotNull;
 import com.wap.chun.domain.enums.SubmitState;
 import com.wap.chun.domain.enums.SubmitType;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity(name = "submit_tbl")
-@Getter
+@Getter @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Submit {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Setter

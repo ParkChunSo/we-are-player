@@ -5,10 +5,7 @@ import com.wap.chun.domain.enums.DisclosureScopeState;
 import com.wap.chun.domain.enums.MemberRole;
 import com.wap.chun.domain.enums.PositionType;
 import com.wap.chun.profile.member.dtos.MemberInfoUpdateDto;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -16,7 +13,8 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity(name = "member_tbl")
-@NoArgsConstructor
+@EqualsAndHashCode(of = "id")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Member {
     @Id

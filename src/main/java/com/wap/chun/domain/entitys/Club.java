@@ -43,7 +43,7 @@ public class Club {
     @OneToMany(mappedBy = "club", fetch = FetchType.EAGER)
     private List<ClubMember> clubMembers;
 
-    private boolean deleteFlag = false;
+    private boolean deleteFlag;
 
     @Builder
     protected Club(String clubName, String location, String logoUri) {
@@ -53,6 +53,7 @@ public class Club {
         this.likeCnt = 0;
         this.rudeCnt = 0;
         this.point = 0;
+        this.deleteFlag = false;
     }
 
     public Club(ClubInfoDto dto) {
@@ -62,6 +63,7 @@ public class Club {
         this.likeCnt = 0;
         this.rudeCnt = 0;
         this.point = 0;
+        this.deleteFlag = false;
     }
 
     public void deleteClub(){

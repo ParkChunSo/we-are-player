@@ -28,26 +28,27 @@ public class ClubService {
     private final MemberRepository memberRepository;
     private final ClubMemberRepository clubMemberRepository;
 
-    public void createClub(ClubInfoDto dto){
-        if(clubRepository.existsByClubNameAndLocation(dto.getClubName(), dto.getLocation())) {
+    public void createClub(ClubInfoDto dto) {
+        if (clubRepository.existsByClubNameAndLocation(dto.getClubName(), dto.getLocation())) {
             throw new ClubAlreadyExistException();
         }
-        Club save = clubRepository.save(new Club(dto));
-        List<Member> member = memberRepository.findAllById(dto.getMembers().stream()
-                .map(ClubMemberDto::getMemberId)
-                .collect(Collectors.toList()));
+        Club club = clubRepository.save(new Club(dto));
+        List<Member> members = memberRepository.findAllById(
+                dto.getMembers().stream()
+                        .map(ClubMemberDto::getMemberId)
+                        .collect(Collectors.toList()));
 
-        List<ClubMember> clubMembers = member.stream()
-                .map(m -> {
+        List<ClubMember> clubMembers = members.stream()
+                .map(member -> {
                     ClubMember clubMember = null;
                     for (ClubMemberDto clubMemberDto : dto.getMembers()) {
-                        if (clubMemberDto.getMemberId().equals(m.getId())) {
+                        if (clubMemberDto.getMemberId().equals(member.getId())) {
                             clubMember = ClubMember.builder()
-                                    .club(save)
+                                    .club(club)
                                     .clubMemberType(clubMemberDto.getType())
-                                    .member(m)
+                                    .member(member)
                                     .positionType(clubMemberDto.getPosition())
-                                    .uniformNum(0)
+                                    .uniformNum(clubMemberDto.getUniformNum())
                                     .build();
                             break;
                         }
@@ -61,13 +62,13 @@ public class ClubService {
         clubMemberRepository.saveAll(clubMembers);
     }
 
-    public ClubInfoDto getClubInfo(String clubName, String clubLocation){
+    public ClubInfoDto getClubInfo(String clubName, String clubLocation) {
         Club club = clubRepository.findByClubNameAndLocationAndDeleteFlagFalse(clubName, clubLocation)
                 .orElseThrow(ClubNotFoundException::new);
         return new ClubInfoDto(club);
     }
 
-    public List<ClubInfoDto> findByClubName(String clubName){
+    public List<ClubInfoDto> findByClubName(String clubName) {
         List<Club> clubList = clubRepository.findByClubName(clubName)
                 .orElseThrow(ClubNotFoundException::new);
 
@@ -76,7 +77,7 @@ public class ClubService {
                 .collect(Collectors.toList());
     }
 
-    public List<ClubInfoDto> findByLocation(String clubLocation){
+    public List<ClubInfoDto> findByLocation(String clubLocation) {
         List<Club> clubList = clubRepository.findByLocation(clubLocation)
                 .orElseThrow(ClubNotFoundException::new);
 
@@ -85,14 +86,14 @@ public class ClubService {
                 .collect(Collectors.toList());
     }
 
-    public void updateClubLogoUri(ClubInfoUpdateDto dto){
+    public void updateClubLogoUri(ClubInfoUpdateDto dto) {
         Club club = clubRepository.findByClubNameAndLocationAndDeleteFlagFalse(dto.getClubName(), dto.getLocation())
                 .orElseThrow(ClubNotFoundException::new);
         club.setLogoUri(dto.getLogoUri());
         clubRepository.save(club);
     }
 
-    public void updateLikeAndRudeCnt(ClubInfoUpdateDto dto){
+    public void updateLikeAndRudeCnt(ClubInfoUpdateDto dto) {
         Club club = clubRepository.findByClubNameAndLocationAndDeleteFlagFalse(dto.getClubName(), dto.getLocation())
                 .orElseThrow(ClubNotFoundException::new);
         club.setLikeCnt(dto.getLikeCnt());
@@ -100,7 +101,7 @@ public class ClubService {
         clubRepository.save(club);
     }
 
-    public void deleteClub(String clubName, String clubLocation){
+    public void deleteClub(String clubName, String clubLocation) {
         Club club = clubRepository.findByClubNameAndLocationAndDeleteFlagFalse(clubName, clubLocation)
                 .orElseThrow(ClubNotFoundException::new);
         club.deleteClub();

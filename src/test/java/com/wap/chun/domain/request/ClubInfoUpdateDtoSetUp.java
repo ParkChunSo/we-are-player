@@ -1,4 +1,4 @@
-package com.wap.chun.domain.builder;
+package com.wap.chun.domain.request;
 
 import com.wap.chun.profile.club.dtos.ClubInfoUpdateDto;
 import lombok.Getter;

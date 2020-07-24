@@ -15,7 +15,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
-@ActiveProfiles(value = "local")
+@ActiveProfiles(value = "test")
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public @interface RepositoryTest {
 }

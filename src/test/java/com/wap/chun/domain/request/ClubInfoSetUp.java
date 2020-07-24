@@ -1,7 +1,11 @@
 package com.wap.chun.domain.request;
 
 import com.wap.chun.domain.entitys.Club;
+import com.wap.chun.domain.entitys.Member;
 import com.wap.chun.profile.club.dtos.ClubInfoDto;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class ClubInfoSetUp {
     public static ClubInfoDto yangpyeongFC = ClubInfoDto.builder()
@@ -32,4 +36,5 @@ public class ClubInfoSetUp {
             .location("서울특별시")
             .logoUri("/img/logo/seoul.png")
             .build();
+
 }

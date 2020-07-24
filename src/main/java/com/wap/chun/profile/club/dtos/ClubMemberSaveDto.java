@@ -14,7 +14,5 @@ public class ClubMemberSaveDto {
     private Integer uniformNum;
     private PositionType positionType;
     private ClubMemberType clubMemberType;
-
-
 }
 

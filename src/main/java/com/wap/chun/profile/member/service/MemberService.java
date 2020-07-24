@@ -89,6 +89,7 @@ public class MemberService {
         return new MemberInfoDto(member);
     }
 
+    //TODO("데이터 가져오는 쿼리문 문제")
     public MemberDetailsInfoDto getMemberDetailsInfo(String memberId, String token) {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(MemberNotFoundException::new);

@@ -16,6 +16,7 @@ public class ClubMemberDto {
     private String location;
     private String pictureUri;
     private String registTime;
+    private Integer uniformNum;
 
     private ClubMemberType type;
     private PositionType position;
@@ -26,6 +27,7 @@ public class ClubMemberDto {
         this.location = entity.getMember().getLocation();
         this.pictureUri = entity.getMember().getPictureUri();
         this.registTime = entity.getRegistDate().toString();
+        this.uniformNum = entity.getUniformNum();
         this.type = entity.getClubMemberType();
         this.position = entity.getPositionType();
     }

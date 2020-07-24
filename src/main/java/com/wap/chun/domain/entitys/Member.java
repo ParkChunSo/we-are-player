@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity(name = "member_tbl")
+@EqualsAndHashCode(of = "id")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Member {

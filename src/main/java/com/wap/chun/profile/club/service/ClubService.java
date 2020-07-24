@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 public class ClubService {
     private final ClubRepository clubRepository;
     private final MemberRepository memberRepository;
+    private final ClubMemberRepository clubMemberRepository;
 
     public void createClub(ClubInfoDto dto){
         if(clubRepository.existsByClubNameAndLocation(dto.getClubName(), dto.getLocation())) {
@@ -35,7 +36,14 @@ public class ClubService {
         Member member = memberRepository.findById(dto.getLeaderId())
                 .orElseThrow(MemberNotFoundException::new);
 
-        clubRepository.save(new Club(dto, member));
+        Club save = clubRepository.save(new Club(dto, member));
+        clubMemberRepository.save(ClubMember.builder()
+                .club(save)
+                .clubMemberType(ClubMemberType.MEMBER)
+                .member(member)
+                .position(member.getPosition())
+                .uniformNum(0)
+                .build());
     }
 
     public ClubInfoDto getClubInfo(String clubName, String clubLocation){

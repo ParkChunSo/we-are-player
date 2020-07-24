@@ -2,12 +2,17 @@ package com.wap.chun.profile.club.service;
 
 import com.wap.chun.domain.entitys.Club;
 import com.wap.chun.domain.entitys.ClubMember;
+import com.wap.chun.domain.entitys.Member;
 import com.wap.chun.domain.enums.ClubMemberType;
 import com.wap.chun.error.exception.AuthorizationException;
 import com.wap.chun.error.exception.ClubMemberNotFoundException;
+import com.wap.chun.error.exception.ClubNotFoundException;
+import com.wap.chun.error.exception.MemberNotFoundException;
 import com.wap.chun.profile.club.dtos.ClubMemberDto;
 import com.wap.chun.profile.club.dtos.ClubMemberSaveDto;
 import com.wap.chun.profile.club.repository.ClubMemberRepository;
+import com.wap.chun.profile.club.repository.ClubRepository;
+import com.wap.chun.profile.member.repository.MemberRepository;
 import com.wap.chun.security.util.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +24,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ClubMemberService {
     private final ClubMemberRepository clubMemberRepository;
+    private final ClubRepository clubRepository;
+    private final MemberRepository memberRepository;
     private final JwtTokenProvider jwtTokenProvider;
 
 
@@ -32,16 +39,17 @@ public class ClubMemberService {
     }
 
     public void saveClubMember(String token, ClubMemberSaveDto dto){
-        ClubMember clubMembers = clubMemberRepository
-                .findFirstByClub_ClubNameAndClub_LocationAndClubMemberType(dto.getClubName(), dto.getClubLocation(), ClubMemberType.MEMBER)
-                .orElseThrow(ClubMemberNotFoundException::new);
-
-        Club club = clubMembers.getClub();
+        Club club = clubRepository.findByClubNameAndLocation(dto.getClubName(), dto.getClubLocation())
+                .orElseThrow(ClubNotFoundException::new);
 
         String requestId = jwtTokenProvider.getUsername(token);
-        if(!requestId.equals(club.getLeader().getId()))
+        if(!requestId.equals(club.getLeader().getId())) {
             throw new AuthorizationException();
+        }
 
-//        clubMemberRepository.save()
+        Member member = memberRepository.findById(dto.getMemberId())
+                .orElseThrow(MemberNotFoundException::new);
+
+        clubMemberRepository.save(new ClubMember(club, member, dto.getUniformNum(), dto.getPositionType(), dto.getClubMemberType()));
     }
 }

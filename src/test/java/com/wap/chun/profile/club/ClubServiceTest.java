@@ -1,7 +1,6 @@
 package com.wap.chun.profile.club;
 
 import com.wap.chun.common.ServiceTest;
-import com.wap.chun.domain.builder.ClubMemberBuilder;
 import com.wap.chun.domain.builder.ClubMemberDtoBuilder;
 import com.wap.chun.domain.entitys.Club;
 import com.wap.chun.domain.entitys.Member;
@@ -9,7 +8,6 @@ import com.wap.chun.domain.enums.ClubMemberType;
 import com.wap.chun.domain.request.ClubInfoSetUp;
 import com.wap.chun.domain.request.MemberInfoSetUp;
 import com.wap.chun.error.exception.ClubAlreadyExistException;
-import com.wap.chun.error.exception.MemberNotFoundException;
 import com.wap.chun.profile.club.dtos.ClubInfoDto;
 import com.wap.chun.profile.club.repository.ClubMemberRepository;
 import com.wap.chun.profile.club.repository.ClubRepository;
@@ -62,7 +60,7 @@ public class ClubServiceTest {
         ));
 
 
-        given(clubRepository.existsByClubNameAndLocation(anyString(), anyString())).willReturn(false);
+        given(clubRepository.existsByClubNameAndCityAndDistrict(anyString(), anyString(), anyString())).willReturn(false);
         given(clubRepository.save(any())).willReturn(club);
         given(memberRepository.findAllById(any()))
                 .willReturn(Arrays.asList(park, kim, yun));
@@ -76,7 +74,7 @@ public class ClubServiceTest {
     @DisplayName("클럽 중복 오류(실패)")
     void testCreateClubFailByDuplication() {
         //given
-        given(clubRepository.existsByClubNameAndLocation(anyString(), anyString())).willReturn(true);
+        given(clubRepository.existsByClubNameAndCityAndDistrict(anyString(), anyString(), anyString())).willReturn(true);
 
         //then
         assertThrows(ClubAlreadyExistException.class, () -> clubService.createClub(ClubInfoSetUp.yangpyeongFC));
@@ -87,15 +85,15 @@ public class ClubServiceTest {
     void testGetClubInfoSuccess() {
         //given
         ClubInfoDto dto = ClubInfoSetUp.yangpyeongFC;
-        given(clubRepository.findByClubNameAndLocationAndDeleteFlagFalse(anyString(), anyString()))
+        given(clubRepository.findByClubNameAndCityAndDistrictAndDeleteFlagFalse(anyString(), anyString(), anyString()))
                 .willReturn(Optional.of(new Club(dto)));
 
         //when
-        ClubInfoDto clubInfo = clubService.getClubInfo(dto.getClubName(), dto.getLocation());
+        ClubInfoDto clubInfo = clubService.getClubInfo(dto.getClubName(), dto.getCity(), dto.getDistrict());
 
         //then
         assertEquals(clubInfo.getClubName(), dto.getClubName());
-        assertEquals(clubInfo.getLocation(), dto.getLocation());
+        assertEquals(clubInfo.getCity(), dto.getCity());
     }
 
     @Test
@@ -118,13 +116,14 @@ public class ClubServiceTest {
     @DisplayName("클럽 지역으로 조회")
     void testFindByLocation() {
         //given
-        String clubLocation = "경기도 양평";
+        String clubCity = "경기도";
+        String clubDistrict = "양평";
         List<Club> list = Arrays.asList(new Club(ClubInfoSetUp.yangpyeongFC), new Club(ClubInfoSetUp.yangpyeongProFC));
 
-        given(clubRepository.findByLocation(anyString())).willReturn(Optional.of(list));
+        given(clubRepository.findByCityAndDistrict(anyString(), anyString())).willReturn(Optional.of(list));
 
         //when
-        List<ClubInfoDto> result = clubService.findByLocation(clubLocation);
+        List<ClubInfoDto> result = clubService.findByLocation(clubCity, clubDistrict);
 
         //then
         assertEquals(result.size(), 2);

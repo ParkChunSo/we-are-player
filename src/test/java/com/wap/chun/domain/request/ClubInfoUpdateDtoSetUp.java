@@ -7,7 +7,8 @@ import lombok.Getter;
 public class ClubInfoUpdateDtoSetUp {
     public static ClubInfoUpdateDto dto = ClubInfoUpdateDto.builder()
             .clubName("양평FC")
-            .location("경기도 양평")
+            .city("경기도")
+            .district("양평")
             .likeCnt(12)
             .rudeCnt(4)
             .logoUri("path")

@@ -3,16 +3,15 @@ package com.wap.chun.profile.club.service;
 import com.wap.chun.domain.entitys.Club;
 import com.wap.chun.domain.entitys.ClubMember;
 import com.wap.chun.domain.entitys.Member;
-import com.wap.chun.domain.enums.ClubMemberType;
-import com.wap.chun.error.exception.*;
+import com.wap.chun.error.exception.ClubAlreadyExistException;
+import com.wap.chun.error.exception.ClubNotFoundException;
+import com.wap.chun.error.exception.MemberNotFoundException;
 import com.wap.chun.profile.club.dtos.ClubInfoDto;
 import com.wap.chun.profile.club.dtos.ClubInfoUpdateDto;
-import com.wap.chun.profile.club.dtos.ClubLeaderUpdateDto;
 import com.wap.chun.profile.club.dtos.ClubMemberDto;
 import com.wap.chun.profile.club.repository.ClubMemberRepository;
 import com.wap.chun.profile.club.repository.ClubRepository;
 import com.wap.chun.profile.member.repository.MemberRepository;
-import com.wap.chun.security.util.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +28,7 @@ public class ClubService {
     private final ClubMemberRepository clubMemberRepository;
 
     public void createClub(ClubInfoDto dto) {
-        if (clubRepository.existsByClubNameAndLocation(dto.getClubName(), dto.getLocation())) {
+        if (clubRepository.existsByClubNameAndCityAndDistrict(dto.getClubName(), dto.getCity(), dto.getDistrict())) {
             throw new ClubAlreadyExistException();
         }
         Club club = clubRepository.save(new Club(dto));
@@ -62,8 +61,8 @@ public class ClubService {
         clubMemberRepository.saveAll(clubMembers);
     }
 
-    public ClubInfoDto getClubInfo(String clubName, String clubLocation) {
-        Club club = clubRepository.findByClubNameAndLocationAndDeleteFlagFalse(clubName, clubLocation)
+    public ClubInfoDto getClubInfo(String clubName, String clubCity, String clubDistrict) {
+        Club club = clubRepository.findByClubNameAndCityAndDistrictAndDeleteFlagFalse(clubName, clubCity, clubDistrict)
                 .orElseThrow(ClubNotFoundException::new);
         return new ClubInfoDto(club);
     }
@@ -77,8 +76,8 @@ public class ClubService {
                 .collect(Collectors.toList());
     }
 
-    public List<ClubInfoDto> findByLocation(String clubLocation) {
-        List<Club> clubList = clubRepository.findByLocation(clubLocation)
+    public List<ClubInfoDto> findByLocation(String clubCity, String clubDistrict) {
+        List<Club> clubList = clubRepository.findByCityAndDistrict(clubCity, clubDistrict)
                 .orElseThrow(ClubNotFoundException::new);
 
         return clubList.stream()
@@ -87,22 +86,22 @@ public class ClubService {
     }
 
     public void updateClubLogoUri(ClubInfoUpdateDto dto) {
-        Club club = clubRepository.findByClubNameAndLocationAndDeleteFlagFalse(dto.getClubName(), dto.getLocation())
+        Club club = clubRepository.findByClubNameAndCityAndDistrictAndDeleteFlagFalse(dto.getClubName(), dto.getCity(),dto.getDistrict())
                 .orElseThrow(ClubNotFoundException::new);
         club.setLogoUri(dto.getLogoUri());
         clubRepository.save(club);
     }
 
     public void updateLikeAndRudeCnt(ClubInfoUpdateDto dto) {
-        Club club = clubRepository.findByClubNameAndLocationAndDeleteFlagFalse(dto.getClubName(), dto.getLocation())
+        Club club = clubRepository.findByClubNameAndCityAndDistrictAndDeleteFlagFalse(dto.getClubName(), dto.getCity(),dto.getDistrict())
                 .orElseThrow(ClubNotFoundException::new);
         club.setLikeCnt(dto.getLikeCnt());
         club.setRudeCnt(dto.getRudeCnt());
         clubRepository.save(club);
     }
 
-    public void deleteClub(String clubName, String clubLocation) {
-        Club club = clubRepository.findByClubNameAndLocationAndDeleteFlagFalse(clubName, clubLocation)
+    public void deleteClub(String clubName, String clubCity, String clubDistrict) {
+        Club club = clubRepository.findByClubNameAndCityAndDistrictAndDeleteFlagFalse(clubName, clubCity, clubDistrict)
                 .orElseThrow(ClubNotFoundException::new);
         club.deleteClub();
         clubRepository.save(club);

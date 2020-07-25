@@ -30,8 +30,8 @@ public class ClubMemberService {
     private final JwtTokenProvider jwtTokenProvider;
 
 
-    public List<ClubMemberDto> getClubMembers(String clubName, String clubLocation, ClubMemberType type) {
-        List<ClubMember> clubMembers = clubMemberRepository.findByClub_ClubNameAndClub_LocationAndClubMemberType(clubName, clubLocation, type)
+    public List<ClubMemberDto> getClubMembers(String clubName, String city, String district, ClubMemberType type) {
+        List<ClubMember> clubMembers = clubMemberRepository.findByClub_ClubNameAndClub_CityAndClub_DistrictAndClubMemberType(clubName, city, district, type)
                 .orElseThrow(ClubMemberNotFoundException::new);
 
         return clubMembers.stream()
@@ -40,7 +40,7 @@ public class ClubMemberService {
     }
 
     public void saveClubMember(String token, ClubMemberSaveDto dto) {
-        Club club = clubRepository.findByClubNameAndLocationAndDeleteFlagFalse(dto.getClubName(), dto.getClubLocation())
+        Club club = clubRepository.findByClubNameAndCityAndDistrictAndDeleteFlagFalse(dto.getClubName(), dto.getClubCity(), dto.getClubDistrict())
                 .orElseThrow(ClubNotFoundException::new);
 
         //DataBase에 접근을 줄이기 위해서 따로 쿼리를 날리지 않고 Eager로 받아온 데이터를 활용
@@ -63,7 +63,7 @@ public class ClubMemberService {
 
 
     public void updateClubLeader(ClubLeaderUpdateDto dto) {
-        List<ClubMember> clubMembers = clubMemberRepository.findByClub_ClubNameAndClub_Location(dto.getClubName(), dto.getLocation())
+        List<ClubMember> clubMembers = clubMemberRepository.findByClub_ClubNameAndClub_CityAndClub_District(dto.getClubName(), dto.getCity(), dto.getDistrict())
                 .orElseThrow(ClubMemberNotFoundException::new);
         clubMemberRepository.saveAll(clubMembers.stream()
                 .peek(clubMember -> {

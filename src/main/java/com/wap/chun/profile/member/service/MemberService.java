@@ -53,7 +53,8 @@ public class MemberService {
                 .password(passwordEncoder.encode(dto.getPassword()))
                 .name(dto.getName())
                 .roleSet(dto.getType().getRoles())
-                .location(dto.getLocation())
+                .city(dto.getCity())
+                .district(dto.getDistrict())
                 .pictureUri(dto.getPictureUri())
                 .position(dto.getPosition())
                 .build();
@@ -74,7 +75,8 @@ public class MemberService {
                 .password(passwordEncoder.encode(dto.getPassword()))
                 .name(dto.getName())
                 .roleSet(dto.getType().getRoles())
-                .location(dto.getLocation())
+                .city(dto.getCity())
+                .district(dto.getDistrict())
                 .pictureUri(dto.getPictureUri())
                 .position(dto.getPosition())
                 .build();

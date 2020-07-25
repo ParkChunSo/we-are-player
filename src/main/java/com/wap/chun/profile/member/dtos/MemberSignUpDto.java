@@ -16,7 +16,8 @@ public class MemberSignUpDto {
     private String id;
     private String password;
     private String name;
-    private String location;
+    private String city;
+    private String district;
     private String pictureUri;
     private PositionType position;
     private MemberType type;

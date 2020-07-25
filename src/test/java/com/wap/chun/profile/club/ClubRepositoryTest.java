@@ -48,13 +48,14 @@ public class ClubRepositoryTest {
         clubRepository.saveAndFlush(club);
 
         //when
-        Optional<Club> save = clubRepository.findByClubNameAndLocationAndDeleteFlagFalse(club.getClubName(), club.getLocation());
+        Optional<Club> save = clubRepository.findByClubNameAndCityAndDistrictAndDeleteFlagFalse(club.getClubName(), club.getCity(), club.getDistrict());
 
         //then
         assertTrue(save.isPresent());
         assertNotNull(save.get().getClubId());
         assertEquals(club.getClubName(), save.get().getClubName());
-        assertEquals(club.getLocation(), save.get().getLocation());
+        assertEquals(club.getCity(), save.get().getCity());
+        assertEquals(club.getDistrict(), save.get().getDistrict());
     }
 
     @Test
@@ -65,7 +66,7 @@ public class ClubRepositoryTest {
         clubRepository.saveAndFlush(YClub);
 
         //when
-        boolean val = clubRepository.existsByClubNameAndLocation(YClub.getClubName(), YClub.getLocation());
+        boolean val = clubRepository.existsByClubNameAndCityAndDistrict(YClub.getClubName(), YClub.getCity(), YClub.getDistrict());
 
         //then
         assertTrue(val);
@@ -81,7 +82,7 @@ public class ClubRepositoryTest {
         clubRepository.saveAndFlush(YPClub);
 
         //when
-        Optional<List<Club>> save = clubRepository.findByLocation(YClub.getLocation());
+        Optional<List<Club>> save = clubRepository.findByCityAndDistrict(YClub.getCity(), YClub.getDistrict());
 
         //then
         assertTrue(save.isPresent());
@@ -98,7 +99,7 @@ public class ClubRepositoryTest {
         clubRepository.saveAndFlush(YPClub);
 
         //when
-        Optional<List<Club>> save = clubRepository.findByLocation(YClub.getLocation());
+        Optional<List<Club>> save = clubRepository.findByCityAndDistrict(YClub.getCity(), YClub.getDistrict());
 
         //then
         assertTrue(save.isPresent());

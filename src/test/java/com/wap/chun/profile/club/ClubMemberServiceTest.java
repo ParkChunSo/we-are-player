@@ -60,11 +60,11 @@ public class ClubMemberServiceTest {
     @DisplayName("클럽멤버 조회하기 성공")
     void testGetClubMembersSuccess(){
         //given
-        given(clubMemberRepository.findByClub_ClubNameAndClub_LocationAndClubMemberType(anyString(),anyString(),any()))
+        given(clubMemberRepository.findByClub_ClubNameAndClub_CityAndClub_DistrictAndClubMemberType(anyString(), anyString(),anyString(),any()))
                 .willReturn(Optional.of(clubMembers));
 
         //when
-        List<ClubMemberDto> dtos = clubMemberService.getClubMembers("양평FC", "경기도 양평", ClubMemberType.MEMBER);
+        List<ClubMemberDto> dtos = clubMemberService.getClubMembers("양평FC", "경기도",  "양평", ClubMemberType.MEMBER);
 
         //then
         assertEquals(dtos.size(), 3);
@@ -77,7 +77,7 @@ public class ClubMemberServiceTest {
     public void testSaveClubMemberSuccess() {
         //given
         club.setClubMembers(clubMembers);
-        given(clubRepository.findByClubNameAndLocationAndDeleteFlagFalse(anyString(), anyString()))
+        given(clubRepository.findByClubNameAndCityAndDistrictAndDeleteFlagFalse(anyString(), anyString(), anyString()))
                 .willReturn(Optional.of(club));
         given(jwtTokenProvider.getUsername(anyString())).willReturn(park.getId());
         given(memberRepository.findById(anyString())).willReturn(Optional.of(Member.builder().id("gun@gmail.com").name("건우").build()));
@@ -85,7 +85,8 @@ public class ClubMemberServiceTest {
 
         ClubMemberSaveDto request = ClubMemberSaveDto.builder()
                 .clubName("양평FC")
-                .clubLocation("경기도 양평")
+                .clubCity("경기도")
+                .clubDistrict("양평")
                 .clubMemberType(ClubMemberType.MEMBER)
                 .memberId("gun@gmail.com")
                 .positionType(PositionType.FW)
@@ -103,11 +104,12 @@ public class ClubMemberServiceTest {
         //given
         ClubLeaderUpdateDto request = ClubLeaderUpdateDto.builder()
                 .clubName("양평FC")
-                .location("경기도 양평")
+                .city("경기도")
+                .district("양평")
                 .newLeaderId("park@gmail.com")
                 .preLeaderId("yun@gmail.com")
                 .build();
-        given(clubMemberRepository.findByClub_ClubNameAndClub_Location(anyString(), anyString())).willReturn(Optional.of(clubMembers));
+        given(clubMemberRepository.findByClub_ClubNameAndClub_CityAndClub_District(anyString(), anyString(), anyString())).willReturn(Optional.of(clubMembers));
         given(clubMemberRepository.saveAll(any())).willReturn(null);
 
         //when

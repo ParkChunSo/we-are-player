@@ -25,7 +25,10 @@ public class Club {
     private LocalDateTime createDate;
 
     @Setter
-    private String location;
+    private String city;
+
+    @Setter
+    private String district;
 
     @Setter
     private String logoUri;
@@ -46,9 +49,10 @@ public class Club {
     private boolean deleteFlag;
 
     @Builder
-    protected Club(String clubName, String location, String logoUri) {
+    protected Club(String clubName, String city, String district, String logoUri) {
         this.clubName = clubName;
-        this.location = location;
+        this.city = city;
+        this.district = district;
         this.logoUri = logoUri;
         this.likeCnt = 0;
         this.rudeCnt = 0;
@@ -58,7 +62,8 @@ public class Club {
 
     public Club(ClubInfoDto dto) {
         this.clubName = dto.getClubName();
-        this.location = dto.getLocation();
+        this.city = dto.getCity();
+        this.district = dto.getDistrict();
         this.logoUri = dto.getLogoUri();
         this.likeCnt = 0;
         this.rudeCnt = 0;

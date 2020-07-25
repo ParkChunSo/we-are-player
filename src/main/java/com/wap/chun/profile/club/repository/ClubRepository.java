@@ -7,10 +7,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ClubRepository extends JpaRepository<Club, Long> {
-    Optional<Club> findByClubNameAndLocationAndDeleteFlagFalse(String clubName, String clubLocation);
+    Optional<Club> findByClubNameAndCityAndDistrictAndDeleteFlagFalse(String clubName,  String city, String district);
     Optional<List<Club>> findByClubName(String clubName);
-    Optional<List<Club>> findByLocation(String clubLocation);
-    boolean existsByClubNameAndLocation(String clubName, String clubLocation);
-
-    void deleteByClubNameAndLocation(String clubName, String clubLocation);
+    Optional<List<Club>> findByCityAndDistrict(String city, String district);
+    boolean existsByClubNameAndCityAndDistrict(String clubName, String city, String district);
 }

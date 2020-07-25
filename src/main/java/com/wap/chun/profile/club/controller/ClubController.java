@@ -21,24 +21,29 @@ public class ClubController {
         clubService.createClub(dto);
     }
 
-    @GetMapping(value = "/info/club-name/{clubName}/club-location/{clubLocation}")
-    public ClubInfoDto getClubInfo(@PathVariable String clubName, @PathVariable String clubLocation){
-        return clubService.getClubInfo(clubName, clubLocation);
+    @GetMapping(value = "/info/name/{clubName}/city/{city}/district/{district}")
+    public ClubInfoDto getClubInfo(@PathVariable String clubName, @PathVariable String city, @PathVariable String district){
+        return clubService.getClubInfo(clubName, city, district);
     }
 
-    @GetMapping(value = "/info/club-name/{clubName}")
+    @GetMapping(value = "/info/name/{clubName}")
     public List<ClubInfoDto> findByClubName(@PathVariable String clubName){
         return clubService.findByClubName(clubName);
     }
 
-    @GetMapping(value = "/info/club-location/{clubLocation}")
-    public List<ClubInfoDto> findByLocation(@PathVariable String clubLocation){
-        return clubService.findByLocation(clubLocation);
+    @GetMapping(value = "/info/city/{city}/district/{district}")
+    public List<ClubInfoDto> findByLocation(@PathVariable String city, @PathVariable String district){
+        return clubService.findByLocation(city, district);
     }
 
-    @GetMapping(value = "/member/club-name/{clubName}/club-location/{clubLocation}/type/{type}")
-    public List<ClubMemberDto> getClubMembers(@RequestHeader(name = "Authorize") String token, @PathVariable String clubName, @PathVariable String clubLocation, @PathVariable ClubMemberType type){
-        return clubMemberService.getClubMembers(clubName, clubLocation, type);
+    @GetMapping(value = "/info/name/{clubName}/city/{city}/district/{district}/members")
+    public List<ClubMemberDto> getClubMembers(@PathVariable String clubName, @PathVariable String city, @PathVariable String district){
+        return clubMemberService.getClubMembers(clubName, city, district, ClubMemberType.MEMBER);
+    }
+
+    @GetMapping(value = "/info/name/{clubName}/city/{city}/district/{district}/mercenaries")
+    public List<ClubMemberDto> getClubMercenaries(@PathVariable String clubName, @PathVariable String city, @PathVariable String district){
+        return clubMemberService.getClubMembers(clubName, city, district, ClubMemberType.MERCENARY);
     }
 
     @PostMapping(value = "/member/save")
@@ -57,9 +62,9 @@ public class ClubController {
         clubService.updateLikeAndRudeCnt(dto);
     }
 
-    @DeleteMapping(value = "/delete/club-name/{clubName}/club-location/{clubLocation}")
-    public void deleteClub(@PathVariable String clubName, @PathVariable String clubLocation){
-        clubService.deleteClub(clubName, clubLocation);
+    @DeleteMapping(value = "/delete/name/{clubName}/city/{city}/district/{district}")
+    public void deleteClub(@PathVariable String clubName, @PathVariable String city, @PathVariable String district){
+        clubService.deleteClub(clubName, city, district);
     }
 
 }

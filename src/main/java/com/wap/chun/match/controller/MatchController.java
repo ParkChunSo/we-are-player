@@ -17,9 +17,9 @@ import java.util.List;
 public class MatchController {
     private final MatchService matchService;
 
-    @GetMapping("/clubName/{clubName}/clubLocation/{clubLocation}/from/{from}/to/{to}")
-    public List<MatchInfoDto> getMatchInfoByClubInfoAndDate(@PathVariable String clubName, @PathVariable String clubLocation,
+    @GetMapping("/clubName/{clubName}/clubCity/{clubCity}/clubDistrict/{clubDistrict}/from/{from}/to/{to}")
+    public List<MatchInfoDto> getMatchInfoByClubInfoAndDate(@PathVariable String clubName, @PathVariable String clubCity, @PathVariable String clubDistrict,
                                                             @PathVariable LocalDate from, @PathVariable LocalDate to){
-        return matchService.findByClubNameAndClubLocation(clubName, clubLocation, from, to);
+        return matchService.findByClubNameAndClubLocation(clubName, clubCity, clubDistrict, from, to);
     }
 }

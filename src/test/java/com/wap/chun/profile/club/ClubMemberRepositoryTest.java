@@ -80,7 +80,8 @@ public class ClubMemberRepositoryTest {
     void testFindByClubNameAndClubLocationSuccess(){
         //given
         final String clubName = "양평FC";
-        final String clubLocation = "경기도 양평";
+        final String clubCity = "경기도";
+        final String clubDistrict = "양평";
 
         Member park = memberRepository.save(MemberInfoSetUp.toClientEntity(MemberInfoSetUp.park));
         Member memberKim = memberRepository.save(MemberInfoSetUp.toClientEntity(MemberInfoSetUp.kim));
@@ -99,7 +100,7 @@ public class ClubMemberRepositoryTest {
 
 
         //when
-        List<ClubMember> clubMembers = clubMemberRepository.findByClub_ClubNameAndClub_Location(clubName, clubLocation)
+        List<ClubMember> clubMembers = clubMemberRepository.findByClub_ClubNameAndClub_CityAndClub_District(clubName, clubCity, clubDistrict)
                 .orElse(Collections.emptyList());
 
 
@@ -108,7 +109,8 @@ public class ClubMemberRepositoryTest {
         assertEquals(clubMembers.size(), 2);
         for (ClubMember clubMember : clubMembers) {
             assertEquals(clubMember.getClub().getClubName(), clubName);
-            assertEquals(clubMember.getClub().getLocation(), clubLocation);
+            assertEquals(clubMember.getClub().getCity(), clubCity);
+            assertEquals(clubMember.getClub().getDistrict(), clubDistrict);
         }
     }
 
@@ -117,7 +119,8 @@ public class ClubMemberRepositoryTest {
     void testFindByClubNameAndClubLocationAndClubMemberTypeSuccess(){
         //given
         final String clubName = "양평FC";
-        final String clubLocation = "경기도 양평";
+        final String clubCity = "경기도";
+        final String clubDistrict = "양평";
 
         Member park = memberRepository.save(MemberInfoSetUp.toClientEntity(MemberInfoSetUp.park));
         Member memberKim = memberRepository.save(MemberInfoSetUp.toClientEntity(MemberInfoSetUp.kim));
@@ -136,9 +139,9 @@ public class ClubMemberRepositoryTest {
         ));
 
         //when
-        List<ClubMember> leaders = clubMemberRepository.findByClub_ClubNameAndClub_LocationAndClubMemberType(clubName, clubLocation, ClubMemberType.LEADER)
+        List<ClubMember> leaders = clubMemberRepository.findByClub_ClubNameAndClub_CityAndClub_DistrictAndClubMemberType(clubName, clubCity, clubDistrict, ClubMemberType.LEADER)
                 .orElse(Collections.emptyList());
-        List<ClubMember> members = clubMemberRepository.findByClub_ClubNameAndClub_LocationAndClubMemberType(clubName, clubLocation, ClubMemberType.MEMBER)
+        List<ClubMember> members = clubMemberRepository.findByClub_ClubNameAndClub_CityAndClub_DistrictAndClubMemberType(clubName, clubCity, clubDistrict, ClubMemberType.MEMBER)
                 .orElse(Collections.emptyList());
 
         //then
@@ -148,12 +151,14 @@ public class ClubMemberRepositoryTest {
         assertEquals(members.size(), 2);
         for (ClubMember clubMember : leaders) {
             assertEquals(clubMember.getClub().getClubName(), clubName);
-            assertEquals(clubMember.getClub().getLocation(), clubLocation);
+            assertEquals(clubMember.getClub().getCity(), clubCity);
+            assertEquals(clubMember.getClub().getDistrict(), clubDistrict);
             assertEquals(clubMember.getClubMemberType(), ClubMemberType.LEADER);
         }
         for (ClubMember clubMember : members) {
             assertEquals(clubMember.getClub().getClubName(), clubName);
-            assertEquals(clubMember.getClub().getLocation(), clubLocation);
+            assertEquals(clubMember.getClub().getCity(), clubCity);
+            assertEquals(clubMember.getClub().getDistrict(), clubDistrict);
             assertEquals(clubMember.getClubMemberType(), ClubMemberType.MEMBER);
         }
     }

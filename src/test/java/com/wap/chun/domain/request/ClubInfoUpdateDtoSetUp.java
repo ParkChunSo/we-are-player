@@ -8,7 +8,7 @@ public class ClubInfoUpdateDtoSetUp {
     public static ClubInfoUpdateDto dto = ClubInfoUpdateDto.builder()
             .clubName("양평FC")
             .city("경기도")
-            .district("양평")
+            .district("양평굳")
             .likeCnt(12)
             .rudeCnt(4)
             .logoUri("path")

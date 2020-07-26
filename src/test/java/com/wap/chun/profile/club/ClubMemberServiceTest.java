@@ -64,7 +64,7 @@ public class ClubMemberServiceTest {
                 .willReturn(Optional.of(clubMembers));
 
         //when
-        List<ClubMemberDto> dtos = clubMemberService.getClubMembers("양평FC", "경기도",  "양평", ClubMemberType.MEMBER);
+        List<ClubMemberDto> dtos = clubMemberService.getClubMembers("양평FC", "경기도",  "양평군", ClubMemberType.MEMBER);
 
         //then
         assertEquals(dtos.size(), 3);
@@ -86,7 +86,7 @@ public class ClubMemberServiceTest {
         ClubMemberSaveDto request = ClubMemberSaveDto.builder()
                 .clubName("양평FC")
                 .clubCity("경기도")
-                .clubDistrict("양평")
+                .clubDistrict("양평군")
                 .clubMemberType(ClubMemberType.MEMBER)
                 .memberId("gun@gmail.com")
                 .positionType(PositionType.FW)
@@ -105,7 +105,7 @@ public class ClubMemberServiceTest {
         ClubLeaderUpdateDto request = ClubLeaderUpdateDto.builder()
                 .clubName("양평FC")
                 .city("경기도")
-                .district("양평")
+                .district("양평군")
                 .newLeaderId("park@gmail.com")
                 .preLeaderId("yun@gmail.com")
                 .build();

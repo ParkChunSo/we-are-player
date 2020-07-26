@@ -117,7 +117,7 @@ public class ClubServiceTest {
     void testFindByLocation() {
         //given
         String clubCity = "경기도";
-        String clubDistrict = "양평";
+        String clubDistrict = "양평군";
         List<Club> list = Arrays.asList(new Club(ClubInfoSetUp.yangpyeongFC), new Club(ClubInfoSetUp.yangpyeongProFC));
 
         given(clubRepository.findByCityAndDistrict(anyString(), anyString())).willReturn(Optional.of(list));

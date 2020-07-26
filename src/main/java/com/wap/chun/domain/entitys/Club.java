@@ -7,11 +7,13 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "club_tbl")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @EqualsAndHashCode(of = "clubId")
 public class Club {
     @Id
@@ -42,11 +44,11 @@ public class Club {
     @Setter
     private Integer point;
 
+    private boolean deleteFlag;
+
     @Setter
     @OneToMany(mappedBy = "club", fetch = FetchType.EAGER)
-    private List<ClubMember> clubMembers;
-
-    private boolean deleteFlag;
+    private List<ClubMember> clubMembers = new ArrayList<>();
 
     @Builder
     protected Club(String clubName, String city, String district, String logoUri) {

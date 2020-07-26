@@ -27,8 +27,11 @@ public class ClubInfoDto {
         this.city = club.getCity();
         this.district = club.getDistrict();
         this.logoUri = club.getLogoUri();
-        members = club.getClubMembers() == null ? new ArrayList<>()
-                : club.getClubMembers().stream()
+//        members = club.getClubMembers() == null ? new ArrayList<>()
+//                : club.getClubMembers().stream()
+//                .map(ClubMemberDto::new)
+//                .collect(Collectors.toList());
+        members = club.getClubMembers().stream()
                 .map(ClubMemberDto::new)
                 .collect(Collectors.toList());
     }

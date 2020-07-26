@@ -6,14 +6,14 @@ public class ClubInfoSetUp {
     public static ClubInfoDto yangpyeongFC = ClubInfoDto.builder()
             .clubName("양평FC")
             .city("경기도")
-            .district("양평")
+            .district("양평군")
             .logoUri("/img/logo/yang.png")
             .build();
 
     public static ClubInfoDto yangpyeongProFC = ClubInfoDto.builder()
             .clubName("양평프로FC")
             .city("경기도")
-            .district("양평")
+            .district("양평군")
             .logoUri("/img/logo/yang.png")
             .build();
 
@@ -25,7 +25,7 @@ public class ClubInfoSetUp {
     
     public static ClubInfoDto gangjuFC = ClubInfoDto.builder()
             .clubName("광주FC")
-            .city("경기도 광주")
+            .city("경기도 광주시")
             .logoUri("/img/logo/gang.png")
             .build();
     public static ClubInfoDto seoulFC = ClubInfoDto.builder()

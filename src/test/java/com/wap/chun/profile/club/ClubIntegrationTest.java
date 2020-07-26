@@ -2,7 +2,7 @@ package com.wap.chun.profile.club;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
-import com.wap.chun.ChunApplication;
+import com.wap.chun.common.IntegrationTest;
 import com.wap.chun.domain.builder.ClubMemberDtoBuilder;
 import com.wap.chun.domain.entitys.Club;
 import com.wap.chun.domain.entitys.ClubMember;
@@ -21,30 +21,23 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
-import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
-@SpringBootTest(classes = ChunApplication.class
-        , webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ActiveProfiles("test")
-@Transactional
-@AutoConfigureMockMvc
+@IntegrationTest
 public class ClubIntegrationTest {
     static final ObjectMapper om = new JsonMapper();
 
@@ -64,7 +57,6 @@ public class ClubIntegrationTest {
     JwtTokenProvider jwtTokenProvider;
 
     List<Member> members;
-    String clientToken;
     String adminToken;
 
     @BeforeEach
@@ -99,13 +91,14 @@ public class ClubIntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "park")
     @DisplayName("클럽 정보 조회 성공")
     void testGetClubInfo() throws Exception {
         //given
-        Club club = clubRepository.save(new Club(ClubInfoSetUp.yangpyeongFC));
-        Member park = memberRepository.save(MemberInfoSetUp.toClientEntity(MemberInfoSetUp.park));
-        Member kim = memberRepository.save(MemberInfoSetUp.toClientEntity(MemberInfoSetUp.kim));
-        clubMemberRepository.save(
+        Club club = clubRepository.saveAndFlush(new Club(ClubInfoSetUp.yangpyeongFC));
+        Member park = memberRepository.saveAndFlush(MemberInfoSetUp.toClientEntity(MemberInfoSetUp.park));
+        Member kim = memberRepository.saveAndFlush(MemberInfoSetUp.toClientEntity(MemberInfoSetUp.kim));
+        ClubMember clubMemberPark = clubMemberRepository.saveAndFlush(
                 ClubMember.builder()
                         .member(park)
                         .club(club)
@@ -113,7 +106,7 @@ public class ClubIntegrationTest {
                         .positionType(PositionType.FW)
                         .uniformNum(7)
                         .build());
-        clubMemberRepository.save(
+        ClubMember clubMemberKim = clubMemberRepository.saveAndFlush(
                 ClubMember.builder()
                         .member(kim)
                         .club(club)
@@ -122,14 +115,21 @@ public class ClubIntegrationTest {
                         .uniformNum(11)
                         .build());
 
-        mvc.perform(get("/info/club-name/양평FC/club-location/경기도 양평")
+        //when
+//        MvcResult result = mvc.perform(get("/info/name/{clubName}/city/{city}/district/{district}", "yang", "a", "n"))
+        MvcResult result = mvc.perform(get("/club/info/name/{clubName}/city/{city}/district/{district}", "양평FC", "경기도", "양평군"))
 //                .header("Authorization", "Bearer " + clientToken)
-                .contentType(MediaType.APPLICATION_JSON))
+//                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("clubId").exists())
-                .andExpect(jsonPath("clubName").value("양평FC"))
-                .andExpect(jsonPath("location").value("경기도 양평"))
-                .andExpect(jsonPath("").value("경기도 양평"));
+                .andDo(print())
+                .andReturn();
 
+        //then
+        ClubInfoDto dto = om.readValue(result.getResponse().getContentAsString(), ClubInfoDto.class);
+        assertNotNull(dto.getClubId());
+        assertEquals(dto.getClubName(), club.getClubName());
+        assertEquals(dto.getCity(), club.getCity());
+        assertEquals(dto.getDistrict(), club.getDistrict());
+        assertEquals(dto.getMembers().size(), 2);
     }
 }

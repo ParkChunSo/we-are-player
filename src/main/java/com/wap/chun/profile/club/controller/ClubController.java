@@ -22,7 +22,7 @@ public class ClubController {
     }
 
     @GetMapping(value = "/info/name/{clubName}/city/{city}/district/{district}")
-    public ClubInfoDto getClubInfo(@PathVariable String clubName, @PathVariable String city, @PathVariable String district){
+    public ClubInfoDto getClubInfo(@PathVariable("clubName") String clubName, @PathVariable("city") String city, @PathVariable("district") String district){
         return clubService.getClubInfo(clubName, city, district);
     }
 

@@ -81,7 +81,7 @@ public class ClubMemberRepositoryTest {
         //given
         final String clubName = "양평FC";
         final String clubCity = "경기도";
-        final String clubDistrict = "양평";
+        final String clubDistrict = "양평군";
 
         Member park = memberRepository.save(MemberInfoSetUp.toClientEntity(MemberInfoSetUp.park));
         Member memberKim = memberRepository.save(MemberInfoSetUp.toClientEntity(MemberInfoSetUp.kim));
@@ -120,7 +120,7 @@ public class ClubMemberRepositoryTest {
         //given
         final String clubName = "양평FC";
         final String clubCity = "경기도";
-        final String clubDistrict = "양평";
+        final String clubDistrict = "양평군";
 
         Member park = memberRepository.save(MemberInfoSetUp.toClientEntity(MemberInfoSetUp.park));
         Member memberKim = memberRepository.save(MemberInfoSetUp.toClientEntity(MemberInfoSetUp.kim));

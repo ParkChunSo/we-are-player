@@ -2,11 +2,14 @@ package com.wap.chun.profile.club;
 
 import com.wap.chun.common.RepositoryTest;
 import com.wap.chun.domain.builder.ClubBuilder;
+import com.wap.chun.domain.builder.ClubMemberBuilder;
+import com.wap.chun.domain.entitys.ClubMember;
 import com.wap.chun.domain.request.ClubInfoUpdateDtoSetUp;
 import com.wap.chun.domain.entitys.Club;
 import com.wap.chun.domain.entitys.Member;
 import com.wap.chun.domain.request.MemberInfoSetUp;
 import com.wap.chun.profile.club.dtos.ClubInfoUpdateDto;
+import com.wap.chun.profile.club.repository.ClubMemberRepository;
 import com.wap.chun.profile.club.repository.ClubRepository;
 import com.wap.chun.profile.member.repository.MemberRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -27,6 +30,9 @@ public class ClubRepositoryTest {
     @Autowired
     private MemberRepository memberRepository;
 
+    @Autowired
+    private ClubMemberRepository clubMemberRepository;
+
     @Test
     @DisplayName("클럽 저장(성공)")
     void testSaveClubSuccess(){
@@ -45,7 +51,10 @@ public class ClubRepositoryTest {
     void testGetClubSuccess(){
         //given
         Club club = ClubBuilder.yangpyeongFC;
+        Member member = MemberInfoSetUp.toClientEntity(MemberInfoSetUp.park);
         clubRepository.saveAndFlush(club);
+        memberRepository.saveAndFlush(member);
+        clubMemberRepository.saveAndFlush(ClubMemberBuilder.buildLeader(member, club));
 
         //when
         Optional<Club> save = clubRepository.findByClubNameAndCityAndDistrictAndDeleteFlagFalse(club.getClubName(), club.getCity(), club.getDistrict());
@@ -56,6 +65,7 @@ public class ClubRepositoryTest {
         assertEquals(club.getClubName(), save.get().getClubName());
         assertEquals(club.getCity(), save.get().getCity());
         assertEquals(club.getDistrict(), save.get().getDistrict());
+        assertEquals(club.getClubMembers().size(), 1);
     }
 
     @Test

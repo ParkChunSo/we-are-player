@@ -50,7 +50,7 @@ public class ClubMemberService {
                 .map(ClubMember::getMember)
                 .orElseThrow(ClubMemberNotFoundException::new);
 
-        String requestId = jwtTokenProvider.getUsername(token);
+        String requestId = jwtTokenProvider.getUsername(jwtTokenProvider.resolveToken(token));
         if (!requestId.equals(leader.getId())) {
             throw new AuthorizationException();
         }

@@ -9,7 +9,8 @@ import lombok.Getter;
 public class MemberInfoDto {
     private String id;
     private String name;
-    private String location;
+    private String city;
+    private String district;
     private String pictureUri;
     private PositionType position;
     private Integer likeCnt;
@@ -19,7 +20,8 @@ public class MemberInfoDto {
     public MemberInfoDto(Member entity){
         this.id = entity.getId();
         this.name = entity.getName();
-        this.location = entity.getLocation();
+        this.city = entity.getCity();
+        this.district = entity.getDistrict();
         this.pictureUri = entity.getPictureUri();
         this.position = entity.getPosition();
         this.likeCnt = entity.getLikeCnt();

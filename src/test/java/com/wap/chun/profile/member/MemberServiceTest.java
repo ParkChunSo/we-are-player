@@ -128,8 +128,8 @@ public class MemberServiceTest {
         Member leader = MemberInfoSetUp.toClientEntity(MemberInfoSetUp.park);
         Member member = MemberInfoSetUp.toClientEntity(MemberInfoSetUp.kim);
 
-        Club club = ClubBuilder.build(leader);
-        List<ClubMember> clubMembers = List.of(ClubMemberBuilder.build(member, club));
+        Club club = ClubBuilder.yangpyeongFC;
+        List<ClubMember> clubMembers = List.of(ClubMemberBuilder.buildMember(member, club));
 
         given(memberRepository.findById(anyString())).willReturn(Optional.of(member));
         given(clubMemberRepository.findByMemberAndClubMemberType(any(), any())).willReturn(Optional.of(clubMembers));
@@ -151,8 +151,8 @@ public class MemberServiceTest {
         Member member = MemberInfoSetUp.toClientEntity(MemberInfoSetUp.kim);
         Member admin = MemberInfoSetUp.toAdminEntity(MemberInfoSetUp.yun);
 
-        Club club = ClubBuilder.build(leader);
-        List<ClubMember> clubMembers = List.of(ClubMemberBuilder.build(member, club));
+        Club club = ClubBuilder.yangpyeongFC;
+        List<ClubMember> clubMembers = List.of(ClubMemberBuilder.buildMember(member, club));
 
         given(memberRepository.findById(anyString())).willReturn(Optional.of(member));
         given(clubMemberRepository.findByMemberAndClubMemberType(any(), any())).willReturn(Optional.of(clubMembers));

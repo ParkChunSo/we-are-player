@@ -13,9 +13,11 @@ import lombok.Getter;
 public class ClubMemberDto {
     private String memberId;
     private String memberName;
-    private String location;
+    private String city;
+    private String district;
     private String pictureUri;
     private String registTime;
+    private Integer uniformNum;
 
     private ClubMemberType type;
     private PositionType position;
@@ -23,9 +25,11 @@ public class ClubMemberDto {
     public ClubMemberDto(ClubMember entity) {
         this.memberId = entity.getMember().getId();
         this.memberName = entity.getMember().getName();
-        this.location = entity.getMember().getLocation();
+        this.city = entity.getMember().getCity();
+        this.district = entity.getMember().getDistrict();
         this.pictureUri = entity.getMember().getPictureUri();
         this.registTime = entity.getRegistDate().toString();
+        this.uniformNum = entity.getUniformNum();
         this.type = entity.getClubMemberType();
         this.position = entity.getPositionType();
     }

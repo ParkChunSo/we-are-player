@@ -9,12 +9,11 @@ import lombok.Getter;
 @Builder
 public class ClubMemberSaveDto {
     private String clubName;
-    private String clubLocation;
+    private String clubCity;
+    private String clubDistrict;
     private String memberId;
     private Integer uniformNum;
     private PositionType positionType;
     private ClubMemberType clubMemberType;
-
-
 }
 

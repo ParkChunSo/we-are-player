@@ -19,7 +19,6 @@ import java.util.*;
 @Component
 public class JwtTokenProvider {
     private final String secretKey = Base64.getEncoder().encodeToString("secret".getBytes());
-    private final long validityInMs = 1000 * 60 * 60L;
 
     public String createToken(String username, Set<MemberRole> roles) {
 
@@ -29,7 +28,7 @@ public class JwtTokenProvider {
         return Jwts.builder()//
                 .setClaims(claims)//
                 .setIssuedAt(new Date())//
-                .setExpiration(Date.from(LocalDateTime.now().plusHours(1).toInstant(ZoneOffset.UTC)))//
+                .setExpiration(Date.from(LocalDateTime.now().plusHours(1).toInstant(ZoneOffset.UTC))) //한시간
                 .signWith(SignatureAlgorithm.HS256, secretKey)//
                 .compact();
     }

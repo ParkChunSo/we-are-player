@@ -1,5 +1,7 @@
 package com.wap.chun.security.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.wap.chun.domain.enums.MemberRole;
 import com.wap.chun.security.JwtTokenFilter;
 import com.wap.chun.security.util.JwtTokenProvider;

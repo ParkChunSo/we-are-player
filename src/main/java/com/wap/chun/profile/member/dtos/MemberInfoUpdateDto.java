@@ -8,7 +8,8 @@ import lombok.Getter;
 public class MemberInfoUpdateDto {
     private String id;
     private String password;
-    private String location;
+    private String city;
+    private String district;
     private String pictureUri;
     private PositionType position;
     private Integer likeCnt;

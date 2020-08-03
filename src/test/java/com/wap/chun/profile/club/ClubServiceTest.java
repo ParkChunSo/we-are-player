@@ -1,13 +1,15 @@
 package com.wap.chun.profile.club;
 
 import com.wap.chun.common.ServiceTest;
+import com.wap.chun.domain.builder.ClubMemberDtoBuilder;
 import com.wap.chun.domain.entitys.Club;
 import com.wap.chun.domain.entitys.Member;
+import com.wap.chun.domain.enums.ClubMemberType;
 import com.wap.chun.domain.request.ClubInfoSetUp;
 import com.wap.chun.domain.request.MemberInfoSetUp;
 import com.wap.chun.error.exception.ClubAlreadyExistException;
-import com.wap.chun.error.exception.MemberNotFoundException;
 import com.wap.chun.profile.club.dtos.ClubInfoDto;
+import com.wap.chun.profile.club.repository.ClubMemberRepository;
 import com.wap.chun.profile.club.repository.ClubRepository;
 import com.wap.chun.profile.club.service.ClubService;
 import com.wap.chun.profile.member.repository.MemberRepository;
@@ -17,11 +19,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 
@@ -36,51 +40,69 @@ public class ClubServiceTest {
     @Mock
     MemberRepository memberRepository;
 
+    @Mock
+    ClubMemberRepository clubMemberRepository;
+
+    @Test
+    @DisplayName("클럽 생성 성공")
+    void testCreateClubSuccess() {
+        //given
+        Club club = new Club(ClubInfoSetUp.yangpyeongFC);
+        Member park = MemberInfoSetUp.toClientEntity(MemberInfoSetUp.park);
+        Member kim = MemberInfoSetUp.toClientEntity(MemberInfoSetUp.kim);
+        Member yun = MemberInfoSetUp.toClientEntity(MemberInfoSetUp.yun);
+
+        ClubInfoDto dto = ClubInfoSetUp.yangpyeongFC;
+        dto.setMembers(Arrays.asList(
+                ClubMemberDtoBuilder.build(park, ClubMemberType.LEADER),
+                ClubMemberDtoBuilder.build(kim, ClubMemberType.MEMBER),
+                ClubMemberDtoBuilder.build(yun, ClubMemberType.MEMBER)
+        ));
+
+
+        given(clubRepository.existsByClubNameAndCityAndDistrict(anyString(), anyString(), anyString())).willReturn(false);
+        given(clubRepository.save(any())).willReturn(club);
+        given(memberRepository.findAllById(any()))
+                .willReturn(Arrays.asList(park, kim, yun));
+        given(clubMemberRepository.saveAll(any())).willReturn(Collections.emptyList());
+
+        //when
+        clubService.createClub(dto);
+    }
+
     @Test
     @DisplayName("클럽 중복 오류(실패)")
-    void testCreateClubFailByDuplication(){
+    void testCreateClubFailByDuplication() {
         //given
-        given(clubRepository.existsByClubNameAndLocation(anyString(), anyString())).willReturn(true);
+        given(clubRepository.existsByClubNameAndCityAndDistrict(anyString(), anyString(), anyString())).willReturn(true);
 
         //then
         assertThrows(ClubAlreadyExistException.class, () -> clubService.createClub(ClubInfoSetUp.yangpyeongFC));
     }
 
     @Test
-    @DisplayName("리더 NPE 오류(실패)")
-    void testCreateClubFailByLeaderNotFound(){
-        //given
-        given(clubRepository.existsByClubNameAndLocation(anyString(), anyString())).willReturn(false);
-        given(memberRepository.findById(anyString())).willReturn(Optional.empty());
-
-        //then
-        assertThrows(MemberNotFoundException.class, () -> clubService.createClub(ClubInfoSetUp.yangpyeongFC));
-    }
-
-    @Test
     @DisplayName("클럽 조회(성공)")
-    void testGetClubInfoSuccess(){
+    void testGetClubInfoSuccess() {
         //given
         ClubInfoDto dto = ClubInfoSetUp.yangpyeongFC;
-        given(clubRepository.findByClubNameAndLocation(anyString(), anyString()))
-                .willReturn(Optional.of(new Club(dto, MemberInfoSetUp.toClientEntity(MemberInfoSetUp.park))));
+        given(clubRepository.findByClubNameAndCityAndDistrictAndDeleteFlagFalse(anyString(), anyString(), anyString()))
+                .willReturn(Optional.of(new Club(dto)));
 
         //when
-        ClubInfoDto clubInfo = clubService.getClubInfo(dto.getClubName(), dto.getLocation());
+        ClubInfoDto clubInfo = clubService.getClubInfo(dto.getClubName(), dto.getCity(), dto.getDistrict());
 
         //then
-        assertEquals(clubInfo.getLeaderId(), dto.getLeaderId());
         assertEquals(clubInfo.getClubName(), dto.getClubName());
-        assertEquals(clubInfo.getLocation(), dto.getLocation());
+        assertEquals(clubInfo.getCity(), dto.getCity());
     }
 
     @Test
     @DisplayName("클럽 이름으로 조회")
-    void testFindByClubName(){
+    void testFindByClubName() {
         //given
         String clubName = "양평FC";
         Member leader = MemberInfoSetUp.toClientEntity(MemberInfoSetUp.park);
-        List<Club> list = Arrays.asList(new Club(ClubInfoSetUp.yangpyeongFC, leader), new Club(ClubInfoSetUp.seoulYangpyeongFC, leader));
+        List<Club> list = Arrays.asList(new Club(ClubInfoSetUp.yangpyeongFC), new Club(ClubInfoSetUp.seoulYangpyeongFC));
         given(clubRepository.findByClubName(anyString())).willReturn(Optional.of(list));
 
         //when
@@ -92,16 +114,16 @@ public class ClubServiceTest {
 
     @Test
     @DisplayName("클럽 지역으로 조회")
-    void testFindByLocation(){
+    void testFindByLocation() {
         //given
-        String clubLocation = "경기도 양평";
-        Member leader = MemberInfoSetUp.toClientEntity(MemberInfoSetUp.park);
-        List<Club> list = Arrays.asList(new Club(ClubInfoSetUp.yangpyeongFC, leader), new Club(ClubInfoSetUp.yangpyeongProFC, leader));
+        String clubCity = "경기도";
+        String clubDistrict = "양평군";
+        List<Club> list = Arrays.asList(new Club(ClubInfoSetUp.yangpyeongFC), new Club(ClubInfoSetUp.yangpyeongProFC));
 
-        given(clubRepository.findByLocation(anyString())).willReturn(Optional.of(list));
+        given(clubRepository.findByCityAndDistrict(anyString(), anyString())).willReturn(Optional.of(list));
 
         //when
-        List<ClubInfoDto> result = clubService.findByLocation(clubLocation);
+        List<ClubInfoDto> result = clubService.findByLocation(clubCity, clubDistrict);
 
         //then
         assertEquals(result.size(), 2);

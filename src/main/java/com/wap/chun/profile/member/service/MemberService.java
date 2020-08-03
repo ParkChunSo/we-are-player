@@ -53,7 +53,8 @@ public class MemberService {
                 .password(passwordEncoder.encode(dto.getPassword()))
                 .name(dto.getName())
                 .roleSet(dto.getType().getRoles())
-                .location(dto.getLocation())
+                .city(dto.getCity())
+                .district(dto.getDistrict())
                 .pictureUri(dto.getPictureUri())
                 .position(dto.getPosition())
                 .build();
@@ -74,7 +75,8 @@ public class MemberService {
                 .password(passwordEncoder.encode(dto.getPassword()))
                 .name(dto.getName())
                 .roleSet(dto.getType().getRoles())
-                .location(dto.getLocation())
+                .city(dto.getCity())
+                .district(dto.getDistrict())
                 .pictureUri(dto.getPictureUri())
                 .position(dto.getPosition())
                 .build();
@@ -89,6 +91,7 @@ public class MemberService {
         return new MemberInfoDto(member);
     }
 
+    //TODO("데이터 가져오는 쿼리문 문제")
     public MemberDetailsInfoDto getMemberDetailsInfo(String memberId, String token) {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(MemberNotFoundException::new);

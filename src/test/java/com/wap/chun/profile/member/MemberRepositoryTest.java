@@ -18,7 +18,7 @@ public class MemberRepositoryTest{
 
     @Test
     @DisplayName("아이디 중복 확인")
-    void test_existById() {
+    void testExistById() {
         //given
         Member member = MemberInfoSetUp.toClientEntity(MemberInfoSetUp.park);
         memberRepository.save(member);
@@ -32,7 +32,7 @@ public class MemberRepositoryTest{
 
     @Test
     @DisplayName("사용자 조회")
-    void test_findById() {
+    void testFindById() {
         //given
         Member member = MemberInfoSetUp.toClientEntity(MemberInfoSetUp.park);
         memberRepository.save(member);

@@ -28,7 +28,10 @@ public class Member {
     private String name;
 
     @Setter
-    private String location;
+    private String city;
+
+    @Setter
+    private String district;
 
     @CreationTimestamp
     private LocalDateTime createDate;
@@ -56,11 +59,12 @@ public class Member {
     private DisclosureScopeState disclosureScopeState;
 
     @Builder
-    public Member(String id, String password, String name, String location, String pictureUri, PositionType position, Set<MemberRole> roleSet) {
+    public Member(String id, String password, String name, String city, String district, String pictureUri, PositionType position, Set<MemberRole> roleSet) {
         this.id = id;
         this.password = password;
         this.name = name;
-        this.location = location;
+        this.city = city;
+        this.district = district;
         this.pictureUri = pictureUri;
         this.position = position;
         this.roleSet = roleSet;
@@ -70,7 +74,8 @@ public class Member {
     }
 
     public Member updateInfo(MemberInfoUpdateDto dto){
-        this.location = dto.getLocation();
+        this.city = dto.getCity();
+        this.district = dto.getDistrict();
         this.likeCnt = dto.getLikeCnt();
         this.rudeCnt = dto.getRudeCnt();
         this.pictureUri = dto.getPictureUri();

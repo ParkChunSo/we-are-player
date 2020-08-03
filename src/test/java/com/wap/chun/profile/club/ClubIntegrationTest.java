@@ -116,7 +116,6 @@ public class ClubIntegrationTest {
                         .build());
 
         //when
-//        MvcResult result = mvc.perform(get("/info/name/{clubName}/city/{city}/district/{district}", "yang", "a", "n"))
         MvcResult result = mvc.perform(get("/club/info/name/{clubName}/city/{city}/district/{district}", "양평FC", "경기도", "양평군"))
 //                .header("Authorization", "Bearer " + clientToken)
 //                .contentType(MediaType.APPLICATION_JSON))

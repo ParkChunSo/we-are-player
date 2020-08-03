@@ -23,6 +23,10 @@ public class Submit {
     private LocalDateTime submitTime;
 
     @ManyToOne
+    @JoinColumn(name = "invitation_id")
+    private Invitation invitation;
+
+    @ManyToOne
     @JoinColumn(name = "club_id")
     private Club club;
 
@@ -30,19 +34,16 @@ public class Submit {
     @JoinColumn(name = "writer_id")
     private Member member;
 
-    @NotNull
-    @Enumerated(value = EnumType.STRING)
-    private SubmitType type;
-
     @Setter
     @Enumerated(value = EnumType.STRING)
     private SubmitState state;
 
     @Builder
-    public Submit(Club club, Member member, SubmitType type) {
+    public Submit(String message, Invitation invitation, Club club, Member member) {
+        this.message = message;
+        this.invitation = invitation;
         this.club = club;
         this.member = member;
-        this.type = type;
         this.state = SubmitState.WAIT;
     }
 }

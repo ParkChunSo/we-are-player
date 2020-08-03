@@ -35,7 +35,13 @@ public enum ErrorCode {
     AUTHORIZATION(403, "No permission"),
 
     //Match
-    MATCH_NOT_FOUND(400, "Can't found match") ;
+    MATCH_NOT_FOUND(400, "Can't found match"),
+
+    //Invitation
+    INVITATION_NOT_FOUND(400, "Can't found Invitation"),
+
+    //Submit
+    SUBMIT_NOT_FOUND(400, "Can't found Submit");
     ;
     private final int code;
     private final String message;

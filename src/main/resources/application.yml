@@ -1,6 +1,7 @@
 spring:
   profiles:
     active: local
+
 ---
 spring:
   profiles: local
@@ -17,7 +18,6 @@ spring:
     show-sql: true
     database: mysql
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-
 
 ---
 spring:

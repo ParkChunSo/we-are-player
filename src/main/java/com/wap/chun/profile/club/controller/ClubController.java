@@ -47,7 +47,7 @@ public class ClubController {
     }
 
     @PostMapping(value = "/member/save")
-    public void saveClubMembers(@RequestHeader(name = "Authorize") String token, @RequestBody ClubMemberSaveDto dto){
+    public void saveClubMembers(@RequestHeader(name = "Authorization") String token, @RequestBody ClubMemberSaveDto dto){
         clubMemberService.saveClubMember(token, dto);
     }
 

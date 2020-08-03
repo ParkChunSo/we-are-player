@@ -86,6 +86,14 @@ public class JwtTokenProvider {
         return Optional.empty();
     }
 
+    public String resolveToken(String token) {
+        if (token != null && token.startsWith("Bearer ")) {
+            return token.substring(7);
+        }
+
+        return "";
+    }
+
     public boolean validateToken(String token) {
         try {
             Jws<Claims> claims = Jwts.parser()

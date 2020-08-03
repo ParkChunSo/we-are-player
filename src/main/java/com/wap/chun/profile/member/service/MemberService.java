@@ -93,7 +93,8 @@ public class MemberService {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(MemberNotFoundException::new);
 
-        List<ClubMember> clubMembers = clubMemberRepository.findByMemberAndClubMemberType(member, ClubMemberType.MEMBER)
+        List<ClubMember> clubMembers = clubMemberRepository
+                .findByMemberAndClubMemberType(member, ClubMemberType.LEADER)
                 .orElse(Collections.emptyList());
 
         String requestId = jwtTokenProvider.getUsername(token);
@@ -110,12 +111,12 @@ public class MemberService {
         return (memberId.equals(requestId) || isLeader(clubMembers, requestId));
     }
 
-    private boolean isLeader(List<ClubMember> list, String requestId) {
-        if (list.isEmpty())
+    private boolean isLeader(List<ClubMember> clubMembers, String requestId) {
+        if (clubMembers.isEmpty())
             return false;
 
-        return list.stream()
-                .map(clubMember -> clubMember.getClub().getLeader().getId())
+        return clubMembers.stream()
+                .map(leader -> leader.getMember().getId())
                 .anyMatch(s -> s.equals(requestId));
     }
 

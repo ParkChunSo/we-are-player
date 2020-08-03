@@ -27,6 +27,6 @@ public class ClubMemberDto {
         this.pictureUri = entity.getMember().getPictureUri();
         this.registTime = entity.getRegistDate().toString();
         this.type = entity.getClubMemberType();
-        this.position = entity.getPosition();
+        this.position = entity.getPositionType();
     }
 }

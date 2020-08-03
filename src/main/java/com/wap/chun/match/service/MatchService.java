@@ -21,7 +21,7 @@ public class MatchService {
     private final ClubRepository clubRepository;
     public List<MatchInfoDto> findByClubNameAndClubLocation(String clubName, String clubLocation,
                                                             LocalDate from, LocalDate to){
-        Club club = clubRepository.findByClubNameAndLocation(clubName, clubLocation)
+        Club club = clubRepository.findByClubNameAndLocationAndDeleteFlagFalse(clubName, clubLocation)
                 .orElseThrow(ClubNotFoundException::new);
         List<Match> match = matchRepository.findByHomeClubOrAwayClubAndDateBetween(club, club, from.atStartOfDay(), to.atTime(23, 59))
                 .orElseThrow(MatChNotFoundException::new);

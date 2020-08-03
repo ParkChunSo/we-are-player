@@ -2,10 +2,11 @@ package com.wap.chun.error;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 
 @Getter
-@AllArgsConstructor
+@RequiredArgsConstructor
 public enum ErrorCode {
     // Common
     INVALID_INPUT_VALUE(400, "Invalid Input Value"),
@@ -28,13 +29,15 @@ public enum ErrorCode {
     MEMBER_CANNOT_FOUND_IN_CLUB(400, "Can't found member in club"),
 
     //Security
-    INVALID_TOKEN(403, "Expired or invalid JWT token"),
+    INVALID_TOKEN(403, "invalid JWT token"),
+    EXPIRED_TOKEN(403, "Expired JWT token"),
     HANDLE_ACCESS_DENIED(403, "Access is Denied"),
+    AUTHORIZATION(403, "No permission"),
 
     //Match
     MATCH_NOT_FOUND(400, "Can't found match") ;
     ;
-    private final int status;
+    private final int code;
     private final String message;
 
 }

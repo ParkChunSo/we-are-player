@@ -2,18 +2,16 @@ package com.wap.chun.domain.entitys;
 
 import com.sun.istack.NotNull;
 import com.wap.chun.domain.enums.MatchState;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity(name = "match_tbl")
-@Getter
+@Getter @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Match {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @NotNull

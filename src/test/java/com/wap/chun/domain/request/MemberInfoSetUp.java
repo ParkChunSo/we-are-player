@@ -1,15 +1,13 @@
-package com.wap.chun.domain;
+package com.wap.chun.domain.request;
 
 import com.wap.chun.domain.entitys.Member;
 import com.wap.chun.domain.enums.DisclosureScopeState;
 import com.wap.chun.domain.enums.MemberRole;
+import com.wap.chun.domain.enums.MemberType;
 import com.wap.chun.domain.enums.PositionType;
 import com.wap.chun.profile.member.dtos.MemberSignUpDto;
 import lombok.Getter;
 
-import javax.annotation.PostConstruct;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -21,6 +19,7 @@ public class MemberInfoSetUp {
             .name("박춘소")
             .location("경기도 양평군")
             .pictureUri("/image/profile/park")
+            .type(MemberType.CLIENT)
             .position(PositionType.FW)
             .disclosureScopeState(DisclosureScopeState.PUBLIC)
             .build();
@@ -31,6 +30,7 @@ public class MemberInfoSetUp {
             .name("김윤상")
             .location("경기도 광주시")
             .pictureUri("/image/profile/yun")
+            .type(MemberType.CLIENT)
             .position(PositionType.DF)
             .disclosureScopeState(DisclosureScopeState.PUBLIC)
             .build();
@@ -41,6 +41,7 @@ public class MemberInfoSetUp {
             .name("김건영")
             .location("경기도 용인시")
             .pictureUri("/image/profile/kim")
+            .type(MemberType.CLIENT)
             .position(PositionType.MF)
             .disclosureScopeState(DisclosureScopeState.PUBLIC)
             .build();
@@ -51,6 +52,7 @@ public class MemberInfoSetUp {
             .name("정승현")
             .location("경기도 부천시")
             .pictureUri("/image/profile/jeoung")
+            .type(MemberType.CLIENT)
             .position(PositionType.GK)
             .disclosureScopeState(DisclosureScopeState.PUBLIC)
             .build();

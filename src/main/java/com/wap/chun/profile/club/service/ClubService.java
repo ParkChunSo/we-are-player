@@ -4,10 +4,7 @@ import com.wap.chun.domain.entitys.Club;
 import com.wap.chun.domain.entitys.ClubMember;
 import com.wap.chun.domain.entitys.Member;
 import com.wap.chun.domain.enums.ClubMemberType;
-import com.wap.chun.error.exception.ClubAlreadyExistException;
-import com.wap.chun.error.exception.ClubNotFoundException;
-import com.wap.chun.error.exception.ClubMemberNotFoundException;
-import com.wap.chun.error.exception.MemberNotFoundException;
+import com.wap.chun.error.exception.*;
 import com.wap.chun.profile.club.dtos.ClubInfoDto;
 import com.wap.chun.profile.club.dtos.ClubInfoUpdateDto;
 import com.wap.chun.profile.club.dtos.ClubLeaderUpdateDto;
@@ -15,6 +12,7 @@ import com.wap.chun.profile.club.dtos.ClubMemberDto;
 import com.wap.chun.profile.club.repository.ClubMemberRepository;
 import com.wap.chun.profile.club.repository.ClubRepository;
 import com.wap.chun.profile.member.repository.MemberRepository;
+import com.wap.chun.security.util.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -38,7 +36,14 @@ public class ClubService {
         Member member = memberRepository.findById(dto.getLeaderId())
                 .orElseThrow(MemberNotFoundException::new);
 
-        clubRepository.save(new Club(dto, member));
+        Club save = clubRepository.save(new Club(dto, member));
+        clubMemberRepository.save(ClubMember.builder()
+                .club(save)
+                .clubMemberType(ClubMemberType.MEMBER)
+                .member(member)
+                .position(member.getPosition())
+                .uniformNum(0)
+                .build());
     }
 
     public ClubInfoDto getClubInfo(String clubName, String clubLocation){
@@ -88,18 +93,6 @@ public class ClubService {
         club.setLikeCnt(dto.getLikeCnt());
         club.setRudeCnt(dto.getRudeCnt());
         clubRepository.save(club);
-    }
-
-    public List<ClubMemberDto> getClubMembers(String clubName, String clubLocation, ClubMemberType type){
-        Club club = clubRepository.findByClubNameAndLocation(clubName, clubLocation)
-                .orElseThrow(ClubNotFoundException::new);
-
-        List<ClubMember> memberList = clubMemberRepository.findByClubAndClubMemberType(club, type)
-                .orElseThrow(ClubMemberNotFoundException::new);
-
-        return memberList.stream()
-                .map(ClubMemberDto::new)
-                .collect(Collectors.toList());
     }
 
     public void deleteClub(String clubName, String clubLocation){

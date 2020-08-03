@@ -2,13 +2,13 @@ package com.wap.chun.domain.entitys;
 
 import com.sun.istack.NotNull;
 import com.wap.chun.domain.enums.InvitationType;
-import com.wap.chun.post.invitation.dto.InvitationInfoDto;
 import com.wap.chun.post.invitation.dto.InvitationSaveDto;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity(name = "invitation_tbl")
 @Getter
@@ -44,6 +44,9 @@ public class Invitation {
     private LocalDateTime endDate;
 
     private String message;
+
+    @OneToMany(mappedBy = "invitation", fetch = FetchType.EAGER)
+    private List<Submit> submitList;
 
     @Builder
     public Invitation(InvitationType category,String city, String district, Club club, Member writer, LocalDateTime startDate, LocalDateTime endDate) {

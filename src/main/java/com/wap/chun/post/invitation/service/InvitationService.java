@@ -12,14 +12,19 @@ import com.wap.chun.error.exception.ClubNotFoundException;
 import com.wap.chun.error.exception.InvitationNotFoundException;
 import com.wap.chun.error.exception.MemberNotFoundException;
 import com.wap.chun.post.invitation.dto.InvitationInfoDto;
+import com.wap.chun.post.invitation.dto.InvitationMemberInfoDto;
 import com.wap.chun.post.invitation.dto.InvitationSaveDto;
 import com.wap.chun.post.invitation.repository.InvitationRepository;
+import com.wap.chun.post.submit.repository.SubmitMatchRepository;
+import com.wap.chun.post.submit.repository.SubmitMemberRepository;
+import com.wap.chun.post.submit.repository.SubmitRepository;
 import com.wap.chun.profile.club.repository.ClubMemberRepository;
 import com.wap.chun.profile.club.repository.ClubRepository;
 import com.wap.chun.profile.member.repository.MemberRepository;
 import com.wap.chun.security.util.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -34,7 +39,8 @@ public class InvitationService {
     private final JwtTokenProvider jwtTokenProvider;
     private final ClubRepository clubRepository;
     private final MemberRepository memberRepository;
-    private final ClubMemberRepository clubMemberRepository;
+    private final SubmitMemberRepository submitMemberRepository;
+    private final SubmitMatchRepository submitMatchRepository;
 
     public List<InvitationInfoDto> getAll() {
         return invitationRepository.findAll().stream()
@@ -45,6 +51,7 @@ public class InvitationService {
     public InvitationInfoDto getInvitationInfoById(Long id) {
         Invitation invitation = invitationRepository.findById(id)
                 .orElseThrow(InvitationNotFoundException::new);
+
         return new InvitationInfoDto(invitation);
     }
 
@@ -79,11 +86,11 @@ public class InvitationService {
         invitationRepository.save(new Invitation(dto, club, writer));
     }
 
-    public void updateInvitation(String token, InvitationInfoDto dto){
+    public void updateInvitation(String token, InvitationInfoDto dto) {
         Invitation invitation = invitationRepository.findById(dto.getId())
                 .orElseThrow(InvitationNotFoundException::new);
 
-        if(!checkSelfOrLeaderOrAdmin(token, invitation))
+        if (!checkSelfOrLeaderOrAdmin(token, invitation))
             throw new AccessDeniedAuthenticationException();
 
         invitation = invitation.updateInfo(dto.getWantedCity(), dto.getWantedDistrict(), dto.getEndDate(), dto.getMessage());
@@ -94,13 +101,13 @@ public class InvitationService {
         Invitation invitation = invitationRepository.findById(id)
                 .orElseThrow(InvitationNotFoundException::new);
 
-        if(!checkSelfOrLeaderOrAdmin(token, invitation))
+        if (!checkSelfOrLeaderOrAdmin(token, invitation))
             throw new AccessDeniedAuthenticationException();
 
         invitationRepository.deleteById(id);
     }
 
-    private boolean checkSelfOrLeaderOrAdmin(String token, Invitation invitation){
+    private boolean checkSelfOrLeaderOrAdmin(String token, Invitation invitation) {
         String requestId = jwtTokenProvider.getUsername(jwtTokenProvider.resolveToken(token));
 
         boolean isLeader = invitation.getClub().getClubMembers().stream()

@@ -1,6 +1,8 @@
 package com.wap.chun.post.invitation.controller;
 
 import com.wap.chun.domain.entitys.Invitation;
+import com.wap.chun.post.invitation.dto.InvitationMatchInfoDto;
+import com.wap.chun.post.invitation.dto.InvitationMemberInfoDto;
 import com.wap.chun.post.invitation.dto.InvitationSaveDto;
 import com.wap.chun.post.invitation.service.InvitationService;
 import com.wap.chun.post.invitation.dto.InvitationInfoDto;
@@ -21,11 +23,13 @@ public class InvitationController {
         return invitationService.getInvitationInfoById(id);
     }
 
+    //장소 기반 검색
     @GetMapping("/category/{category}/city/{city}/district/{district}")
     public List<InvitationInfoDto> getInvitationInfoByLocationAndCategory(@PathVariable String category, @PathVariable String city, @PathVariable String district){
         return invitationService.getInvitationInfoByCategoryAndLocation(category, city, district);
     }
 
+    //장소와 날짜 기반 검색
     @GetMapping("/category/{category}/city/{city}/district/{district}/from/{from}/to/{to}")
     public List<InvitationInfoDto> getInvitationInfoByLocationAndCategory(@PathVariable String category, @PathVariable String city, @PathVariable String district,
                                                                           @PathVariable LocalDate from, @PathVariable LocalDate to){

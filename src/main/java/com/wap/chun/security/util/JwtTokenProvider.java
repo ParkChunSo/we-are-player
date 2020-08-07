@@ -25,9 +25,9 @@ public class JwtTokenProvider {
         Claims claims = Jwts.claims().setSubject(username);
         claims.put("roles", roles);
 
-        return Jwts.builder()//
-                .setClaims(claims)//
-                .setIssuedAt(new Date())//
+        return Jwts.builder()
+                .setClaims(claims)
+                .setIssuedAt(new Date())
                 .setExpiration(Date.from(LocalDateTime.now().plusHours(1).toInstant(ZoneOffset.UTC))) //한시간
                 .signWith(SignatureAlgorithm.HS256, secretKey)//
                 .compact();

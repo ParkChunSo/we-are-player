@@ -14,7 +14,7 @@ public class GoalInfoDto {
     private String goalMemberName;
     private String assistMemberId;
     private String assistMemberName;
-    private Integer time;
+    private int time;
 
     public GoalInfoDto(Goal entity) {
         this.goalMemberId = entity.getGoalMember().getId();

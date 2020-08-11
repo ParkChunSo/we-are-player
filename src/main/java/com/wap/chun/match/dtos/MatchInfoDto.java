@@ -15,15 +15,15 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MatchInfoDto {
-    private Long id;
+    private long id;
     private LocalDateTime date;
     private String city;
     private String district;
     private String detailsAddress;
     private ClubInfoDto homeClub;
     private ClubInfoDto awayClub;
-    private Integer homeClubScore;
-    private Integer awayClubScore;
+    private int homeClubScore;
+    private int awayClubScore;
     private MatchState state;
 
     public MatchInfoDto(Match entity) {

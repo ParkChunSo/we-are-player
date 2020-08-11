@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @Getter
 public class SubmitMemberSaveDto {
-    private Long invitationId;
+    private long invitationId;
     private String message;
     private String memberId;
     private ClubMemberType clubMemberType;

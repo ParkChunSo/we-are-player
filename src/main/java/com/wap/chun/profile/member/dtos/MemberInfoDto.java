@@ -13,8 +13,8 @@ public class MemberInfoDto {
     private String district;
     private String pictureUri;
     private PositionType position;
-    private Integer likeCnt;
-    private Integer rudeCnt;
+    private int likeCnt;
+    private int rudeCnt;
     private DisclosureScopeState disclosureScopeState;
 
     public MemberInfoDto(Member entity){

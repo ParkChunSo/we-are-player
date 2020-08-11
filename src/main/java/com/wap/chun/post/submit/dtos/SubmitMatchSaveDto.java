@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public class SubmitMatchSaveDto {
-    private Long invitationId;
+    private long invitationId;
     private String message;
     
     // 요청하는 클럽 정보

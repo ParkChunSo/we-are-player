@@ -12,7 +12,7 @@ public class ClubMemberSaveDto {
     private String clubCity;
     private String clubDistrict;
     private String memberId;
-    private Integer uniformNum;
+    private int uniformNum;
     private PositionType positionType;
     private ClubMemberType clubMemberType;
 }

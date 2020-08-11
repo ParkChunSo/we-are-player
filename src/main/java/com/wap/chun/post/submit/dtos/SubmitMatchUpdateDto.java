@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Getter
 public class SubmitMatchUpdateDto {
-    private Long id;
+    private long id;
     private SubmitState state;
     private String city;
     private String district;

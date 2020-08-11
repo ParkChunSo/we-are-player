@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Getter
 public class SubmitMatchInfoDto {
-    private Long id;
+    private long id;
     private String message;
     private LocalDateTime submitTime;
     private ClubInfoDto club;

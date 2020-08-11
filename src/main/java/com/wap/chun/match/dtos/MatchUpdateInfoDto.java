@@ -7,10 +7,10 @@ import java.util.List;
 
 @Getter
 public class MatchUpdateInfoDto {
-    private Long matchId;
+    private long matchId;
 
-    private Integer homeClubScore;
-    private Integer awayClubScore;
+    private int homeClubScore;
+    private int awayClubScore;
 
     private List<GoalInfoDto> homeClubGoals;
     private List<GoalInfoDto> awayClubGoals;

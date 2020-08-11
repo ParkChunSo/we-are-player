@@ -13,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Squad {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private long id;
 
     private PositionType positionType;
 

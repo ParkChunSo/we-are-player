@@ -19,7 +19,7 @@ import java.util.Set;
 public class Invitation {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private long id;
 
     @NotNull
     @Enumerated(value = EnumType.STRING)

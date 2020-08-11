@@ -10,7 +10,7 @@ public class ClubInfoUpdateDto {
     private String city;
     private String district;
 
-    private Integer likeCnt;
-    private Integer rudeCnt;
+    private int likeCnt;
+    private int rudeCnt;
     private String logoUri;
 }

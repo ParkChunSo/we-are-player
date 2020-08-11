@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @Getter @Builder
 @AllArgsConstructor
 public class ClubInfoDto {
-    private Long clubId;
+    private long clubId;
     private String clubName;
     private String city;
     private String district;

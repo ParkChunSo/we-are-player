@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 public class ClubMember {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "club_id")
@@ -28,7 +28,7 @@ public class ClubMember {
     private LocalDateTime registDate;
 
     @Setter
-    private Integer uniformNum;
+    private int uniformNum;
 
     @Setter
     @Enumerated(value = EnumType.STRING)
@@ -39,7 +39,7 @@ public class ClubMember {
     private ClubMemberType clubMemberType;
 
     @Builder
-    public ClubMember(Club club, Member member, Integer uniformNum, PositionType positionType, ClubMemberType clubMemberType) {
+    public ClubMember(Club club, Member member, int uniformNum, PositionType positionType, ClubMemberType clubMemberType) {
         this.club = club;
         this.member = member;
         this.uniformNum = uniformNum;

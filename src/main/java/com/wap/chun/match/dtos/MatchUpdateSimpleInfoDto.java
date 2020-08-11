@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 @Getter
 public class MatchUpdateSimpleInfoDto {
-    private Long id;
+    private long id;
     private LocalDateTime date;
     private String city;
     private String district;

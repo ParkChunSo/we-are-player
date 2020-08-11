@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 public abstract class Submit {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private long id;
 
     @Setter
     private String message;

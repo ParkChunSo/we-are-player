@@ -7,8 +7,8 @@ import lombok.Getter;
 
 @Getter
 public class SubmitMemberUpdateDto {
-    private Long id;
-    private Integer uniformNum;
+    private long id;
+    private int uniformNum;
     private ClubMemberType clubMemberType;
     private PositionType positionType;
     private SubmitState state;

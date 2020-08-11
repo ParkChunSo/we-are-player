@@ -18,7 +18,7 @@ import java.util.List;
 public class Club {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long clubId;
+    private long clubId;
 
     @NotNull
     private String clubName;
@@ -36,13 +36,13 @@ public class Club {
     private String logoUri;
 
     @Setter
-    private Integer likeCnt;
+    private int likeCnt;
 
     @Setter
-    private Integer rudeCnt;
+    private int rudeCnt;
 
     @Setter
-    private Integer point;
+    private int point;
 
     private boolean deleteFlag;
 

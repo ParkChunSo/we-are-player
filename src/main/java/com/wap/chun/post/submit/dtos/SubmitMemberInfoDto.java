@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 @Getter
 public class SubmitMemberInfoDto {
-    private Long id;
+    private long id;
     private String message;
     private LocalDateTime submitTime;
     private MemberInfoDto member;

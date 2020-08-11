@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Getter
 public class InvitationInfoDto {
-    private Long id;
+    private long id;
     private InvitationType category;
 
     private String wantedCity;

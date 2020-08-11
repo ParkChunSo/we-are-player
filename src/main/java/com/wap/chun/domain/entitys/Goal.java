@@ -14,9 +14,9 @@ import java.time.LocalTime;
 public class Goal {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private long id;
 
-    private Integer time;
+    private int time;
 
     private MatchType type;
 

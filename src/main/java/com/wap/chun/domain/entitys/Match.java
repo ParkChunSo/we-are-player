@@ -17,7 +17,7 @@ import java.util.List;
 public class Match {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private long id;
 
     @NotNull
     private LocalDateTime date;
@@ -39,9 +39,9 @@ public class Match {
     @JoinColumn(name = "away_club_id")
     private Club awayClub;
 
-    private Integer homeClubScore;
+    private int homeClubScore;
 
-    private Integer awayClubScore;
+    private int awayClubScore;
 
     @Setter
     @Enumerated(value = EnumType.STRING)
@@ -64,7 +64,7 @@ public class Match {
         this.state = date.isAfter(LocalDateTime.now()) ? MatchState.FUTURE : MatchState.PAST;
     }
 
-    public Match updateInfoAfterMatch(Integer homeClubScore, Integer awayClubScore, List<Goal> goals, List<Squad> squads){
+    public Match updateInfoAfterMatch(int homeClubScore, int awayClubScore, List<Goal> goals, List<Squad> squads){
         this.homeClubScore = homeClubScore;
         this.awayClubScore = awayClubScore;
         this.goals = goals;

@@ -37,10 +37,10 @@ public class Member {
     private LocalDateTime createDate;
 
     @Setter
-    private Integer likeCnt;
+    private int likeCnt;
 
     @Setter
-    private Integer rudeCnt;
+    private int rudeCnt;
 
     @Setter
     private String pictureUri;

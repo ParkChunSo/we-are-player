@@ -17,7 +17,7 @@ public class ClubMemberDto {
     private String district;
     private String pictureUri;
     private String registTime;
-    private Integer uniformNum;
+    private int uniformNum;
 
     private ClubMemberType type;
     private PositionType position;

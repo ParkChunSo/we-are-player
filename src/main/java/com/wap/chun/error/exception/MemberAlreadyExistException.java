@@ -3,8 +3,7 @@ package com.wap.chun.error.exception;
 import com.wap.chun.error.ErrorCode;
 import lombok.Getter;
 
-@Getter
-public class MemberAlreadyExistException extends AlreadyExistException {
+public class MemberAlreadyExistException extends ErrorCodeException {
     public MemberAlreadyExistException() {
         this(ErrorCode.EMAIL_DUPLICATION);
     }

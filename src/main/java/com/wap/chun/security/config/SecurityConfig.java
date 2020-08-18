@@ -1,5 +1,7 @@
 package com.wap.chun.security.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.wap.chun.domain.enums.MemberRole;
 import com.wap.chun.security.JwtTokenFilter;
 import com.wap.chun.security.util.JwtTokenProvider;
@@ -30,16 +32,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic().disable()
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-
                 .and()
                 .authorizeRequests()
                     .antMatchers(HttpMethod.POST, "/member/login").permitAll()
-                    .antMatchers(HttpMethod.POST, "/member/client/signUp").permitAll()
-                    .antMatchers(HttpMethod.POST, "/member/admin/signUp").hasRole(MemberRole.ADMIN.toString())
+                    .antMatchers(HttpMethod.POST, "/member/signUp/member").permitAll()
+                    .antMatchers(HttpMethod.POST, "/member/signUp/admin").hasRole(MemberRole.ADMIN.toString())
                     .antMatchers(HttpMethod.GET, "/member/all").hasRole(MemberRole.ADMIN.toString())
-
                     .antMatchers("/member/**").authenticated()
-                //TODO("추가적인 URL 고려 및 ENUM으로 뺴는거 생각해보기")
+
+                    .antMatchers(HttpMethod.GET, "/club/**").permitAll()
+                    .antMatchers(HttpMethod.POST, "/club/**").authenticated()
+
+                    .antMatchers(HttpMethod.GET,"/match/**").permitAll()
+                    .antMatchers(HttpMethod.POST,"/match/**").authenticated()
+                    .antMatchers(HttpMethod.PUT,"/match/**").authenticated()
+
+                    //TODO("추가적인 URL 고려 및 ENUM으로 뺴는거 생각해보기")
                     .anyRequest().anonymous()
 
                 .and()

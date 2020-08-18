@@ -1,6 +1,7 @@
 spring:
   profiles:
     active: local
+
 ---
 spring:
   profiles: local
@@ -18,6 +19,22 @@ spring:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
 
+---
+spring:
+  profiles: test
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/we_are_player_test_schema?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Seoul
+    username: we_are_player
+    password: 1234
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
 ---
 spring:
   profiles: release

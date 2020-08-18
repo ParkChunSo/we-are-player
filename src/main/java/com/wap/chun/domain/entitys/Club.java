@@ -2,19 +2,22 @@ package com.wap.chun.domain.entitys;
 
 import com.sun.istack.NotNull;
 import com.wap.chun.profile.club.dtos.ClubInfoDto;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "club_tbl")
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@EqualsAndHashCode(of = "clubId")
 public class Club {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long clubId;
 
     @NotNull
@@ -24,7 +27,10 @@ public class Club {
     private LocalDateTime createDate;
 
     @Setter
-    private String location;
+    private String city;
+
+    @Setter
+    private String district;
 
     @Setter
     private String logoUri;
@@ -38,28 +44,36 @@ public class Club {
     @Setter
     private Integer point;
 
+    private boolean deleteFlag;
+
     @Setter
-    @OneToOne
-    @JoinColumn(name = "leader_id")
-    private Member leader;
+    @OneToMany(mappedBy = "club", fetch = FetchType.EAGER)
+    private List<ClubMember> clubMembers = new ArrayList<>();
 
     @Builder
-    public Club(String clubName,String location, Member leader) {
+    protected Club(String clubName, String city, String district, String logoUri) {
         this.clubName = clubName;
-        this.location = location;
-        this.leader = leader;
+        this.city = city;
+        this.district = district;
+        this.logoUri = logoUri;
         this.likeCnt = 0;
         this.rudeCnt = 0;
         this.point = 0;
+        this.deleteFlag = false;
     }
 
-    public Club(ClubInfoDto dto, Member leader){
+    public Club(ClubInfoDto dto) {
         this.clubName = dto.getClubName();
-        this.location = dto.getLocation();
+        this.city = dto.getCity();
+        this.district = dto.getDistrict();
         this.logoUri = dto.getLogoUri();
-        this.leader = leader;
         this.likeCnt = 0;
         this.rudeCnt = 0;
         this.point = 0;
+        this.deleteFlag = false;
+    }
+
+    public void deleteClub(){
+        deleteFlag = true;
     }
 }

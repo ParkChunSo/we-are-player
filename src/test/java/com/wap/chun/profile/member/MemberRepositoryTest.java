@@ -1,31 +1,24 @@
 package com.wap.chun.profile.member;
 
-import com.wap.chun.common.WebConfig;
-import com.wap.chun.domain.MemberInfoSetUp;
+import com.wap.chun.common.RepositoryTest;
 import com.wap.chun.domain.entitys.Member;
+import com.wap.chun.domain.request.MemberInfoSetUp;
 import com.wap.chun.profile.member.repository.MemberRepository;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
-import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@RepositoryTest
+public class MemberRepositoryTest{
 
-//@ExtendWith(SpringExtension.class)
-@DataJpaTest
-@AutoConfigureDataJpa
-public class MemberRepositoryTest {
     @Autowired
     MemberRepository memberRepository;
 
     @Test
-    void test_ExistById() {
+    @DisplayName("아이디 중복 확인")
+    void testExistById() {
         //given
         Member member = MemberInfoSetUp.toClientEntity(MemberInfoSetUp.park);
         memberRepository.save(member);
@@ -38,7 +31,8 @@ public class MemberRepositoryTest {
     }
 
     @Test
-    void test_findById() {
+    @DisplayName("사용자 조회")
+    void testFindById() {
         //given
         Member member = MemberInfoSetUp.toClientEntity(MemberInfoSetUp.park);
         memberRepository.save(member);

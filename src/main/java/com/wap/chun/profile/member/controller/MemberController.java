@@ -17,48 +17,48 @@ import java.util.List;
 public class MemberController {
     private final MemberService memberService;
 
-    @PostMapping("/client/signUp")
-    public void signUpForClient(@RequestBody MemberSignUpDto dto){
-        memberService.signUp(dto, MemberRole.CLIENT);
+    @PostMapping("/signUp/member")
+    public void signUpClient(@RequestBody MemberSignUpDto dto) {
+        memberService.signUp(dto);
     }
 
-    @PostMapping("/admin/signUp")
-    public void signUpForAdmin(@RequestBody MemberSignUpDto dto){
-        memberService.signUp(dto, MemberRole.ADMIN);
+    @PostMapping("/signUp/admin")
+    public void signUpAdmin(@RequestHeader(name = "Authorization") String token, @RequestBody MemberSignUpDto dto) {
+        memberService.signUp(token, dto);
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody MemberLoginDto dto){
+    public String login(@RequestBody MemberLoginDto dto) {
         return memberService.login(dto);
     }
 
     @GetMapping("/{userId}")
-    public MemberInfoDto getMemberInfo(@PathVariable String userId){
+    public MemberInfoDto getMemberInfo(@PathVariable String userId) {
         return memberService.getMemberInfo(userId);
     }
 
     @GetMapping("/details/{userId}")
-    public MemberDetailsInfoDto getMemberDetailsInfo(@RequestHeader(name = "Authorization") String token, @PathVariable String userId){
+    public MemberDetailsInfoDto getMemberDetailsInfo(@RequestHeader(name = "Authorization") String token, @PathVariable String userId) {
         return memberService.getMemberDetailsInfo(userId, token);
     }
 
-    @PostMapping("/update")
-    public void updateMemberInfo(@RequestBody MemberInfoUpdateDto dto){
+    @PutMapping("/update")
+    public void updateMemberInfo(@RequestBody MemberInfoUpdateDto dto) {
         memberService.updateMemberInfo(dto);
     }
 
-    @PostMapping("/update/password")
-    public void updatePassword(@RequestBody MemberPasswordUpdateDto dto){
+    @PutMapping("/update/password")
+    public void updatePassword(@RequestBody MemberPasswordUpdateDto dto) {
         memberService.updateMemberPassword(dto);
     }
 
-    @PostMapping("/delete")
-    public void deleteMember(@RequestBody MemberDeleteDto dto){
+    @DeleteMapping("/delete")
+    public void deleteMember(@RequestBody MemberDeleteDto dto) {
         memberService.deleteMember(dto);
     }
 
     @GetMapping("/all")
-    public List<MemberInfoDto> getAllMember(){
+    public List<MemberInfoDto> getAllMember() {
         return memberService.getAllMember();
     }
 }

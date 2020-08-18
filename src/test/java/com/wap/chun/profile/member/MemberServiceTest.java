@@ -1,12 +1,13 @@
 package com.wap.chun.profile.member;
 
-import com.wap.chun.domain.ClubBuilder;
-import com.wap.chun.domain.ClubMemberBuilder;
-import com.wap.chun.domain.MemberInfoSetUp;
+import com.wap.chun.common.ServiceTest;
+import com.wap.chun.domain.builder.ClubBuilder;
+import com.wap.chun.domain.builder.ClubMemberBuilder;
 import com.wap.chun.domain.entitys.Club;
 import com.wap.chun.domain.entitys.ClubMember;
 import com.wap.chun.domain.entitys.Member;
-import com.wap.chun.domain.enums.MemberRole;
+import com.wap.chun.domain.request.MemberInfoSetUp;
+import com.wap.chun.error.exception.AccessDeniedAuthenticationException;
 import com.wap.chun.error.exception.MemberAlreadyExistException;
 import com.wap.chun.error.exception.MemberNotFoundException;
 import com.wap.chun.profile.club.repository.ClubMemberRepository;
@@ -18,10 +19,8 @@ import com.wap.chun.profile.member.service.MemberService;
 import com.wap.chun.security.util.JwtTokenProvider;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
@@ -32,7 +31,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 
-@ExtendWith(MockitoExtension.class)
+@ServiceTest
 public class MemberServiceTest {
     @InjectMocks
     MemberService memberService;
@@ -51,7 +50,7 @@ public class MemberServiceTest {
 
     @Test
     @DisplayName("로그인 성공")
-    void test_Login_Success() {
+    void testLoginSuccess() {
         //given
         MemberSignUpDto dto = MemberInfoSetUp.park;
         Member member = MemberInfoSetUp.toAdminEntity(dto);
@@ -60,7 +59,11 @@ public class MemberServiceTest {
         given(jwtTokenProvider.createToken(member.getId(), member.getRoleSet())).willReturn("token");
 
         //when
-        final String token = memberService.login(new MemberLoginDto(dto.getId(), dto.getPassword()));
+        final String token = memberService.login(
+                MemberLoginDto.builder()
+                        .id(dto.getId())
+                        .password(dto.getPassword())
+                        .build());
 
         //then
         assertEquals(token, "token");
@@ -68,29 +71,42 @@ public class MemberServiceTest {
 
     @Test
     @DisplayName("로그인 실패")
-    void test_Login_Fail() {
+    void testLoginFail() {
         //given
         MemberSignUpDto dto = MemberInfoSetUp.park;
         given(memberRepository.findById(anyString())).willReturn(Optional.empty());
 
         //when
-        assertThrows(MemberNotFoundException.class, () -> memberService.login(new MemberLoginDto(dto.getId(), dto.getPassword())));
+        assertThrows(MemberNotFoundException.class,
+                () -> memberService.login(MemberLoginDto.builder()
+                        .id(dto.getId())
+                        .password(dto.getPassword()).build()));
     }
 
     @Test
-    @DisplayName("회원가입 실패")
-    void test_SignUp_Fail() {
+    @DisplayName("회원가입 실패(아이디 중복)")
+    void testSignUpFailBecauseDuplication() {
         //given
         given(memberRepository.existsById(any())).willReturn(true);
 
-        //when
-        assertThrows(MemberAlreadyExistException.class, () -> memberService.signUp(MemberInfoSetUp.park, MemberRole.CLIENT));
+        //then
+        assertThrows(MemberAlreadyExistException.class, () -> memberService.signUp(MemberInfoSetUp.park));
 
+    }
+
+    @Test
+    @DisplayName("회원가입 실패(권한)")
+    void testSignUpFailBecauseAuthentication() {
+        //given
+        given(memberRepository.existsById(any())).willReturn(false);
+
+        //then
+        assertThrows(AccessDeniedAuthenticationException.class, () -> memberService.signUp(MemberInfoSetUp.park));
     }
 
     @Test
     @DisplayName("멤버 상세정보 가져오기(본인)")
-    void test_GetMemberDetailsInfo_Success_Authentication() {
+    void testGetMemberDetailsInfoSuccessByAuthentication() {
         //given
         Member member = MemberInfoSetUp.toClientEntity(MemberInfoSetUp.park);
         given(memberRepository.findById(anyString())).willReturn(Optional.of(member));
@@ -107,13 +123,13 @@ public class MemberServiceTest {
 
     @Test
     @DisplayName("멤버 상세정보 가져오기(리더)")
-    void test_GetMemberDetailsInfo_Success_Leader() {
+    void testGetMemberDetailsInfoSuccessByLeader() {
         //given
         Member leader = MemberInfoSetUp.toClientEntity(MemberInfoSetUp.park);
         Member member = MemberInfoSetUp.toClientEntity(MemberInfoSetUp.kim);
 
-        Club club = ClubBuilder.build(leader);
-        List<ClubMember> clubMembers = List.of(ClubMemberBuilder.build(member, club));
+        Club club = ClubBuilder.yangpyeongFC;
+        List<ClubMember> clubMembers = List.of(ClubMemberBuilder.buildMember(member, club));
 
         given(memberRepository.findById(anyString())).willReturn(Optional.of(member));
         given(clubMemberRepository.findByMemberAndClubMemberType(any(), any())).willReturn(Optional.of(clubMembers));
@@ -129,14 +145,14 @@ public class MemberServiceTest {
 
     @Test
     @DisplayName("멤버 상세정보 가져오기(관리자)")
-    void test_GetMemberDetailsInfo_Success_Admin() {
+    void testGetMemberDetailsInfoSuccessByAdmin() {
         //given
         Member leader = MemberInfoSetUp.toClientEntity(MemberInfoSetUp.park);
         Member member = MemberInfoSetUp.toClientEntity(MemberInfoSetUp.kim);
         Member admin = MemberInfoSetUp.toAdminEntity(MemberInfoSetUp.yun);
 
-        Club club = ClubBuilder.build(leader);
-        List<ClubMember> clubMembers = List.of(ClubMemberBuilder.build(member, club));
+        Club club = ClubBuilder.yangpyeongFC;
+        List<ClubMember> clubMembers = List.of(ClubMemberBuilder.buildMember(member, club));
 
         given(memberRepository.findById(anyString())).willReturn(Optional.of(member));
         given(clubMemberRepository.findByMemberAndClubMemberType(any(), any())).willReturn(Optional.of(clubMembers));

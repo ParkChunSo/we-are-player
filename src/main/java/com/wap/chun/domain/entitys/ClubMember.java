@@ -2,26 +2,25 @@ package com.wap.chun.domain.entitys;
 
 import com.wap.chun.domain.enums.ClubMemberType;
 import com.wap.chun.domain.enums.PositionType;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity(name = "club_member_tbl")
-@Getter
+@Getter @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class ClubMember {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "club_id")
     private Club club;
 
-    @ManyToOne
+    @ManyToOne(targetEntity = Member.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "member_id")
     private Member member;
 
@@ -33,17 +32,18 @@ public class ClubMember {
 
     @Setter
     @Enumerated(value = EnumType.STRING)
-    private PositionType position;
+    private PositionType positionType;
 
     @Setter
     @Enumerated(value = EnumType.STRING)
-    private ClubMemberType clubMemberType; //용병인지, 팀원인지 구분.
+    private ClubMemberType clubMemberType;
 
     @Builder
-    public ClubMember(Club club, Member member) {
+    public ClubMember(Club club, Member member, Integer uniformNum, PositionType positionType, ClubMemberType clubMemberType) {
         this.club = club;
         this.member = member;
-        this.position = member.getPosition();
-        this.clubMemberType = ClubMemberType.MEMBER;
+        this.uniformNum = uniformNum;
+        this.positionType = positionType;
+        this.clubMemberType = clubMemberType;
     }
 }

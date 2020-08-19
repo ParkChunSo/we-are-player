@@ -1,9 +1,8 @@
-package com.wap.api.profile.member;
+package com.wap.api.profile.member.repository;
 
 import com.wap.api.common.RepositoryTest;
 import com.wap.api.domain.entitys.Member;
-import com.wap.api.profile.club.setup.MemberInfoSetUp;
-import com.wap.api.profile.member.repository.MemberRepository;
+import com.wap.api.profile.setup.MemberInfoSetUp;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

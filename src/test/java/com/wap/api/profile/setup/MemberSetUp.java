@@ -1,11 +1,8 @@
-package com.wap.api.profile.club.setup;
+package com.wap.api.profile.setup;
 
 import com.wap.api.domain.entitys.Member;
-import com.wap.api.domain.enums.DisclosureScopeState;
 import com.wap.api.domain.enums.MemberRole;
-import com.wap.api.domain.enums.MemberType;
 import com.wap.api.domain.enums.PositionType;
-import com.wap.api.profile.member.dtos.MemberSignUpDto;
 
 import java.util.Set;
 

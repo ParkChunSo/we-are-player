@@ -15,8 +15,9 @@ import javax.transaction.Transactional;
 @ActiveProfiles("test")
 @Transactional
 public class IntegrationTest {
-    protected MockMvc mvc;
+    protected final MockMvc mvc;
     protected final ObjectMapper om;
+
     public IntegrationTest(WebApplicationContext context) {
         this.mvc = MockMvcBuilders.webAppContextSetup(context)
                 .addFilters(new CharacterEncodingFilter("UTF-8", true))

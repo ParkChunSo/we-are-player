@@ -1,4 +1,4 @@
-package com.wap.api.profile.club.setup;
+package com.wap.api.profile.setup;
 
 import com.wap.api.domain.entitys.Member;
 import com.wap.api.domain.enums.DisclosureScopeState;

@@ -6,7 +6,7 @@ import com.wap.api.domain.builder.ClubMemberBuilder;
 import com.wap.api.domain.request.ClubInfoUpdateDtoSetUp;
 import com.wap.api.domain.entitys.Club;
 import com.wap.api.domain.entitys.Member;
-import com.wap.api.profile.club.setup.MemberInfoSetUp;
+import com.wap.api.profile.setup.MemberInfoSetUp;
 import com.wap.api.profile.club.dtos.request.ClubInfoUpdateDto;
 import com.wap.api.profile.member.repository.MemberRepository;
 import org.junit.jupiter.api.DisplayName;

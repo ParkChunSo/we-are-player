@@ -1,4 +1,4 @@
-package com.wap.api.profile.member;
+package com.wap.api.profile.member.service;
 
 import com.wap.api.common.ServiceTest;
 import com.wap.api.domain.builder.ClubBuilder;
@@ -6,7 +6,7 @@ import com.wap.api.domain.builder.ClubMemberBuilder;
 import com.wap.api.domain.entitys.Club;
 import com.wap.api.domain.entitys.ClubMember;
 import com.wap.api.domain.entitys.Member;
-import com.wap.api.profile.club.setup.MemberInfoSetUp;
+import com.wap.api.profile.setup.MemberInfoSetUp;
 import com.wap.api.error.exception.AccessDeniedAuthenticationException;
 import com.wap.api.error.exception.MemberAlreadyExistException;
 import com.wap.api.error.exception.MemberNotFoundException;
@@ -15,7 +15,6 @@ import com.wap.api.profile.member.dtos.MemberDetailsInfoDto;
 import com.wap.api.profile.member.dtos.MemberLoginDto;
 import com.wap.api.profile.member.dtos.MemberSignUpDto;
 import com.wap.api.profile.member.repository.MemberRepository;
-import com.wap.api.profile.member.service.MemberService;
 import com.wap.api.security.util.JwtTokenProvider;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

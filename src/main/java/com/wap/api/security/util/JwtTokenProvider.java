@@ -1,6 +1,6 @@
 package com.wap.api.security.util;
 
-import com.wap.api.profile.domain.enums.MemberRole;
+import com.wap.api.domain.enums.MemberRole;
 import com.wap.api.error.ErrorCode;
 import com.wap.api.error.exception.InvalidJwtAuthenticationException;
 import io.jsonwebtoken.*;

@@ -1,12 +1,12 @@
 package com.wap.api.post.invitation.service;
 
-import com.wap.api.profile.domain.entitys.Club;
-import com.wap.api.profile.domain.entitys.ClubMember;
-import com.wap.api.profile.domain.entitys.Invitation;
-import com.wap.api.profile.domain.entitys.Member;
-import com.wap.api.profile.domain.enums.ClubMemberType;
-import com.wap.api.profile.domain.enums.InvitationType;
-import com.wap.api.profile.domain.enums.MemberRole;
+import com.wap.api.domain.entitys.Club;
+import com.wap.api.domain.entitys.ClubMember;
+import com.wap.api.domain.entitys.Invitation;
+import com.wap.api.domain.entitys.Member;
+import com.wap.api.domain.enums.ClubMemberType;
+import com.wap.api.domain.enums.InvitationType;
+import com.wap.api.domain.enums.MemberRole;
 import com.wap.api.error.exception.AccessDeniedAuthenticationException;
 import com.wap.api.error.exception.ClubNotFoundException;
 import com.wap.api.error.exception.InvitationNotFoundException;
@@ -52,14 +52,14 @@ public class InvitationService {
     }
 
     public List<InvitationInfoDto> getInvitationInfoByCategoryAndLocation(String category, String city, String district) {
-        List<Invitation> invitations = invitationRepository.findByCategoryAndCityAndDistrictAndEndDateAfter(Enum.valueOf(InvitationType.class, category), city, district, LocalDateTime.now());
+        List<Invitation> invitations = invitationRepository.findByInvitationTypeAndCityAndDistrictAndEndDateAfter(Enum.valueOf(InvitationType.class, category), city, district, LocalDateTime.now());
         return invitations.stream()
                 .map(InvitationInfoDto::new)
                 .collect(Collectors.toList());
     }
 
     public List<InvitationInfoDto> getInvitationInfoByCategoryAndLocationAndDateBetween(String category, String city, String district, LocalDate from, LocalDate to) {
-        List<Invitation> invitations = invitationRepository.findByCategoryAndCityAndDistrictAndStartDateBetweenAndEndDateBetween(
+        List<Invitation> invitations = invitationRepository.findByInvitationTypeAndCityAndDistrictAndStartDateBetweenAndEndDateBetween(
                 Enum.valueOf(InvitationType.class, category)
                 , city
                 , district

@@ -1,16 +1,17 @@
 package com.wap.api.profile.club.service;
 
-import com.wap.api.profile.domain.entitys.Club;
-import com.wap.api.profile.domain.entitys.ClubMember;
-import com.wap.api.profile.domain.entitys.Member;
-import com.wap.api.profile.domain.enums.ClubMemberType;
+import com.wap.api.domain.entitys.Club;
+import com.wap.api.domain.entitys.ClubMember;
+import com.wap.api.domain.entitys.Member;
+import com.wap.api.domain.enums.ClubMemberType;
 import com.wap.api.error.exception.AuthorizationException;
 import com.wap.api.error.exception.ClubMemberNotFoundException;
 import com.wap.api.error.exception.ClubNotFoundException;
 import com.wap.api.error.exception.MemberNotFoundException;
-import com.wap.api.profile.club.dtos.ClubLeaderUpdateDto;
-import com.wap.api.profile.club.dtos.ClubMemberDto;
-import com.wap.api.profile.club.dtos.ClubMemberSaveDto;
+import com.wap.api.profile.club.dtos.params.ClubInfoParam;
+import com.wap.api.profile.club.dtos.request.ClubLeaderUpdateDto;
+import com.wap.api.profile.club.dtos.response.ClubMemberDto;
+import com.wap.api.profile.club.dtos.request.ClubMemberSaveDto;
 import com.wap.api.profile.club.repository.ClubMemberRepository;
 import com.wap.api.profile.club.repository.ClubRepository;
 import com.wap.api.profile.member.repository.MemberRepository;
@@ -30,8 +31,8 @@ public class ClubMemberService {
     private final JwtTokenProvider jwtTokenProvider;
 
 
-    public List<ClubMemberDto> getClubMembers(String clubName, String city, String district, ClubMemberType type) {
-        List<ClubMember> clubMembers = clubMemberRepository.findByClub_ClubNameAndClub_CityAndClub_DistrictAndClubMemberType(clubName, city, district, type)
+    public List<ClubMemberDto> getClubMembers(ClubInfoParam dto, ClubMemberType type) {
+        List<ClubMember> clubMembers = clubMemberRepository.findByClub_ClubNameAndClub_CityAndClub_DistrictAndClubMemberType(dto.getName(), dto.getCity(), dto.getDistrict(), type)
                 .orElseThrow(ClubMemberNotFoundException::new);
 
         return clubMembers.stream()

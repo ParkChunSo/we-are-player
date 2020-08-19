@@ -1,14 +1,16 @@
 package com.wap.api.profile.club.service;
 
-import com.wap.api.profile.domain.entitys.Club;
-import com.wap.api.profile.domain.entitys.ClubMember;
-import com.wap.api.profile.domain.entitys.Member;
+import com.wap.api.domain.entitys.Club;
+import com.wap.api.domain.entitys.ClubMember;
+import com.wap.api.domain.entitys.Member;
 import com.wap.api.error.exception.ClubAlreadyExistException;
 import com.wap.api.error.exception.ClubNotFoundException;
 import com.wap.api.error.exception.MemberNotFoundException;
-import com.wap.api.profile.club.dtos.ClubInfoDto;
-import com.wap.api.profile.club.dtos.ClubInfoUpdateDto;
-import com.wap.api.profile.club.dtos.ClubMemberDto;
+import com.wap.api.profile.club.dtos.params.ClubInfoParam;
+import com.wap.api.profile.club.dtos.params.LocationInfoParam;
+import com.wap.api.profile.club.dtos.response.ClubInfoDto;
+import com.wap.api.profile.club.dtos.request.ClubInfoUpdateDto;
+import com.wap.api.profile.club.dtos.response.ClubMemberDto;
 import com.wap.api.profile.club.repository.ClubMemberRepository;
 import com.wap.api.profile.club.repository.ClubRepository;
 import com.wap.api.profile.member.repository.MemberRepository;
@@ -61,8 +63,8 @@ public class ClubService {
         clubMemberRepository.saveAll(clubMembers);
     }
 
-    public ClubInfoDto getClubInfo(String clubName, String clubCity, String clubDistrict) {
-        Club club = clubRepository.findByClubNameAndCityAndDistrictAndDeleteFlagFalse(clubName, clubCity, clubDistrict)
+    public ClubInfoDto getClubInfo(ClubInfoParam dto) {
+        Club club = clubRepository.findByClubNameAndCityAndDistrictAndDeleteFlagFalse(dto.getName(), dto.getCity(), dto.getDistrict())
                 .orElseThrow(ClubNotFoundException::new);
         return new ClubInfoDto(club);
     }
@@ -76,8 +78,8 @@ public class ClubService {
                 .collect(Collectors.toList());
     }
 
-    public List<ClubInfoDto> findByLocation(String clubCity, String clubDistrict) {
-        List<Club> clubList = clubRepository.findByCityAndDistrict(clubCity, clubDistrict)
+    public List<ClubInfoDto> findByLocation(LocationInfoParam dto) {
+        List<Club> clubList = clubRepository.findByCityAndDistrict(dto.getCity(), dto.getDistrict())
                 .orElseThrow(ClubNotFoundException::new);
 
         return clubList.stream()
@@ -100,8 +102,8 @@ public class ClubService {
         clubRepository.save(club);
     }
 
-    public void deleteClub(String clubName, String clubCity, String clubDistrict) {
-        Club club = clubRepository.findByClubNameAndCityAndDistrictAndDeleteFlagFalse(clubName, clubCity, clubDistrict)
+    public void deleteClub(ClubInfoParam dto) {
+        Club club = clubRepository.findByClubNameAndCityAndDistrictAndDeleteFlagFalse(dto.getName(), dto.getCity(), dto.getDistrict())
                 .orElseThrow(ClubNotFoundException::new);
         club.deleteClub();
         clubRepository.save(club);

@@ -1,8 +1,8 @@
 package com.wap.api.post.submit.dtos;
 
-import com.wap.api.profile.domain.enums.ClubMemberType;
-import com.wap.api.profile.domain.enums.PositionType;
-import com.wap.api.profile.domain.enums.SubmitState;
+import com.wap.api.domain.enums.ClubMemberType;
+import com.wap.api.domain.enums.PositionType;
+import com.wap.api.domain.enums.SubmitState;
 import lombok.Getter;
 
 @Getter

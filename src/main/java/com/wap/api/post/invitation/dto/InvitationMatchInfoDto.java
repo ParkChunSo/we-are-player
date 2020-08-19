@@ -1,7 +1,7 @@
 package com.wap.api.post.invitation.dto;
 
-import com.wap.api.profile.domain.entitys.Invitation;
-import com.wap.api.profile.domain.entitys.SubmitMatch;
+import com.wap.api.domain.entitys.Invitation;
+import com.wap.api.domain.entitys.SubmitMatch;
 import com.wap.api.post.submit.dtos.SubmitMatchInfoDto;
 
 import java.util.List;

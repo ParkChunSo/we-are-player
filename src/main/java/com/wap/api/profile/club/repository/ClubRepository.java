@@ -1,6 +1,6 @@
 package com.wap.api.profile.club.repository;
 
-import com.wap.api.profile.domain.entitys.Club;
+import com.wap.api.domain.entitys.Club;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

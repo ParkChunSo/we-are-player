@@ -1,7 +1,7 @@
 package com.wap.api.post.submit.service;
 
-import com.wap.api.profile.domain.entitys.*;
-import com.wap.api.profile.domain.enums.SubmitState;
+import com.wap.api.domain.entitys.*;
+import com.wap.api.domain.enums.SubmitState;
 import com.wap.api.error.exception.ClubNotFoundException;
 import com.wap.api.error.exception.InvitationNotFoundException;
 import com.wap.api.error.exception.MemberNotFoundException;

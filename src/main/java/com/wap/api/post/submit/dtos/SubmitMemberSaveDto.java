@@ -1,6 +1,6 @@
 package com.wap.api.post.submit.dtos;
 
-import com.wap.api.profile.domain.enums.ClubMemberType;
+import com.wap.api.domain.enums.ClubMemberType;
 import lombok.Getter;
 
 @Getter

@@ -1,8 +1,8 @@
 package com.wap.api.profile.member.dtos;
 
-import com.wap.api.profile.domain.entitys.Club;
-import com.wap.api.profile.domain.entitys.Member;
-import com.wap.api.profile.club.dtos.ClubInfoDto;
+import com.wap.api.domain.entitys.Club;
+import com.wap.api.domain.entitys.Member;
+import com.wap.api.profile.club.dtos.response.ClubInfoDto;
 import lombok.Getter;
 
 import java.util.Collections;

@@ -1,6 +1,6 @@
 package com.wap.api.security.config;
 
-import com.wap.api.profile.domain.enums.MemberRole;
+import com.wap.api.domain.enums.MemberRole;
 import com.wap.api.security.JwtTokenFilter;
 import com.wap.api.security.util.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;

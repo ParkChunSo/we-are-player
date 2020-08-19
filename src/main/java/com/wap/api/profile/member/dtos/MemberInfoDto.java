@@ -1,8 +1,8 @@
 package com.wap.api.profile.member.dtos;
 
-import com.wap.api.profile.domain.entitys.Member;
-import com.wap.api.profile.domain.enums.DisclosureScopeState;
-import com.wap.api.profile.domain.enums.PositionType;
+import com.wap.api.domain.entitys.Member;
+import com.wap.api.domain.enums.DisclosureScopeState;
+import com.wap.api.domain.enums.PositionType;
 import lombok.Getter;
 
 @Getter

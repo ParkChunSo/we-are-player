@@ -1,7 +1,7 @@
 package com.wap.api.profile.member.service;
 
-import com.wap.api.profile.domain.entitys.Member;
-import com.wap.api.profile.domain.enums.MemberRole;
+import com.wap.api.domain.entitys.Member;
+import com.wap.api.domain.enums.MemberRole;
 import com.wap.api.profile.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;

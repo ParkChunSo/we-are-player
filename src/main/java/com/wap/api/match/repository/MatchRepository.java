@@ -1,7 +1,7 @@
 package com.wap.api.match.repository;
 
-import com.wap.api.profile.domain.entitys.Club;
-import com.wap.api.profile.domain.entitys.Match;
+import com.wap.api.domain.entitys.Club;
+import com.wap.api.domain.entitys.Match;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDateTime;

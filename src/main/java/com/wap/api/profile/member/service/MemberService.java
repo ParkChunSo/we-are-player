@@ -1,10 +1,10 @@
 package com.wap.api.profile.member.service;
 
-import com.wap.api.profile.domain.entitys.ClubMember;
-import com.wap.api.profile.domain.entitys.Member;
-import com.wap.api.profile.domain.enums.ClubMemberType;
-import com.wap.api.profile.domain.enums.MemberRole;
-import com.wap.api.profile.domain.enums.MemberType;
+import com.wap.api.domain.entitys.ClubMember;
+import com.wap.api.domain.entitys.Member;
+import com.wap.api.domain.enums.ClubMemberType;
+import com.wap.api.domain.enums.MemberRole;
+import com.wap.api.domain.enums.MemberType;
 import com.wap.api.error.exception.AccessDeniedAuthenticationException;
 import com.wap.api.error.exception.MemberAlreadyExistException;
 import com.wap.api.error.exception.MemberNotFoundException;

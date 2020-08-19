@@ -1,12 +1,12 @@
 package com.wap.api.profile.member;
 
 import com.wap.api.common.ServiceTest;
-import com.wap.api.profile.domain.builder.ClubBuilder;
-import com.wap.api.profile.domain.builder.ClubMemberBuilder;
-import com.wap.api.profile.domain.entitys.Club;
-import com.wap.api.profile.domain.entitys.ClubMember;
-import com.wap.api.profile.domain.entitys.Member;
-import com.wap.api.profile.domain.request.MemberInfoSetUp;
+import com.wap.api.domain.builder.ClubBuilder;
+import com.wap.api.domain.builder.ClubMemberBuilder;
+import com.wap.api.domain.entitys.Club;
+import com.wap.api.domain.entitys.ClubMember;
+import com.wap.api.domain.entitys.Member;
+import com.wap.api.profile.club.setup.MemberInfoSetUp;
 import com.wap.api.error.exception.AccessDeniedAuthenticationException;
 import com.wap.api.error.exception.MemberAlreadyExistException;
 import com.wap.api.error.exception.MemberNotFoundException;

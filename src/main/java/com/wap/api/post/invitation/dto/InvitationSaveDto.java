@@ -1,6 +1,6 @@
 package com.wap.api.post.invitation.dto;
 
-import com.wap.api.profile.domain.enums.InvitationType;
+import com.wap.api.domain.enums.InvitationType;
 import lombok.Builder;
 import lombok.Getter;
 

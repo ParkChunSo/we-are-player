@@ -1,8 +1,8 @@
 package com.wap.api.post.invitation.dto;
 
-import com.wap.api.profile.domain.entitys.Invitation;
-import com.wap.api.profile.domain.enums.InvitationType;
-import com.wap.api.profile.club.dtos.ClubInfoDto;
+import com.wap.api.domain.entitys.Invitation;
+import com.wap.api.domain.enums.InvitationType;
+import com.wap.api.profile.club.dtos.response.ClubInfoDto;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Getter
 public class InvitationInfoDto {
     private long id;
-    private InvitationType category;
+    private InvitationType invitationType;
 
     private String wantedCity;
     private String wantedDistrict;
@@ -25,7 +25,7 @@ public class InvitationInfoDto {
 
     public InvitationInfoDto(Invitation entity){
         this.id = entity.getId();
-        this.category = entity.getCategory();
+        this.invitationType = entity.getInvitationType();
         this.wantedCity = entity.getCity();
         this.wantedDistrict = entity.getDistrict();
         this.clubInfo = new ClubInfoDto(entity.getClub());

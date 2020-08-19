@@ -1,8 +1,8 @@
 package com.wap.api.post.submit.dtos;
 
-import com.wap.api.profile.domain.entitys.SubmitMatch;
-import com.wap.api.profile.domain.enums.SubmitState;
-import com.wap.api.profile.club.dtos.ClubInfoDto;
+import com.wap.api.domain.entitys.SubmitMatch;
+import com.wap.api.domain.enums.SubmitState;
+import com.wap.api.profile.club.dtos.response.ClubInfoDto;
 import lombok.Getter;
 
 import java.time.LocalDateTime;

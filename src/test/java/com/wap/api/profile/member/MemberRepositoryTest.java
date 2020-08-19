@@ -1,8 +1,8 @@
 package com.wap.api.profile.member;
 
 import com.wap.api.common.RepositoryTest;
-import com.wap.api.profile.domain.entitys.Member;
-import com.wap.api.profile.domain.request.MemberInfoSetUp;
+import com.wap.api.domain.entitys.Member;
+import com.wap.api.profile.club.setup.MemberInfoSetUp;
 import com.wap.api.profile.member.repository.MemberRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

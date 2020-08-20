@@ -4,7 +4,9 @@ import com.wap.api.profile.member.dtos.*;
 import com.wap.api.profile.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RequestMapping("/member")
@@ -14,13 +16,14 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping
-    public void signUpClient(@RequestBody MemberSignUpDto dto) {
-        memberService.signUp(dto);
+    public void signUpClient(@RequestParam("image") MultipartFile image, @RequestBody MemberSignUpDto dto) throws IOException {
+        memberService.signUp(dto, image);
     }
 
     @PostMapping("/admin")
-    public void signUpAdmin(@RequestHeader(name = "Authorization") String token, @RequestBody MemberSignUpDto dto) {
-        memberService.signUp(token, dto);
+    public void signUpAdmin(@RequestHeader(name = "Authorization") String token
+            , @RequestParam("image") MultipartFile image, @RequestBody MemberSignUpDto dto) throws IOException {
+        memberService.signUp(token, dto, image);
     }
 
     @PostMapping("/login")
@@ -46,6 +49,11 @@ public class MemberController {
     @PutMapping
     public void updateMemberInfo(@RequestBody MemberInfoUpdateDto dto) {
         memberService.updateMemberInfo(dto);
+    }
+
+    @PutMapping("/image")
+    public void updateImage(@RequestParam("image") MultipartFile image, @RequestParam("id") String id) throws IOException {
+        memberService.updateImage(id, image);
     }
 
     @PutMapping("/password")

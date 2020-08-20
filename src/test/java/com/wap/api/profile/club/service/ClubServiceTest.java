@@ -19,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -46,7 +47,7 @@ public class ClubServiceTest {
 
     @Test
     @DisplayName("클럽 생성 성공")
-    void testCreateClubSuccess() {
+    void testCreateClubSuccess() throws IOException {
         //given
         Club club = new Club(ClubInfoSetUp.yangpyeongFC);
         Member park = MemberInfoSetUp.toClientEntity(MemberInfoSetUp.park);
@@ -68,7 +69,7 @@ public class ClubServiceTest {
         given(clubMemberRepository.saveAll(any())).willReturn(Collections.emptyList());
 
         //when
-        clubService.createClub(dto);
+        clubService.createClub(null, dto);
     }
 
     @Test
@@ -78,7 +79,7 @@ public class ClubServiceTest {
         given(clubRepository.existsByClubNameAndCityAndDistrict(anyString(), anyString(), anyString())).willReturn(true);
 
         //then
-        assertThrows(ClubAlreadyExistException.class, () -> clubService.createClub(ClubInfoSetUp.yangpyeongFC));
+        assertThrows(ClubAlreadyExistException.class, () -> clubService.createClub(null, ClubInfoSetUp.yangpyeongFC));
     }
 
     @Test

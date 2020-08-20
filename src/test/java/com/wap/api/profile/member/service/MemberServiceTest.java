@@ -1,5 +1,6 @@
 package com.wap.api.profile.member.service;
 
+import com.wap.api.common.S3Uploader;
 import com.wap.api.common.ServiceTest;
 import com.wap.api.domain.builder.ClubBuilder;
 import com.wap.api.domain.builder.ClubMemberBuilder;
@@ -20,8 +21,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,6 +43,9 @@ public class MemberServiceTest {
 
     @Mock
     MemberRepository memberRepository;
+
+    @Mock
+    S3Uploader s3Uploader;
 
     @Mock
     JwtTokenProvider jwtTokenProvider;
@@ -84,12 +90,13 @@ public class MemberServiceTest {
 
     @Test
     @DisplayName("회원가입 실패(아이디 중복)")
-    void testSignUpFailBecauseDuplication() {
+    void testSignUpFailBecauseDuplication() throws IOException {
         //given
         given(memberRepository.existsById(any())).willReturn(true);
+        given(s3Uploader.upload(any(), anyString())).willReturn("/path/img.png");
 
         //then
-        assertThrows(MemberAlreadyExistException.class, () -> memberService.signUp(MemberInfoSetUp.park));
+        assertThrows(MemberAlreadyExistException.class, () -> memberService.signUp(MemberInfoSetUp.park, null));
 
     }
 
@@ -100,7 +107,7 @@ public class MemberServiceTest {
         given(memberRepository.existsById(any())).willReturn(false);
 
         //then
-        assertThrows(AccessDeniedAuthenticationException.class, () -> memberService.signUp(MemberInfoSetUp.park));
+        assertThrows(AccessDeniedAuthenticationException.class, () -> memberService.signUp(MemberInfoSetUp.park, null));
     }
 
     @Test

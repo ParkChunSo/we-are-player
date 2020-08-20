@@ -1,5 +1,6 @@
 package com.wap.api.profile.club.service;
 
+import com.wap.api.common.S3Uploader;
 import com.wap.api.domain.entitys.Club;
 import com.wap.api.domain.entitys.ClubMember;
 import com.wap.api.domain.entitys.Member;
@@ -16,7 +17,9 @@ import com.wap.api.profile.club.repository.ClubRepository;
 import com.wap.api.profile.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,11 +31,18 @@ public class ClubService {
     private final ClubRepository clubRepository;
     private final MemberRepository memberRepository;
     private final ClubMemberRepository clubMemberRepository;
+    private final S3Uploader s3Uploader;
 
-    public void createClub(ClubInfoDto dto) {
+    private static final String dirName = "club";
+
+    public void createClub(MultipartFile image, ClubInfoDto dto) throws IOException {
         if (clubRepository.existsByClubNameAndCityAndDistrict(dto.getClubName(), dto.getCity(), dto.getDistrict())) {
             throw new ClubAlreadyExistException();
         }
+        if (!image.isEmpty()) {
+            dto.setLogoUri(s3Uploader.upload(image, dirName, dto.getCity() + dto.getDistrict() + dto.getClubName()));
+        }
+
         Club club = clubRepository.save(new Club(dto));
         List<Member> members = memberRepository.findAllById(
                 dto.getMembers().stream()
@@ -87,15 +97,15 @@ public class ClubService {
                 .collect(Collectors.toList());
     }
 
-    public void updateClubLogoUri(ClubInfoUpdateDto dto) {
-        Club club = clubRepository.findByClubNameAndCityAndDistrictAndDeleteFlagFalse(dto.getClubName(), dto.getCity(),dto.getDistrict())
+    public void updateClubLogoUri(MultipartFile image, ClubInfoParam dto) throws IOException {
+        Club club = clubRepository.findByClubNameAndCityAndDistrictAndDeleteFlagFalse(dto.getName(), dto.getCity(), dto.getDistrict())
                 .orElseThrow(ClubNotFoundException::new);
-        club.setLogoUri(dto.getLogoUri());
+        club.setLogoUri(s3Uploader.upload(image, dirName, club.getCity() + club.getDistrict() + club.getClubName()));
         clubRepository.save(club);
     }
 
     public void updateLikeAndRudeCnt(ClubInfoUpdateDto dto) {
-        Club club = clubRepository.findByClubNameAndCityAndDistrictAndDeleteFlagFalse(dto.getClubName(), dto.getCity(),dto.getDistrict())
+        Club club = clubRepository.findByClubNameAndCityAndDistrictAndDeleteFlagFalse(dto.getClubName(), dto.getCity(), dto.getDistrict())
                 .orElseThrow(ClubNotFoundException::new);
         club.setLikeCnt(dto.getLikeCnt());
         club.setRudeCnt(dto.getRudeCnt());

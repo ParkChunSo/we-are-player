@@ -1,5 +1,6 @@
 package com.wap.api.profile.member.service;
 
+import com.wap.api.common.S3Uploader;
 import com.wap.api.domain.entitys.ClubMember;
 import com.wap.api.domain.entitys.Member;
 import com.wap.api.domain.enums.ClubMemberType;
@@ -15,7 +16,9 @@ import com.wap.api.security.util.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,9 +28,12 @@ import java.util.stream.Collectors;
 public class MemberService {
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
+    private final S3Uploader s3Uploader;
 
     private final MemberRepository memberRepository;
     private final ClubMemberRepository clubMemberRepository;
+
+    private static final String dirName = "profile";
 
     public String login(MemberLoginDto dto) {
         Member member = memberRepository.findById(dto.getId())
@@ -40,7 +46,7 @@ public class MemberService {
         return jwtTokenProvider.createToken(member.getId(), member.getRoleSet());
     }
 
-    public void signUp(MemberSignUpDto dto) {
+    public void signUp(MemberSignUpDto dto, MultipartFile image) throws IOException {
         if(memberRepository.existsById(dto.getId()))
             throw new MemberAlreadyExistException();
 
@@ -54,14 +60,14 @@ public class MemberService {
                 .roleSet(dto.getType().getRoles())
                 .city(dto.getCity())
                 .district(dto.getDistrict())
-                .pictureUri(dto.getPictureUri())
+                .pictureUri(s3Uploader.upload(image, dirName, dto.getId()))
                 .position(dto.getPosition())
                 .build();
 
         memberRepository.save(member);
     }
 
-    public void signUp(String token, MemberSignUpDto dto) {
+    public void signUp(String token, MemberSignUpDto dto, MultipartFile image) throws IOException {
         if(memberRepository.existsById(dto.getId()))
             throw new MemberAlreadyExistException();
 
@@ -76,7 +82,7 @@ public class MemberService {
                 .roleSet(dto.getType().getRoles())
                 .city(dto.getCity())
                 .district(dto.getDistrict())
-                .pictureUri(dto.getPictureUri())
+                .pictureUri(s3Uploader.upload(image, dirName, dto.getId()))
                 .position(dto.getPosition())
                 .build();
 
@@ -165,5 +171,11 @@ public class MemberService {
         return memberRepository.findAll().stream()
                 .map(MemberInfoDto::new)
                 .collect(Collectors.toList());
+    }
+
+    public void updateImage(String id, MultipartFile image) throws IOException {
+        Member member = memberRepository.findById(id).orElseThrow(MemberNotFoundException::new);
+        member.setPictureUri(s3Uploader.upload(image, dirName, member.getId()));
+        memberRepository.save(member);
     }
 }

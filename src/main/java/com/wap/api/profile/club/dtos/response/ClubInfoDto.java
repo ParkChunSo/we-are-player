@@ -14,6 +14,7 @@ public class ClubInfoDto {
     private String clubName;
     private String city;
     private String district;
+    @Setter
     private String logoUri;
     @Setter
     private List<ClubMemberDto> members;

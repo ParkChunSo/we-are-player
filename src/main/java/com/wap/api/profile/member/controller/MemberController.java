@@ -13,12 +13,12 @@ import java.util.List;
 public class MemberController {
     private final MemberService memberService;
 
-    @PostMapping("/signUp/member")
+    @PostMapping
     public void signUpClient(@RequestBody MemberSignUpDto dto) {
         memberService.signUp(dto);
     }
 
-    @PostMapping("/signUp/admin")
+    @PostMapping("/admin")
     public void signUpAdmin(@RequestHeader(name = "Authorization") String token, @RequestBody MemberSignUpDto dto) {
         memberService.signUp(token, dto);
     }
@@ -29,32 +29,32 @@ public class MemberController {
     }
 
     @GetMapping("/{userId}")
-    public MemberInfoDto getMemberInfo(@PathVariable String userId) {
+    public MemberInfoDto findById(@PathVariable String userId) {
         return memberService.getMemberInfo(userId);
     }
 
     @GetMapping("/details/{userId}")
-    public MemberDetailsInfoDto getMemberDetailsInfo(@RequestHeader(name = "Authorization") String token, @PathVariable String userId) {
+    public MemberDetailsInfoDto findDetailsInfoById(@RequestHeader(name = "Authorization") String token, @PathVariable String userId) {
         return memberService.getMemberDetailsInfo(userId, token);
     }
 
-    @PutMapping("/update")
+    @GetMapping("/all")
+    public List<MemberInfoDto> findAllMember() {
+        return memberService.getAllMember();
+    }
+
+    @PutMapping
     public void updateMemberInfo(@RequestBody MemberInfoUpdateDto dto) {
         memberService.updateMemberInfo(dto);
     }
 
-    @PutMapping("/update/password")
+    @PutMapping("/password")
     public void updatePassword(@RequestBody MemberPasswordUpdateDto dto) {
         memberService.updateMemberPassword(dto);
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping
     public void deleteMember(@RequestBody MemberDeleteDto dto) {
         memberService.deleteMember(dto);
-    }
-
-    @GetMapping("/all")
-    public List<MemberInfoDto> getAllMember() {
-        return memberService.getAllMember();
     }
 }

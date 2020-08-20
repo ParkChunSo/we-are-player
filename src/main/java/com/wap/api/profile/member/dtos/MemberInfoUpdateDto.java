@@ -2,9 +2,11 @@ package com.wap.api.profile.member.dtos;
 
 import com.wap.api.domain.enums.DisclosureScopeState;
 import com.wap.api.domain.enums.PositionType;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
+@Builder
 public class MemberInfoUpdateDto {
     private String id;
     private String password;

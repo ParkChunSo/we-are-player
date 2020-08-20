@@ -4,12 +4,14 @@ import com.wap.api.domain.entitys.Club;
 import com.wap.api.domain.entitys.Member;
 import com.wap.api.profile.club.dtos.response.ClubInfoDto;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
+@NoArgsConstructor
 public class MemberDetailsInfoDto extends MemberInfoDto {
     private List<ClubInfoDto> clubInfoDtoList;
 

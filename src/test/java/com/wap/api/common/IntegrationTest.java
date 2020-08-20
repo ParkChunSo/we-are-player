@@ -1,6 +1,7 @@
 package com.wap.api.common;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Disabled;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -14,6 +15,7 @@ import javax.transaction.Transactional;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
 @Transactional
+@Disabled
 public class IntegrationTest {
     protected final MockMvc mvc;
     protected final ObjectMapper om;

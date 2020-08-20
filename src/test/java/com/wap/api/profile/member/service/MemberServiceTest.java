@@ -117,7 +117,6 @@ public class MemberServiceTest {
 
         //then
         assertEquals(member.getId(), dto.getId());
-        assertNull(dto.getClubInfoDtoList());
     }
 
     @Test

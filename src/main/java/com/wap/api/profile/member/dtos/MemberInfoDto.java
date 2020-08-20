@@ -4,8 +4,10 @@ import com.wap.api.domain.entitys.Member;
 import com.wap.api.domain.enums.DisclosureScopeState;
 import com.wap.api.domain.enums.PositionType;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class MemberInfoDto {
     private String id;
     private String name;

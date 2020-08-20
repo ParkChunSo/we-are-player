@@ -66,7 +66,7 @@ public class MemberService {
             throw new MemberAlreadyExistException();
 
         MemberRole role = Enum.valueOf(MemberRole.class, dto.getType().name());
-        if(!jwtTokenProvider.hasRole(token, role))
+        if(!jwtTokenProvider.hasRole(jwtTokenProvider.resolveToken(token), role))
             throw new AccessDeniedAuthenticationException();
 
         Member member = Member.builder()
@@ -99,6 +99,7 @@ public class MemberService {
                 .findByMemberAndClubMemberType(member, ClubMemberType.LEADER)
                 .orElse(Collections.emptyList());
 
+        token = jwtTokenProvider.resolveToken(token);
         String requestId = jwtTokenProvider.getUsername(token);
 
         //리더와 본인만 가능

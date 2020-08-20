@@ -68,13 +68,17 @@ public class JwtTokenProvider {
     }
 
     public boolean hasRole(String token, MemberRole role) {
-        Set list = Jwts.parser()
+        List list = Jwts.parser()
                 .setSigningKey(secretKey)
                 .parseClaimsJws(token)
                 .getBody()
-                .get("roles", Set.class);
+                .get("roles", List.class);
 
-        return list.contains(role);
+        for (Object o : list) {
+            if(o.toString().equals(role.name()))
+                return true;
+        }
+        return false;
     }
 
     public Optional<String> resolveToken(HttpServletRequest req) {

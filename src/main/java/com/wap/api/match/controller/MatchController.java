@@ -1,12 +1,14 @@
 package com.wap.api.match.controller;
 
-import com.wap.api.match.dtos.params.ClubInfoReqParam;
-import com.wap.api.match.dtos.params.ClubsInfoReqParam;
+import com.wap.api.match.dtos.params.ClubInfoDateParam;
+import com.wap.api.match.dtos.params.ClubInfoParam;
+import com.wap.api.match.dtos.params.ClubsInfoParam;
+import com.wap.api.match.dtos.params.LocationParam;
 import com.wap.api.match.dtos.reponse.MatchDetailsInfoDto;
 import com.wap.api.match.dtos.reponse.MatchInfoDto;
 import com.wap.api.match.dtos.request.MatchSaveDto;
 import com.wap.api.match.dtos.request.MatchUpdateInfoDto;
-import com.wap.api.match.dtos.request.MatchUpdateSimpleInfoDto;
+import com.wap.api.match.dtos.request.MatchUpdateBasicInfoDto;
 import com.wap.api.match.service.MatchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -20,43 +22,42 @@ import java.util.List;
 public class MatchController {
     private final MatchService matchService;
 
-    @PostMapping("/save")
+    @PostMapping
     public void saveMatch(@RequestBody MatchSaveDto dto) {
         matchService.saveMatch(dto);
     }
 
-    @GetMapping("/location/city/{city}/district/{district}")
-    public List<MatchInfoDto> getMatchInfoByLocationInMonth(@PathVariable String city, @PathVariable String district) {
-        return matchService.findByLocationInMonth(city, district);
+    @GetMapping("/location")
+    public List<MatchInfoDto> getMatchInfoByLocationInMonth(@ModelAttribute LocationParam dto) {
+        return matchService.findByLocationInMonth(dto);
     }
 
-    @GetMapping("/from/{from}/to/{to}")
-    public List<MatchInfoDto> getMatchInfoByClubInfoAndDate(@ModelAttribute ClubInfoReqParam dto
-            , @PathVariable LocalDate from, @PathVariable LocalDate to) {
-        return matchService.findByClubNameAndClubLocation(dto, from, to);
+    @GetMapping("/club")
+    public List<MatchInfoDto> getMatchInfoByClubInfoAndDate(@ModelAttribute ClubInfoDateParam dto) {
+        return matchService.findByClubNameAndClubLocation(dto);
     }
 
-    @GetMapping("/clubName/{clubName}/clubCity/{clubCity}/clubDistrict/{clubDistrict}")
-    public List<MatchDetailsInfoDto> getMatchByClubInfo(@PathVariable String clubName, @PathVariable String clubCity, @PathVariable String clubDistrict) {
-        return matchService.findClubHistory(clubName, clubCity, clubDistrict);
+    @GetMapping("/club/details")
+    public List<MatchDetailsInfoDto> getMatchByClubInfo(@ModelAttribute ClubInfoParam dto) {
+        return matchService.findClubHistory(dto);
     }
 
     @GetMapping("/clubs")
-    public List<MatchInfoDto> getTwoClubMatchInfoByClubInfo(@ModelAttribute ClubsInfoReqParam dto) {
+    public List<MatchInfoDto> getTwoClubMatchInfoByClubInfo(@ModelAttribute ClubsInfoParam dto) {
         return matchService.findTwoClubHistory(dto);
     }
 
-    @GetMapping("/details/clubs")
-    public List<MatchDetailsInfoDto> getTwoClubMatchDetailsInfoByClubInfo(@ModelAttribute ClubsInfoReqParam dto) {
+    @GetMapping("clubs/details")
+    public List<MatchDetailsInfoDto> getTwoClubMatchDetailsInfoByClubInfo(@ModelAttribute ClubsInfoParam dto) {
         return matchService.findTwoClubDetailsHistory(dto);
     }
 
-    @PutMapping("/update")
-    public void updateInfo(@RequestHeader(name = "Authorization") String token, @RequestBody MatchUpdateSimpleInfoDto dto) {
+    @PutMapping
+    public void updateInfo(@RequestHeader(name = "Authorization") String token, @RequestBody MatchUpdateBasicInfoDto dto) {
         matchService.updateInfo(token, dto);
     }
 
-    @PutMapping("/update/after/match")
+    @PutMapping("/result")
     public void updateInfoAfterMatch(@RequestHeader(name = "Authorization") String token, @RequestBody MatchUpdateInfoDto dto) {
         matchService.updateInfoAfterMatch(token, dto);
     }

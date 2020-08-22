@@ -2,7 +2,7 @@ package com.wap.api.domain.entitys;
 
 import com.sun.istack.NotNull;
 import com.wap.api.domain.enums.MatchState;
-import com.wap.api.match.dtos.request.MatchUpdateSimpleInfoDto;
+import com.wap.api.match.dtos.request.MatchUpdateBasicInfoDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -73,7 +73,7 @@ public class Match {
         return this;
     }
 
-    public Match updateInfo(MatchUpdateSimpleInfoDto dto){
+    public Match updateInfo(MatchUpdateBasicInfoDto dto){
         this.date = dto.getDate();
         this.city = dto.getCity();
         this.district = dto.getDistrict();

@@ -37,10 +37,18 @@ dependencies {
     compile 'mysql:mysql-connector-java'
     // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.11'
-    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-aws', version: '2.2.3.RELEASE'
+//    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-aws', version: '2.2.3.RELEASE'
+    // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-aws-context
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-aws-context', version: '2.2.3.RELEASE'
+
 }
 
 test {
     useJUnitPlatform()
+}
+
+bootRun {
+    String activeProfile = System.properties['spring.profiles.active']
+    systemProperty "spring.profiles.active", activeProfile
 }
 

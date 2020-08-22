@@ -1,11 +1,12 @@
 package com.wap.api.match.dtos.request;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
 
-@Getter
+@Getter @Builder
 @AllArgsConstructor
 public class MatchSaveDto {
     private LocalDateTime date;

@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ClubsInfoReqParam {
+public class ClubsInfoParam {
     private String clubName1;
     private String clubCity1;
     private String clubDistrict1;

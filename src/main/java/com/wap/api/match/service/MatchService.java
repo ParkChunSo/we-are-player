@@ -1,13 +1,15 @@
 package com.wap.api.match.service;
 
-import com.wap.api.match.dtos.params.ClubInfoReqParam;
-import com.wap.api.match.dtos.params.ClubsInfoReqParam;
+import com.wap.api.match.dtos.params.ClubInfoDateParam;
+import com.wap.api.match.dtos.params.ClubInfoParam;
+import com.wap.api.match.dtos.params.ClubsInfoParam;
+import com.wap.api.match.dtos.params.LocationParam;
 import com.wap.api.match.dtos.reponse.MatchDetailsInfoDto;
 import com.wap.api.match.dtos.reponse.MatchInfoDto;
 import com.wap.api.match.dtos.reponse.SquadInfoDto;
 import com.wap.api.match.dtos.request.MatchSaveDto;
 import com.wap.api.match.dtos.request.MatchUpdateInfoDto;
-import com.wap.api.match.dtos.request.MatchUpdateSimpleInfoDto;
+import com.wap.api.match.dtos.request.MatchUpdateBasicInfoDto;
 import com.wap.api.domain.entitys.*;
 import com.wap.api.domain.enums.ClubMemberType;
 import com.wap.api.domain.enums.MatchType;
@@ -58,8 +60,8 @@ public class MatchService {
     }
 
     //클럽의 경기 기록 조회(전체)
-    public List<MatchDetailsInfoDto> findClubHistory(String clubName, String clubCity, String clubDistrict) {
-        Club club = clubRepository.findByClubNameAndCityAndDistrictAndDeleteFlagFalse(clubName, clubCity, clubDistrict)
+    public List<MatchDetailsInfoDto> findClubHistory(ClubInfoParam dto) {
+        Club club = clubRepository.findByClubNameAndCityAndDistrictAndDeleteFlagFalse(dto.getClubName(), dto.getClubCity(), dto.getClubDistrict())
                 .orElseThrow(ClubNotFoundException::new);
 
         List<Match> matches = matchRepository.findByHomeClubOrAwayClub(club, club)
@@ -70,11 +72,10 @@ public class MatchService {
     }
 
     //클럽의 경기 기록 조회
-    public List<MatchInfoDto> findByClubNameAndClubLocation(ClubInfoReqParam dto,
-                                                            LocalDate from, LocalDate to) {
+    public List<MatchInfoDto> findByClubNameAndClubLocation(ClubInfoDateParam dto) {
         Club club = clubRepository.findByClubNameAndCityAndDistrictAndDeleteFlagFalse(dto.getClubName(), dto.getClubCity(), dto.getClubDistrict())
                 .orElseThrow(ClubNotFoundException::new);
-        List<Match> matches = matchRepository.findByHomeClubOrAwayClubAndDateBetween(club, club, from.atStartOfDay(), to.atTime(23, 59))
+        List<Match> matches = matchRepository.findByHomeClubOrAwayClubAndDateBetween(club, club, dto.getFrom().atStartOfDay(), dto.getTo().atTime(23, 59))
                 .orElse(new ArrayList<>());
 
         return matches.stream()
@@ -83,8 +84,8 @@ public class MatchService {
     }
 
     // 해당 지역에서 한달 내에 치뤄질 경기 검색
-    public List<MatchInfoDto> findByLocationInMonth(String city, String district) {
-        List<Match> matches = matchRepository.findByCityAndDistrictAndDateBetween(city, district, LocalDateTime.now(), LocalDateTime.now().plusMonths(1))
+    public List<MatchInfoDto> findByLocationInMonth(LocationParam dto) {
+        List<Match> matches = matchRepository.findByCityAndDistrictAndDateBetween(dto.getCity(), dto.getDistrict(), LocalDateTime.now(), LocalDateTime.now().plusMonths(1))
                 .orElse(new ArrayList<>());
         return matches.stream()
                 .map(MatchInfoDto::new)
@@ -92,7 +93,7 @@ public class MatchService {
     }
 
     //두 클럽이 붙었었던 기록(간단히 몇대몇)
-    public List<MatchInfoDto> findTwoClubHistory(ClubsInfoReqParam dto) {
+    public List<MatchInfoDto> findTwoClubHistory(ClubsInfoParam dto) {
         List<MatchDetailsInfoDto> detailsDto = this.findTwoClubDetailsHistory(dto);
         return detailsDto.stream()
                 .map(MatchInfoDto::new)
@@ -100,7 +101,7 @@ public class MatchService {
     }
 
     //두 클럽이 붙었었던 기록(자세히 누가 골을 넣고 스쿼드가 어땠는지)
-    public List<MatchDetailsInfoDto> findTwoClubDetailsHistory(ClubsInfoReqParam dto) {
+    public List<MatchDetailsInfoDto> findTwoClubDetailsHistory(ClubsInfoParam dto) {
         Club club1 = clubRepository.findByClubNameAndCityAndDistrictAndDeleteFlagFalse(dto.getClubName1(), dto.getClubCity1(), dto.getClubDistrict1())
                 .orElseThrow(ClubNotFoundException::new);
         Club club2 = clubRepository.findByClubNameAndCityAndDistrictAndDeleteFlagFalse(dto.getClubName2(), dto.getClubCity2(), dto.getClubDistrict2())
@@ -113,7 +114,7 @@ public class MatchService {
                 .collect(Collectors.toList());
     }
 
-    public void updateInfo(String token, MatchUpdateSimpleInfoDto dto) {
+    public void updateInfo(String token, MatchUpdateBasicInfoDto dto) {
         Match match = matchRepository.findById(dto.getId())
                 .orElseThrow(MatchNotFoundException::new);
         // 각 클럽의 리더 혹은 관리자만 접근가능

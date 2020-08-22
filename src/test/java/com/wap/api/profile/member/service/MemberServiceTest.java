@@ -1,6 +1,6 @@
 package com.wap.api.profile.member.service;
 
-import com.wap.api.common.S3Uploader;
+import com.wap.api.s3.S3Uploader;
 import com.wap.api.common.ServiceTest;
 import com.wap.api.domain.builder.ClubBuilder;
 import com.wap.api.domain.builder.ClubMemberBuilder;
@@ -21,7 +21,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.io.IOException;
@@ -93,7 +92,7 @@ public class MemberServiceTest {
     void testSignUpFailBecauseDuplication() throws IOException {
         //given
         given(memberRepository.existsById(any())).willReturn(true);
-        given(s3Uploader.upload(any(), anyString())).willReturn("/path/img.png");
+        given(s3Uploader.upload(any(), anyString(), anyString())).willReturn("/path/img.png");
 
         //then
         assertThrows(MemberAlreadyExistException.class, () -> memberService.signUp(MemberInfoSetUp.park, null));

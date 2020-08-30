@@ -5,7 +5,7 @@ build/
 !**/src/main/java/**
 !**/src/test/**
 
-**/src/main/resources/*.yml
+*.yml
 
 
 ### STS ###

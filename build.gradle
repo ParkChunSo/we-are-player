@@ -40,9 +40,26 @@ dependencies {
 //    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-aws', version: '2.2.3.RELEASE'
     // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-aws-context
     compile group: 'org.springframework.cloud', name: 'spring-cloud-aws-context', version: '2.2.3.RELEASE'
-
 }
 
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    group = 'com.dev.wap'
+    version = '0.0.1-SNAPSHOT'
+    sourceCompatibility = '11'
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies{
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
+    }
+}
 test {
     useJUnitPlatform()
 }
@@ -53,5 +70,13 @@ bootRun {
 }
 
 project('apps:apps-member'){
+
+}
+
+project('bases:aws:bases-aws-s3'){
+
+}
+
+project('cores:aws:cores-aws-s3'){
 
 }

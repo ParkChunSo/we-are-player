@@ -1,14 +1,9 @@
-plugins {
-    id 'java'
-}
-
-group 'com.wap'
-version '0.0.1-SNAPSHOT'
-
-repositories {
-    mavenCentral()
-}
-
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+
+    implementation project(':modules:aws:modules-aws-s3')
+    implementation project(':bases:aws:bases-aws-s3')
 }

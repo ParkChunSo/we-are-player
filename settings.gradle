@@ -1,5 +1,10 @@
 rootProject.name = 'wap'
-include 'apps'
+//include 'apps'
+//include 'modules'
+//include 'bases'
+//include 'cores'
+
+
 include 'apps:member'
 findProject(':apps:member')?.name = 'apps-member'
 include 'apps:club'
@@ -8,7 +13,15 @@ include 'apps:match'
 findProject(':apps:match')?.name = 'apps-match'
 include 'apps:invitation'
 findProject(':apps:invitation')?.name = 'apps-invitation'
-include 'modules'
-include 'bases'
-include 'cores'
+
+include 'modules:aws:s3'
+findProject(':modules:aws:s3')?.name = 'modules-aws-s3'
+
+include 'bases:aws:s3'
+findProject(':bases:aws:s3')?.name = 'bases-aws-s3'
+
+include 'cores:aws:s3'
+findProject(':cores:aws:s3')?.name = 'cores-aws-s3'
+include 'cores:db:mysql'
+findProject(':cores:db:mysql')?.name = 'mysql'
 

@@ -17,7 +17,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Component
 public class S3Uploader {
-    private final String bucket;
+    private static final String bucket = "we-are-player-bucket";
     private final AmazonS3 amazonS3;
 
     public String upload(MultipartFile multipartFile, String dirName, String fileName) throws IOException {

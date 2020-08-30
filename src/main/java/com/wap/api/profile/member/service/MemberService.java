@@ -1,6 +1,6 @@
 package com.wap.api.profile.member.service;
 
-import com.wap.api.s3.S3Uploader;
+import com.wap.api.s3.modules.S3Uploader;
 import com.wap.api.domain.entitys.ClubMember;
 import com.wap.api.domain.entitys.Member;
 import com.wap.api.domain.enums.ClubMemberType;

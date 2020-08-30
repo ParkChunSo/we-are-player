@@ -52,3 +52,6 @@ bootRun {
     systemProperty "spring.profiles.active", activeProfile
 }
 
+project('apps:apps-member'){
+
+}

@@ -50,3 +50,17 @@
             - com.wap.api.Invitation
 - 배치서버 구축
     - 기간이 만료된 Invitation(초대장)을 삭제하는 기능
+
+
+
+# apps
+- 각 도메인 서비스
+# modules
+- 서비스 코드
+# bases
+- 서비스코드 X
+- framework의 의존 필요
+- 기능이 있음
+# cores
+- config 들
+- 각 프로파일의 대한 자동화

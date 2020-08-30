@@ -1,6 +1,6 @@
 package com.wap.api.profile.member.service;
 
-import com.wap.api.s3.S3Uploader;
+import com.wap.api.s3.modules.S3Uploader;
 import com.wap.api.common.ServiceTest;
 import com.wap.api.domain.builder.ClubBuilder;
 import com.wap.api.domain.builder.ClubMemberBuilder;

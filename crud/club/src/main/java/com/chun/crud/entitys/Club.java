@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@EqualsAndHashCode(of = "clubId")
+@EqualsAndHashCode(of = {"clubId", "clubName", "city", "district"})
 public class Club {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -37,10 +37,8 @@ public class Club {
 
     private int point;
 
-    private boolean deleteFlag;
-
     @Setter
-    @OneToMany(mappedBy = "club", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "club", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<ClubMember> clubMembers = new ArrayList<>();
 
     @Builder
@@ -52,7 +50,6 @@ public class Club {
         this.likeCnt = 0;
         this.rudeCnt = 0;
         this.point = 0;
-        this.deleteFlag = false;
     }
 
     public Club updateInfo(String logoUri, int likeCnt, int rudeCnt, int point){
@@ -62,9 +59,5 @@ public class Club {
         this.point = point;
 
         return this;
-    }
-
-    public void deleteClub(){
-        deleteFlag = true;
     }
 }

@@ -27,14 +27,11 @@ public class ClubMember {
     @CreationTimestamp
     private LocalDateTime registDate;
 
-    @Setter
     private int uniformNum;
 
-    @Setter
     @Enumerated(value = EnumType.STRING)
     private PositionType positionType;
 
-    @Setter
     @Enumerated(value = EnumType.STRING)
     private ClubMemberType clubMemberType;
 
@@ -45,5 +42,23 @@ public class ClubMember {
         this.uniformNum = uniformNum;
         this.positionType = positionType;
         this.clubMemberType = clubMemberType;
+    }
+
+    public ClubMember updateLeader(Member newLeader){
+        this.member = newLeader;
+
+        return this;
+    }
+
+    public ClubMember updateInfo(int uniformNum, PositionType type){
+        this.uniformNum = uniformNum;
+        this.positionType = type;
+
+        return this;
+    }
+
+    public ClubMember updateClubMemberType(ClubMemberType type){
+        this.clubMemberType = type;
+        return this;
     }
 }

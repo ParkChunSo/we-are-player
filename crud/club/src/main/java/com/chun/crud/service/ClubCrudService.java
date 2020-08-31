@@ -8,7 +8,7 @@ import com.chun.crud.dtos.*;
 import com.chun.crud.entitys.Club;
 import com.chun.crud.entitys.ClubMember;
 import com.chun.crud.entitys.Member;
-import com.chun.crud.entitys.MemberRepository;
+import com.chun.crud.repository.MemberRepository;
 import com.chun.crud.repository.ClubCrudRepository;
 import com.chun.crud.repository.ClubMemberCrudRepository;
 import lombok.RequiredArgsConstructor;

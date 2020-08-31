@@ -4,6 +4,7 @@ package com.chun.crud.entitys;
 import com.chun.commons.enums.DisclosureScopeState;
 import com.chun.commons.enums.MemberRole;
 import com.chun.commons.enums.PositionType;
+import com.chun.crud.dtos.MemberUpdateDto;
 import com.sun.istack.NotNull;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -21,40 +22,31 @@ public class Member {
     private String id;
 
     @NotNull
-    @Setter
     private String password;
 
     @NotNull
     private String name;
 
-    @Setter
     private String city;
 
-    @Setter
     private String district;
 
     @CreationTimestamp
     private LocalDateTime createDate;
 
-    @Setter
     private int likeCnt;
 
-    @Setter
     private int rudeCnt;
 
-    @Setter
     private String pictureUri;
 
-    @Setter
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(value = EnumType.STRING)
     private Set<MemberRole> roleSet;
 
-    @Setter
     @Enumerated(value = EnumType.STRING)
     private PositionType position;
 
-    @Setter
     @Enumerated(value = EnumType.STRING)
     private DisclosureScopeState disclosureScopeState;
 
@@ -73,7 +65,7 @@ public class Member {
         this.disclosureScopeState = DisclosureScopeState.PUBLIC;
     }
 
-    public Member updateInfo(MemberInfoUpdateDto dto) {
+    public Member updateInfo(MemberUpdateDto dto) {
         this.city = dto.getCity();
         this.district = dto.getDistrict();
         this.likeCnt = dto.getLikeCnt();
@@ -82,6 +74,11 @@ public class Member {
         this.position = dto.getPosition();
         this.disclosureScopeState = dto.getDisclosureScopeState();
 
+        return this;
+    }
+
+    public Member updatePassword(String password){
+        this.password = password;
         return this;
     }
 }

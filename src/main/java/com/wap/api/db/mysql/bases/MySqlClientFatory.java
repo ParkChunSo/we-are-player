@@ -12,6 +12,7 @@ public class MySqlClientFatory {
     }
 
     public static EntityManager createEntityManager() {
-        return new SessionImpl();
+//        return new SessionImpl();
+        return null;
     }
 }

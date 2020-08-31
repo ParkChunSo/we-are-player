@@ -1,0 +1,6 @@
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation project(':crud:crud-club')
+    implementation project(':crud:crud-member')
+    implementation project(':commons')
+}

@@ -11,7 +11,7 @@ import com.chun.crud.repository.InvitationMatchCrudRepository;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class InvitationMatchService {
+public class InvitationMatchCrudService {
     private final ClubCrudRepository clubCrudRepository;
     private final InvitationMatchCrudRepository invitationMatchCrudRepository;
 

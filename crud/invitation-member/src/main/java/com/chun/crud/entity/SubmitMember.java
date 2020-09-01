@@ -1,11 +1,8 @@
-package com.chun.crud;
+package com.chun.crud.entity;
 
 import com.chun.commons.enums.SubmitState;
 import com.chun.crud.entitys.Member;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -36,6 +33,7 @@ public class SubmitMember{
     @JoinColumn(name = "member_id")
     private Member member;
 
+    @Builder
     public SubmitMember(String message, InvitationMember invitation, Member member) {
         this.message = message;
         this.invitation = invitation;

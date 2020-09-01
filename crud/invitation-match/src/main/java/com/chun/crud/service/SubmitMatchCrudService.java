@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
-public class SubmitMatchService {
+public class SubmitMatchCrudService {
     private final InvitationMatchCrudRepository invitationMatchCrudRepository;
     private final SubmitMatchCrudRepository submitMatchCrudRepository;
     private final ClubCrudRepository clubCrudRepository;

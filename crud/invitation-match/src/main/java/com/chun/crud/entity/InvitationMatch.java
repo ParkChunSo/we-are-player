@@ -1,4 +1,4 @@
-package com.chun.crud;
+package com.chun.crud.entity;
 
 import com.chun.crud.entitys.Club;
 import com.sun.istack.NotNull;

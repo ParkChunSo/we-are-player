@@ -8,7 +8,7 @@ import com.chun.crud.dtos.*;
 import com.chun.crud.entitys.Club;
 import com.chun.crud.entitys.ClubMember;
 import com.chun.crud.entitys.Member;
-import com.chun.crud.repository.MemberRepository;
+import com.chun.crud.repository.MemberCrudRepository;
 import com.chun.crud.repository.ClubCrudRepository;
 import com.chun.crud.repository.ClubMemberCrudRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,13 +19,13 @@ import java.util.List;
 public class ClubMemberCrudService {
     private final ClubCrudRepository clubCrudRepository;
     private final ClubMemberCrudRepository clubMemberCrudRepository;
-    private final MemberRepository memberRepository;
+    private final MemberCrudRepository memberCrudRepository;
 
     public ClubMember save(ClubMemberCreateDto dto) {
         Club club = clubCrudRepository.findByClubNameAndCityAndDistrict(dto.getClubName(), dto.getClubCity(), dto.getClubDistrict())
                 .orElseThrow(ClubNotFoundException::new);
 
-        Member member = memberRepository.findById(dto.getMemberId())
+        Member member = memberCrudRepository.findById(dto.getMemberId())
                 .orElseThrow(MemberNotFoundException::new);
 
         return clubMemberCrudRepository.save(
@@ -39,7 +39,7 @@ public class ClubMemberCrudService {
     }
 
     public List<ClubMember> findClubMembers(ClubInfoDto dto, ClubMemberType type) {
-        Club club = clubCrudRepository.findByClubNameAndCityAndDistrict(dto.getName(), dto.getCity(), dto.getDistrict())
+        Club club = clubCrudRepository.findByClubNameAndCityAndDistrict(dto.getClubName(), dto.getClubCity(), dto.getClubDistrict())
                 .orElseThrow(ClubNotFoundException::new);
 
         return clubMemberCrudRepository.findByClubAndClubMemberType(club, type)
@@ -50,10 +50,10 @@ public class ClubMemberCrudService {
         Club club = clubCrudRepository.findByClubNameAndCityAndDistrict(dto.getClubName(), dto.getCity(), dto.getDistrict())
                 .orElseThrow(ClubNotFoundException::new);
 
-        Member preLeader = memberRepository.findById(dto.getPreLeaderId())
+        Member preLeader = memberCrudRepository.findById(dto.getPreLeaderId())
                 .orElseThrow(MemberNotFoundException::new);
 
-        Member newLeader = memberRepository.findById(dto.getNewLeaderId())
+        Member newLeader = memberCrudRepository.findById(dto.getNewLeaderId())
                 .orElseThrow(MemberNotFoundException::new);
 
         ClubMember clubMember = clubMemberCrudRepository.findByClubAndMemberAndClubMemberType(club, preLeader, ClubMemberType.LEADER)
@@ -66,7 +66,7 @@ public class ClubMemberCrudService {
         Club club = clubCrudRepository.findByClubNameAndCityAndDistrict(dto.getClubName(), dto.getCity(), dto.getDistrict())
                 .orElseThrow(ClubNotFoundException::new);
 
-        Member member = memberRepository.findById(dto.getMemberId())
+        Member member = memberCrudRepository.findById(dto.getMemberId())
                 .orElseThrow(MemberNotFoundException::new);
 
         ClubMember clubMember = clubMemberCrudRepository.findByClubAndMemberAndClubMemberType(club, member, ClubMemberType.LEADER)
@@ -79,7 +79,7 @@ public class ClubMemberCrudService {
         Club club = clubCrudRepository.findByClubNameAndCityAndDistrict(dto.getClubName(), dto.getClubCity(), dto.getClubDistrict())
                 .orElseThrow(ClubNotFoundException::new);
 
-        Member member = memberRepository.findById(dto.getMemberId())
+        Member member = memberCrudRepository.findById(dto.getMemberId())
                 .orElseThrow(MemberNotFoundException::new);
 
         clubMemberCrudRepository.deleteAllByClubAndMember(club, member);

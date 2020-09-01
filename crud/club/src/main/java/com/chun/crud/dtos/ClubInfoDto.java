@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 @Builder
 public class ClubInfoDto {
-    private String name;
-    private String city;
-    private String district;
+    private String clubName;
+    private String clubCity;
+    private String clubDistrict;
 }

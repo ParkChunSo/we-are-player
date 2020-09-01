@@ -1,8 +1,8 @@
-package com.chun.crud;
+package com.chun.crud.entity;
 
 import com.chun.commons.enums.MatchType;
 import com.chun.commons.errors.exception.InvalidInputValueException;
-import com.chun.crud.Match;
+import com.chun.crud.entitys.Club;
 import com.chun.crud.entitys.Member;
 import lombok.*;
 

@@ -9,13 +9,13 @@ dependencies {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
 
-    compile project(':crud:crud-club')
-    compile project(':crud:crud-member')
-    compile project(':commons')
+    implementation project(':crud:crud-club')
+    implementation project(':crud:crud-member')
+    implementation project(':commons')
 
-    compile project(':modules:aws:modules-aws-s3')
-    compile project(':bases:aws:bases-aws-s3')
+    implementation project(':modules:aws:modules-aws-s3')
+    implementation project(':bases:aws:bases-aws-s3')
 
-    compile project(':modules:modules-security')
-    compile project(':cores:cores-jwt')
+    implementation project(':modules:modules-security')
+    implementation project(':cores:cores-jwt')
 }

@@ -1,8 +1,8 @@
 package com.chun.crud.repository;
 
 import com.chun.commons.enums.ClubMemberType;
-import com.chun.crud.entitys.Club;
 import com.chun.crud.entitys.ClubMember;
+import com.chun.crud.entitys.Club;
 import com.chun.crud.member.entitys.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 

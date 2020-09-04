@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
+@Builder
 public class ClubUpdateDto {
     private String clubName;
     private String city;

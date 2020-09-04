@@ -1,3 +1,9 @@
+bootJar{
+    enabled = false;
+}
+jar {
+    enabled = true;
+}
 dependencies {
     implementation project(':bases:aws:bases-aws-s3')
     implementation 'org.springframework.boot:spring-boot-starter-web'

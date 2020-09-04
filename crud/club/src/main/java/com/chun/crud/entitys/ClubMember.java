@@ -2,6 +2,7 @@ package com.chun.crud.entitys;
 
 import com.chun.commons.enums.ClubMemberType;
 import com.chun.commons.enums.PositionType;
+import com.chun.crud.member.entitys.Member;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -42,12 +43,6 @@ public class ClubMember {
         this.uniformNum = uniformNum;
         this.positionType = positionType;
         this.clubMemberType = clubMemberType;
-    }
-
-    public ClubMember updateLeader(Member newLeader){
-        this.member = newLeader;
-
-        return this;
     }
 
     public ClubMember updateInfo(int uniformNum, PositionType type){

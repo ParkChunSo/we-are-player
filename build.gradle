@@ -69,14 +69,18 @@ bootRun {
     systemProperty "spring.profiles.active", activeProfile
 }
 
-project('apps:apps-member'){
-
-}
-
-project('bases:aws:bases-aws-s3'){
-
-}
-
-project('cores:aws:cores-aws-s3'){
-
-}
+//project('apps:apps-member'){
+//
+//}
+//
+//project('crud:crud-member'){
+//
+//}
+//
+//project('bases:aws:bases-aws-s3'){
+//
+//}
+//
+//project('cores:aws:cores-aws-s3'){
+//
+//}

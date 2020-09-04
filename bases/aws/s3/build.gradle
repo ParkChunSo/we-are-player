@@ -1,3 +1,9 @@
+bootJar{
+    enabled = false;
+}
+jar {
+    enabled = true;
+}
 dependencies {
     implementation project(':cores:aws:cores-aws-s3')
     compile group: 'org.springframework.cloud', name: 'spring-cloud-aws-context', version: '2.2.3.RELEASE'

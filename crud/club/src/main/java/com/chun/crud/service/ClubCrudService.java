@@ -7,21 +7,23 @@ import com.chun.commons.errors.exception.MemberNotFoundException;
 import com.chun.crud.dtos.*;
 import com.chun.crud.entitys.Club;
 import com.chun.crud.entitys.ClubMember;
-import com.chun.crud.entitys.Member;
-import com.chun.crud.repository.MemberCrudRepository;
+import com.chun.crud.member.entitys.Member;
+import com.chun.crud.member.repository.MemberCrudRepository;
 import com.chun.crud.repository.ClubCrudRepository;
 import com.chun.crud.repository.ClubMemberCrudRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 @RequiredArgsConstructor
 public class ClubCrudService {
     private final ClubCrudRepository clubCrudRepository;
     private final ClubMemberCrudRepository clubMemberCrudRepository;
     private final MemberCrudRepository memberCrudRepository;
 
-    public Club save(ClubCreateDto dto){
+    public Club save(ClubSaveDto dto){
         if(clubCrudRepository.existsByClubNameAndCityAndDistrict(
                 dto.getClubName(), dto.getClubCity(), dto.getClubDistrict()))
             throw new ClubAlreadyExistException();
@@ -62,14 +64,14 @@ public class ClubCrudService {
                 .orElseThrow(ClubNotFoundException::new);
     }
 
-    public Club updateClub(ClubUpdateDto dto){
+    public Club update(ClubUpdateDto dto){
         Club club = clubCrudRepository.findByClubNameAndCityAndDistrict(dto.getClubName(), dto.getCity(), dto.getDistrict())
                 .orElseThrow(ClubNotFoundException::new);
         club.updateInfo(dto.getLogoUri(), dto.getLikeCnt(), dto.getRudeCnt(), dto.getPoint());
         return clubCrudRepository.save(club);
     }
 
-    public void deleteClub(ClubDeleteDto dto){
+    public void delete(ClubDeleteDto dto){
         Club club = clubCrudRepository.findByClubNameAndCityAndDistrict(dto.getClubName(), dto.getClubCity(), dto.getClubDistrict())
                 .orElseThrow(ClubNotFoundException::new);
         clubCrudRepository.delete(club);

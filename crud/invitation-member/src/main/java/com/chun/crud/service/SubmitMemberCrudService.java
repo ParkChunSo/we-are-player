@@ -1,7 +1,6 @@
 package com.chun.crud.service;
 
 import com.chun.commons.enums.SubmitState;
-import com.chun.commons.errors.exception.ClubNotFoundException;
 import com.chun.commons.errors.exception.InvitationNotFoundException;
 import com.chun.commons.errors.exception.MemberNotFoundException;
 import com.chun.commons.errors.exception.SubmitNotFoundException;
@@ -9,9 +8,9 @@ import com.chun.crud.dtos.SubmitMemberSaveDto;
 import com.chun.crud.dtos.SubmitMemberUpdateDto;
 import com.chun.crud.entity.InvitationMember;
 import com.chun.crud.entity.SubmitMember;
-import com.chun.crud.entitys.Club;
 import com.chun.crud.entitys.ClubMember;
-import com.chun.crud.entitys.Member;
+import com.chun.crud.member.entitys.Member;
+import com.chun.crud.member.repository.MemberCrudRepository;
 import com.chun.crud.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,9 +1,21 @@
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+    compile 'mysql:mysql-connector-java'
+
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
 
-    implementation project(':modules:aws:modules-aws-s3')
-    implementation project(':bases:aws:bases-aws-s3')
+    compile project(':crud:crud-club')
+    compile project(':crud:crud-member')
+    compile project(':commons')
+
+    compile project(':modules:aws:modules-aws-s3')
+    compile project(':bases:aws:bases-aws-s3')
+
+    compile project(':modules:modules-security')
+    compile project(':cores:cores-jwt')
 }

@@ -2,7 +2,7 @@ package com.chun.crud.entity;
 
 import com.chun.commons.enums.MatchType;
 import com.chun.commons.enums.PositionType;
-import com.chun.crud.entitys.Member;
+import com.chun.crud.member.entitys.Member;
 import lombok.*;
 
 import javax.persistence.*;

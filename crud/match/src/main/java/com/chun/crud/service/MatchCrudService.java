@@ -8,10 +8,10 @@ import com.chun.crud.entity.Goal;
 import com.chun.crud.entity.Match;
 import com.chun.crud.entity.Squad;
 import com.chun.crud.entitys.Club;
-import com.chun.crud.entitys.Member;
+import com.chun.crud.member.entitys.Member;
 import com.chun.crud.repository.ClubCrudRepository;
 import com.chun.crud.repository.MatchCrudRepository;
-import com.chun.crud.repository.MemberCrudRepository;
+import com.chun.crud.member.repository.MemberCrudRepository;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;

@@ -23,6 +23,8 @@ findProject(':crud:invitation-member')?.name = 'crud-invitation-member'
 
 include 'modules:aws:s3'
 findProject(':modules:aws:s3')?.name = 'modules-aws-s3'
+include 'modules:security'
+findProject(':modules:security')?.name = 'modules-security'
 
 include 'bases:aws:s3'
 findProject(':bases:aws:s3')?.name = 'bases-aws-s3'
@@ -31,6 +33,8 @@ include 'cores:aws:s3'
 findProject(':cores:aws:s3')?.name = 'cores-aws-s3'
 include 'cores:db:mysql'
 findProject(':cores:db:mysql')?.name = 'cores-db-mysql'
+include 'cores:jwt'
+findProject(':cores:jwt')?.name = 'cores-jwt'
 
 include 'commons'
 

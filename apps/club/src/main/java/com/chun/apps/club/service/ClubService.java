@@ -4,9 +4,12 @@ import com.chun.apps.club.dtos.params.ClubInfoParam;
 import com.chun.apps.club.dtos.params.LocationInfoParam;
 import com.chun.apps.club.dtos.request.ClubInfoUpdateReqDto;
 import com.chun.apps.club.dtos.request.ClubSaveReqDto;
-import com.chun.apps.club.dtos.response.ClubResDto;
+import com.chun.commons.dtos.club.ClubMemberResDto;
+import com.chun.commons.dtos.club.ClubResDto;
+import com.chun.crud.club.util.ClubConvertor;
 import com.chun.crud.dtos.ClubUpdateDto;
 import com.chun.crud.entitys.Club;
+import com.chun.crud.entitys.ClubMember;
 import com.chun.crud.service.ClubCrudService;
 import com.chun.modules.aws.s3.S3Uploader;
 import lombok.RequiredArgsConstructor;
@@ -38,14 +41,14 @@ public class ClubService {
 
     public ClubResDto find(ClubInfoParam dto) {
         Club club = clubCrudService.find(dto.toClubInfoDto());
-        return new ClubResDto(club);
+        return ClubConvertor.toClubResDto(club);
     }
 
     public List<ClubResDto> findByClubName(String clubName) {
         List<Club> clubList = clubCrudService.findClubByName(clubName);
 
         return clubList.stream()
-                .map(ClubResDto::new)
+                .map(ClubConvertor::toClubResDto)
                 .collect(Collectors.toList());
     }
 
@@ -53,7 +56,7 @@ public class ClubService {
         List<Club> clubList = clubCrudService.findByLocation(dto.toLocationDto());
 
         return clubList.stream()
-                .map(ClubResDto::new)
+                .map(ClubConvertor::toClubResDto)
                 .collect(Collectors.toList());
     }
 

@@ -6,13 +6,12 @@ import com.chun.apps.club.dtos.request.ClubInfoUpdateReqDto;
 import com.chun.apps.club.dtos.request.ClubLeaderUpdateReqDto;
 import com.chun.apps.club.dtos.request.ClubMemberSaveReqDto;
 import com.chun.apps.club.dtos.request.ClubSaveReqDto;
-import com.chun.apps.club.dtos.response.ClubMemberResDto;
-import com.chun.apps.club.dtos.response.ClubResDto;
+import com.chun.commons.dtos.club.ClubMemberResDto;
+import com.chun.commons.dtos.club.ClubResDto;
 import com.chun.apps.club.service.ClubMemberService;
 import com.chun.commons.enums.ClubMemberType;
 import com.chun.apps.club.service.ClubService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 

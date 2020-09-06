@@ -14,7 +14,9 @@ import com.chun.crud.repository.ClubMemberCrudRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -62,6 +64,15 @@ public class ClubCrudService {
     public List<Club> findByLocation(LocationDto dto){
         return clubCrudRepository.findByCityAndDistrict(dto.getCity(), dto.getDistrict())
                 .orElseThrow(ClubNotFoundException::new);
+    }
+
+    public List<Member> findLeaders(ClubInfoDto dto){
+        Club club = find(dto);
+        List<ClubMember> clubLeaders = clubMemberCrudRepository.findByClubAndClubMemberType(club, ClubMemberType.LEADER)
+                .orElse(new ArrayList<>());
+        return clubLeaders.stream()
+                .map(ClubMember::getMember)
+                .collect(Collectors.toList());
     }
 
     public Club update(ClubUpdateDto dto){

@@ -4,6 +4,7 @@ import com.chun.apps.member.dtos.*;
 import com.chun.apps.member.dtos.request.MemberLoginReqDto;
 import com.chun.apps.member.dtos.request.MemberSaveReqDto;
 import com.chun.apps.member.service.MemberService;
+import com.chun.commons.dtos.member.MemberResDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,7 +35,7 @@ public class MemberController {
     }
 
     @GetMapping("/{userId}")
-    public MemberInfoDto findById(@PathVariable String userId) {
+    public MemberResDto findById(@PathVariable String userId) {
         return memberService.find(userId);
     }
 
@@ -44,7 +45,7 @@ public class MemberController {
 //    }
 
     @GetMapping("/all")
-    public List<MemberInfoDto> findAllMember() {
+    public List<MemberResDto> findAllMember() {
         return memberService.findAll();
     }
 

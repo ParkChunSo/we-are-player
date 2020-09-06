@@ -1,16 +1,12 @@
 package com.chun.apps.member.dtos;
 
-import com.chun.crud.member.entitys.Member;
+import com.chun.commons.dtos.member.MemberResDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Getter
 @NoArgsConstructor
-public class MemberDetailsInfoDto extends MemberInfoDto {
+public class MemberDetailsInfoDto extends MemberResDto {
 //    private List<ClubInfoDto> clubInfoDtoList;
 //
 //    public MemberDetailsInfoDto(Member entity) {

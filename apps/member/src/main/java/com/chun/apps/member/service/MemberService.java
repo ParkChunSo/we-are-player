@@ -1,6 +1,6 @@
 package com.chun.apps.member.service;
 
-import com.chun.apps.member.dtos.MemberInfoDto;
+import com.chun.commons.dtos.member.MemberResDto;
 import com.chun.apps.member.dtos.MemberPasswordUpdateReqDto;
 import com.chun.apps.member.dtos.MemberUpdateReqDto;
 import com.chun.apps.member.dtos.request.MemberLoginReqDto;
@@ -13,6 +13,7 @@ import com.chun.commons.errors.exception.MemberNotFoundException;
 import com.chun.crud.member.dtos.MemberUpdateDto;
 import com.chun.crud.member.entitys.Member;
 import com.chun.crud.member.service.MemberCrudService;
+import com.chun.crud.member.util.MemberConvertor;
 import com.chun.modules.aws.s3.S3Uploader;
 import com.chun.modules.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -64,17 +65,18 @@ public class MemberService {
         memberCrudService.save(dto.toMemberSaveDto(uploadedImg, encodedPw));
     }
 
-    public MemberInfoDto find(String userId) {
+    public MemberResDto find(String userId) {
         Member member = memberCrudService.find(userId);
 
-        return new MemberInfoDto(member);
+        return MemberConvertor.toMemberResDto(member);
     }
 
-    public List<MemberInfoDto> findAll() {
+    public List<MemberResDto> findAll() {
         return memberCrudService.findAll().stream()
-                .map(MemberInfoDto::new)
+                .map(MemberConvertor::toMemberResDto)
                 .collect(Collectors.toList());
     }
+
     //    //TODO("데이터 가져오는 쿼리문 문제")
 //    public MemberDetailsInfoDto getMemberDetailsInfo(String memberId, String token) {
 //        Member member = memberRepository.findById(memberId)

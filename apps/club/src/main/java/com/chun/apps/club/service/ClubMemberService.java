@@ -3,9 +3,10 @@ package com.chun.apps.club.service;
 import com.chun.apps.club.dtos.params.ClubInfoParam;
 import com.chun.apps.club.dtos.request.ClubLeaderUpdateReqDto;
 import com.chun.apps.club.dtos.request.ClubMemberSaveReqDto;
-import com.chun.apps.club.dtos.response.ClubMemberResDto;
+import com.chun.commons.dtos.club.ClubMemberResDto;
 import com.chun.commons.enums.ClubMemberType;
 import com.chun.commons.errors.exception.AuthorizationException;
+import com.chun.crud.club.util.ClubConvertor;
 import com.chun.crud.entitys.ClubMember;
 import com.chun.crud.service.ClubMemberCrudService;
 import com.chun.crud.dtos.ClubInfoDto;
@@ -45,10 +46,9 @@ public class ClubMemberService {
         List<ClubMember> clubMembers = clubMemberCrudService.findClubMembers(dto.toClubInfoDto(), type);
 
         return clubMembers.stream()
-                .map(ClubMemberResDto::new)
+                .map(ClubConvertor::toClubMemberResDto)
                 .collect(Collectors.toList());
     }
-
 
     public void updateClubLeader(ClubLeaderUpdateReqDto dto) {
         clubMemberCrudService.updateLeader(dto.toClubLeaderUpdateDto());

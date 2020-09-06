@@ -1,8 +1,7 @@
-package com.chun.apps.club.dtos.response;
+package com.chun.commons.dtos.club;
 
 import com.chun.commons.enums.ClubMemberType;
 import com.chun.commons.enums.PositionType;
-import com.chun.crud.entitys.ClubMember;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,15 +22,15 @@ public class ClubMemberResDto {
     private ClubMemberType type;
     private PositionType position;
 
-    public ClubMemberResDto(ClubMember entity) {
-        this.memberId = entity.getMember().getId();
-        this.memberName = entity.getMember().getName();
-        this.city = entity.getMember().getCity();
-        this.district = entity.getMember().getDistrict();
-        this.pictureUri = entity.getMember().getPictureUri();
-        this.registTime = entity.getRegistDate().toString();
-        this.uniformNum = entity.getUniformNum();
-        this.type = entity.getClubMemberType();
-        this.position = entity.getPositionType();
-    }
+//    public ClubMemberResDto(ClubMember entity) {
+//        this.memberId = entity.getMember().getId();
+//        this.memberName = entity.getMember().getName();
+//        this.city = entity.getMember().getCity();
+//        this.district = entity.getMember().getDistrict();
+//        this.pictureUri = entity.getMember().getPictureUri();
+//        this.registTime = entity.getRegistDate().toString();
+//        this.uniformNum = entity.getUniformNum();
+//        this.type = entity.getClubMemberType();
+//        this.position = entity.getPositionType();
+//    }
 }

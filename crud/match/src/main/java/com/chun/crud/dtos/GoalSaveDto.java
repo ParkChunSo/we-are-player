@@ -1,8 +1,9 @@
 package com.chun.crud.dtos;
 
+import lombok.Builder;
 import lombok.Getter;
 
-@Getter
+@Getter @Builder
 public class GoalSaveDto {
     private String clubName;
     private String goalMemberId;

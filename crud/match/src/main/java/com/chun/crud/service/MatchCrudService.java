@@ -42,6 +42,11 @@ public class MatchCrudService {
                 .build());
     }
 
+    public Match find(long id){
+        return matchCrudRepository.findById(id)
+                .orElseThrow(MatchNotFoundException::new);
+    }
+
     //클럽의 경기 기록 조회(전체)
     public List<Match> findByClub(ClubInfoDto dto) {
         Club club = clubCrudRepository.findByClubNameAndCityAndDistrict(dto.getClubName(), dto.getClubCity(), dto.getClubDistrict())
@@ -62,6 +67,15 @@ public class MatchCrudService {
     // 해당 지역에서 한달 내에 치뤄질 경기 검색
     public List<Match> findByLocationInMonth(MatchLocationDto dto) {
         return matchCrudRepository.findByCityAndDistrictAndDateBetween(dto.getCity(), dto.getDistrict(), LocalDateTime.now(), LocalDateTime.now().plusMonths(1))
+                .orElse(new ArrayList<>());
+    }
+
+    public List<Match> findByTwoClubs(ClubsInfoDto dto){
+        Club club1 = clubCrudRepository.findByClubNameAndCityAndDistrict(dto.getClubName1(), dto.getClubCity1(), dto.getClubDistrict1())
+                .orElseThrow(ClubNotFoundException::new);
+        Club club2 = clubCrudRepository.findByClubNameAndCityAndDistrict(dto.getClubName2(), dto.getClubCity2(), dto.getClubDistrict2())
+                .orElseThrow(ClubNotFoundException::new);
+        return matchCrudRepository.findByHomeClubOrAwayClubOrHomeClubOrAwayClub(club1, club1, club2, club2)
                 .orElse(new ArrayList<>());
     }
 

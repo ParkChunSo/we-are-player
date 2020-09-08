@@ -12,4 +12,6 @@ public interface MatchCrudRepository extends JpaRepository<Match, Long> {
     Optional<List<Match>> findByHomeClubOrAwayClubAndDateBetween(Club homeClub, Club awayClub, LocalDateTime from, LocalDateTime to);
     Optional<List<Match>> findByCityAndDistrictAndDateBetween(String city, String district, LocalDateTime to, LocalDateTime from);
     Optional<List<Match>> findByHomeClubOrAwayClub(Club homeClub, Club awayClub);
+    Optional<List<Match>> findByHomeClubOrAwayClubOrHomeClubOrAwayClub(Club homeClub1, Club awayClub1, Club homeClub2, Club awayClub2);
+
 }

@@ -1,10 +1,11 @@
 package com.chun.crud.dtos;
 
+import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
 
-@Getter
+@Getter @Builder
 public class MatchSaveDto {
     private LocalDateTime date;
     private String matchCity;

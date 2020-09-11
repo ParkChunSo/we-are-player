@@ -1,7 +1,7 @@
 package com.chun.crud.invitation.member.util;
 
 import com.chun.commons.dtos.invitation.InvitationPeopleResDto;
-import com.chun.commons.dtos.invitation.SubmitMemberResDto;
+import com.chun.commons.dtos.invitation.SubmitPeopleResDto;
 import com.chun.crud.club.util.ClubConvertor;
 import com.chun.crud.invitation.member.entity.InvitationMember;
 import com.chun.crud.invitation.member.entity.SubmitMember;
@@ -24,8 +24,8 @@ public class InvitationMemberConvertor {
                 .build();
     }
 
-    public static SubmitMemberResDto toSubmitMemberResDto(SubmitMember entity){
-        return SubmitMemberResDto.builder()
+    public static SubmitPeopleResDto toSubmitMemberResDto(SubmitMember entity){
+        return SubmitPeopleResDto.builder()
                 .id(entity.getId())
                 .member(MemberConvertor.toMemberResDto(entity.getMember()))
                 .state(entity.getState())

@@ -45,4 +45,9 @@ public class CrudConfig {
     public SubmitMemberCrudService submitMemberCrudService(){
         return new SubmitMemberCrudService(invitationMemberCrudRepository, submitMemberCrudRepository, memberCrudRepository, clubMemberCrudRepository);
     }
+
+    @Bean
+    public ClubCrudService clubCrudService(){
+        return new ClubCrudService(clubCrudRepository,clubMemberCrudRepository, memberCrudRepository);
+    }
 }

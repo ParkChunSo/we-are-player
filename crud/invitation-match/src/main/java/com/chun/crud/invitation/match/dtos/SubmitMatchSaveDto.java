@@ -1,8 +1,9 @@
 package com.chun.crud.invitation.match.dtos;
 
+import lombok.Builder;
 import lombok.Getter;
 
-@Getter
+@Getter @Builder
 public class SubmitMatchSaveDto {
     private long invitationId;
     private String message;

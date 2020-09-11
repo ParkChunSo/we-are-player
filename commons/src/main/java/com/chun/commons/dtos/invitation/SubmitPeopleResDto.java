@@ -8,7 +8,7 @@ import lombok.Getter;
 import java.time.LocalDateTime;
 
 @Getter @Builder
-public class SubmitMemberResDto {
+public class SubmitPeopleResDto {
     private long id;
     private String message;
     private LocalDateTime submitTime;

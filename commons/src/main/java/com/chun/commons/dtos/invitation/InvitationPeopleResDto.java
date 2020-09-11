@@ -19,5 +19,5 @@ public class InvitationPeopleResDto {
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private String message;
-    List<SubmitMemberResDto> dtos;
+    List<SubmitPeopleResDto> dtos;
 }

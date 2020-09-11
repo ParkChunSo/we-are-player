@@ -1,14 +1,20 @@
-plugins {
-    id 'java'
-}
-
-group 'com.wap'
-version '0.0.1-SNAPSHOT'
-
-repositories {
-    mavenCentral()
-}
-
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+    compile 'mysql:mysql-connector-java'
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+
+    implementation project(':modules:modules-security')
+    implementation project(':cores:cores-jwt')
+
+    implementation project(':crud:crud-invitation-match')
+    implementation project(':crud:crud-invitation-member')
+    implementation project(':crud:crud-club')
+    implementation project(':crud:crud-member')
+    implementation project(':crud:crud-match')
 }

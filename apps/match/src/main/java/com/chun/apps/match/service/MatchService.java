@@ -95,7 +95,7 @@ public class MatchService {
     public void update(String token, MatchUpdateReqDto dto) {
         Match match = matchCrudService.find(dto.getId());
 
-        if(!checkAuthorization(token, match))
+        if(!checkAuthorization(jwtTokenProvider.resolveToken(token), match))
             throw new AccessDeniedAuthenticationException();
 
         matchCrudService.update(dto.toMatchUpdateDto());
@@ -104,7 +104,7 @@ public class MatchService {
     public void updateScore(String token, MatchScoreUpdateReqDto dto) {
         Match match = matchCrudService.find(dto.getId());
 
-        if(!checkAuthorization(token, match))
+        if(!checkAuthorization(jwtTokenProvider.resolveToken(token), match))
             throw new AccessDeniedAuthenticationException();
 
         matchCrudService.updateScore(dto.toMatchScoreUpdateDto());
@@ -113,7 +113,7 @@ public class MatchService {
     public void delete(String token, long id){
         Match match = matchCrudService.find(id);
 
-        if(!checkAuthorization(token, match))
+        if(!checkAuthorization(jwtTokenProvider.resolveToken(token), match))
             throw new AccessDeniedAuthenticationException();
 
         matchCrudService.delete(id);

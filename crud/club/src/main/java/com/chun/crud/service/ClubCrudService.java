@@ -51,6 +51,11 @@ public class ClubCrudService {
         return club;
     }
 
+    public Club find (long id){
+        return clubCrudRepository.findById(id)
+                .orElseThrow(ClubNotFoundException::new);
+    }
+
     public Club find(ClubInfoDto dto){
         return clubCrudRepository.findByClubNameAndCityAndDistrict(dto.getClubName(), dto.getClubCity(), dto.getClubDistrict())
                 .orElseThrow(ClubNotFoundException::new);
@@ -64,6 +69,15 @@ public class ClubCrudService {
     public List<Club> findByLocation(LocationDto dto){
         return clubCrudRepository.findByCityAndDistrict(dto.getCity(), dto.getDistrict())
                 .orElseThrow(ClubNotFoundException::new);
+    }
+
+    public List<Member> findLeaders(long id){
+        Club club = find(id);
+        List<ClubMember> clubLeaders = clubMemberCrudRepository.findByClubAndClubMemberType(club, ClubMemberType.LEADER)
+                .orElse(new ArrayList<>());
+        return clubLeaders.stream()
+                .map(ClubMember::getMember)
+                .collect(Collectors.toList());
     }
 
     public List<Member> findLeaders(ClubInfoDto dto){

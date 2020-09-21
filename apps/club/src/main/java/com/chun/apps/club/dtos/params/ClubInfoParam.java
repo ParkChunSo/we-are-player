@@ -1,7 +1,7 @@
 package com.chun.apps.club.dtos.params;
 
-import com.chun.crud.dtos.ClubDeleteDto;
-import com.chun.crud.dtos.ClubInfoDto;
+import com.chun.modules.crud.club.dtos.ClubDeleteDto;
+import com.chun.modules.crud.club.dtos.ClubInfoDto;
 import lombok.*;
 
 @Getter @Setter @Builder

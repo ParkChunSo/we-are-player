@@ -7,23 +7,17 @@ import com.chun.commons.enums.MatchType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
 @Getter
-@AllArgsConstructor
+@SuperBuilder
 public class MatchDetailsResDto extends MatchResDto {
     Map<MatchType, List<GoalResDto>> goalMap;
     Map<MatchType, List<SquadResDto>> squadMap;
-
-    @Builder
-    public MatchDetailsResDto(long id, LocalDateTime date, String city, String district, String detailsAddress, ClubResDto homeClub, ClubResDto awayClub, int homeClubScore, int awayClubScore, MatchState state, Map<MatchType, List<GoalResDto>> goalMap, Map<MatchType, List<SquadResDto>> squadMap) {
-        super(id, date, city, district, detailsAddress, homeClub, awayClub, homeClubScore, awayClubScore, state);
-        this.goalMap = goalMap;
-        this.squadMap = squadMap;
-    }
 
     //    public MatchDetailsInfoDto(Match entity) {
 //        super(entity);

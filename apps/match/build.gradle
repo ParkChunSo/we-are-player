@@ -8,9 +8,9 @@ dependencies {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
 
-    implementation project(':crud:crud-match')
-    implementation project(':crud:crud-club')
-    implementation project(':crud:crud-member')
+    implementation project(':modules:crud:crud-club')
+    implementation project(':modules:crud:crud-member')
+    implementation project(':modules:crud:crud-match')
 
     implementation project(':modules:modules-security')
     implementation project(':cores:cores-jwt')

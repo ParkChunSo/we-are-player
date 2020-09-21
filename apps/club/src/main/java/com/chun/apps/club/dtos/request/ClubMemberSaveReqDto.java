@@ -2,7 +2,7 @@ package com.chun.apps.club.dtos.request;
 
 import com.chun.commons.enums.ClubMemberType;
 import com.chun.commons.enums.PositionType;
-import com.chun.crud.dtos.ClubMemberSaveDto;
+import com.chun.modules.crud.club.dtos.ClubMemberSaveDto;
 import lombok.Builder;
 import lombok.Getter;
 

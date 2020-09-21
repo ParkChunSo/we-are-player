@@ -1,0 +1,13 @@
+bootJar{
+    enabled = false;
+}
+jar {
+    enabled = true;
+}
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation project(':modules:crud:crud-club')
+    implementation project(':modules:crud:crud-member')
+    implementation project(':modules:crud:crud-match')
+    implementation project(':commons')
+}

@@ -1,8 +1,7 @@
 package com.chun.apps.match.dtos.request;
 
 import com.chun.commons.enums.PositionType;
-import com.chun.crud.dtos.SquadSaveDto;
-import lombok.Builder;
+import com.chun.modules.crud.dtos.SquadSaveDto;
 import lombok.Getter;
 
 @Getter

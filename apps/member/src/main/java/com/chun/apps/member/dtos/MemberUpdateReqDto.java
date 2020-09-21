@@ -3,7 +3,7 @@ package com.chun.apps.member.dtos;
 
 import com.chun.commons.enums.DisclosureScopeState;
 import com.chun.commons.enums.PositionType;
-import com.chun.crud.member.dtos.MemberUpdateDto;
+import com.chun.modules.crud.member.dtos.MemberUpdateDto;
 import lombok.Builder;
 import lombok.Getter;
 

@@ -1,6 +1,6 @@
 package com.chun.apps.match.dtos.params;
 
-import com.chun.crud.dtos.ClubsInfoDto;
+import com.chun.modules.crud.dtos.ClubsInfoDto;
 import lombok.Getter;
 import lombok.Setter;
 

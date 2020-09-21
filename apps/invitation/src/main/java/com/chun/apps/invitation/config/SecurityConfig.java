@@ -3,7 +3,7 @@ package com.chun.apps.invitation.config;
 import com.chun.modules.security.JwtTokenFilter;
 import com.chun.modules.security.JwtTokenProvider;
 import com.chun.modules.security.UserDetailsImpl;
-import com.wap.cores.JWTSecretKeySource;
+import com.chun.cores.jwt.JWTSecretKeySource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

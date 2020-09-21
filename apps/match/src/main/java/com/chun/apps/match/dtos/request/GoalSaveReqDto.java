@@ -1,6 +1,6 @@
 package com.chun.apps.match.dtos.request;
 
-import com.chun.crud.dtos.GoalSaveDto;
+import com.chun.modules.crud.dtos.GoalSaveDto;
 import lombok.Getter;
 
 @Getter

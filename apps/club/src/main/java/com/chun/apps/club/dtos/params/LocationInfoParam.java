@@ -1,6 +1,6 @@
 package com.chun.apps.club.dtos.params;
 
-import com.chun.crud.dtos.LocationDto;
+import com.chun.modules.crud.club.dtos.LocationDto;
 import lombok.*;
 
 @Getter

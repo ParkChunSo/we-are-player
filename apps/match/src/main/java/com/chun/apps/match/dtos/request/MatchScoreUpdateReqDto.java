@@ -1,9 +1,6 @@
 package com.chun.apps.match.dtos.request;
 
-import com.chun.commons.dtos.match.GoalResDto;
-import com.chun.commons.dtos.match.SquadResDto;
-import com.chun.crud.dtos.GoalSaveDto;
-import com.chun.crud.dtos.MatchScoreUpdateDto;
+import com.chun.modules.crud.dtos.MatchScoreUpdateDto;
 import lombok.Getter;
 
 import java.util.List;

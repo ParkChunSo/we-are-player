@@ -1,6 +1,6 @@
 package com.chun.apps.match.dtos.request;
 
-import com.chun.crud.dtos.MatchSaveDto;
+import com.chun.modules.crud.dtos.MatchSaveDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

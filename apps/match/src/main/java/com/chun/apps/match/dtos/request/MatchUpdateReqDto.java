@@ -1,7 +1,6 @@
 package com.chun.apps.match.dtos.request;
 
-import com.chun.crud.dtos.ClubInfoDto;
-import com.chun.crud.dtos.MatchUpdateDto;
+import com.chun.modules.crud.dtos.MatchUpdateDto;
 import lombok.Getter;
 
 import java.time.LocalDateTime;

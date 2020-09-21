@@ -1,6 +1,6 @@
 package com.chun.apps.invitation.dtos.request;
 
-import com.chun.crud.invitation.match.dtos.InvitationMatchSaveDto;
+import com.chun.modules.crud.invitation.match.dtos.InvitationMatchSaveDto;
 import lombok.Builder;
 import lombok.Getter;
 

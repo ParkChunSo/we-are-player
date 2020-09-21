@@ -1,12 +1,12 @@
 package com.chun.apps.match.config;
 
-import com.chun.crud.member.repository.MemberCrudRepository;
-import com.chun.crud.repository.ClubCrudRepository;
-import com.chun.crud.repository.ClubMemberCrudRepository;
-import com.chun.crud.repository.MatchCrudRepository;
-import com.chun.crud.service.ClubCrudService;
-import com.chun.crud.service.ClubMemberCrudService;
-import com.chun.crud.service.MatchCrudService;
+import com.chun.modules.crud.member.repository.MemberCrudRepository;
+import com.chun.modules.crud.club.repository.ClubCrudRepository;
+import com.chun.modules.crud.club.repository.ClubMemberCrudRepository;
+import com.chun.modules.crud.repository.MatchCrudRepository;
+import com.chun.modules.crud.club.service.ClubCrudService;
+import com.chun.modules.crud.club.service.ClubMemberCrudService;
+import com.chun.modules.crud.service.MatchCrudService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

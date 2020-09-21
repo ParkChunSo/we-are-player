@@ -4,7 +4,7 @@ package com.chun.apps.member.dtos.request;
 import com.chun.commons.enums.DisclosureScopeState;
 import com.chun.commons.enums.MemberType;
 import com.chun.commons.enums.PositionType;
-import com.chun.crud.member.dtos.MemberSaveDto;
+import com.chun.modules.crud.member.dtos.MemberSaveDto;
 import lombok.Builder;
 import lombok.Getter;
 

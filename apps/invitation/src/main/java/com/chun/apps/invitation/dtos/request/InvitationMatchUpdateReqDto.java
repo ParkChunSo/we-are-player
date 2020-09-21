@@ -1,6 +1,6 @@
 package com.chun.apps.invitation.dtos.request;
 
-import com.chun.crud.invitation.match.dtos.InvitationMatchUpdateDto;
+import com.chun.modules.crud.invitation.match.dtos.InvitationMatchUpdateDto;
 import lombok.Getter;
 
 import java.time.LocalDateTime;

@@ -1,8 +1,7 @@
 package com.chun.apps.club.dtos.request;
 
-import com.chun.crud.dtos.ClubSaveDto;
+import com.chun.modules.crud.club.dtos.ClubSaveDto;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 public class ClubSaveReqDto {

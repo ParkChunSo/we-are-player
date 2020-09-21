@@ -1,7 +1,7 @@
 package com.chun.apps.invitation.dtos.request;
 
 import com.chun.commons.enums.InvitationType;
-import com.chun.crud.invitation.member.dtos.InvitationPeopleSaveDto;
+import com.chun.modules.crud.invitation.member.dtos.InvitationPeopleSaveDto;
 import lombok.Builder;
 import lombok.Getter;
 

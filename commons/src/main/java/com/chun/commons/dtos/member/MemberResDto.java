@@ -8,7 +8,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter @Builder
-@NoArgsConstructor
 public class MemberResDto {
     private String id;
     private String name;

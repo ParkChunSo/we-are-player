@@ -1,6 +1,6 @@
 package com.chun.apps.club.dtos.request;
 
-import com.chun.crud.dtos.ClubLeaderUpdateDto;
+import com.chun.modules.crud.club.dtos.ClubLeaderUpdateDto;
 import lombok.Builder;
 import lombok.Getter;
 

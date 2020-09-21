@@ -1,6 +1,6 @@
 package com.chun.apps.club.config;
 
-import com.wap.cores.JWTSecretKeySource;
+import com.chun.cores.jwt.JWTSecretKeySource;
 import com.chun.modules.security.JwtTokenFilter;
 import com.chun.modules.security.JwtTokenProvider;
 import com.chun.modules.security.UserDetailsImpl;

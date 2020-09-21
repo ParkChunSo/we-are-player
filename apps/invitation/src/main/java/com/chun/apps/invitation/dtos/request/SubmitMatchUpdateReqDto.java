@@ -1,7 +1,7 @@
 package com.chun.apps.invitation.dtos.request;
 
 import com.chun.commons.enums.SubmitState;
-import com.chun.crud.invitation.match.dtos.SubmitMatchUpdateDto;
+import com.chun.modules.crud.invitation.match.dtos.SubmitMatchUpdateDto;
 import lombok.Getter;
 
 @Getter

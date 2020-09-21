@@ -1,7 +1,7 @@
 package com.chun.apps.member.config;
 
-import com.chun.crud.member.repository.MemberCrudRepository;
-import com.chun.crud.member.service.MemberCrudService;
+import com.chun.modules.crud.member.repository.MemberCrudRepository;
+import com.chun.modules.crud.member.service.MemberCrudService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,6 +1,6 @@
 package com.chun.apps.member.dtos;
 
-import com.chun.crud.member.dtos.MemberPasswordUpdateDto;
+import com.chun.modules.crud.member.dtos.MemberPasswordUpdateDto;
 import lombok.Builder;
 import lombok.Getter;
 

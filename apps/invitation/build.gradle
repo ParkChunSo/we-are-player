@@ -21,4 +21,5 @@ dependencies {
     implementation project(':modules:crud:crud-match')
     implementation project(':modules:crud:crud-invitation-member')
     implementation project(':modules:crud:crud-invitation-match')
+    implementation project(':cores:db:cores-db-mysql')
 }

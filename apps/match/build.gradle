@@ -19,5 +19,5 @@ dependencies {
     implementation project(':modules:modules-security')
     implementation project(':cores:cores-jwt')
 
-
+    implementation project(':cores:db:cores-db-mysql')
 }

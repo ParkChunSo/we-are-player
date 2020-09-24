@@ -1,6 +1,7 @@
 package com.chun.cores.db.mysql;
 
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.apache.commons.dbcp2.BasicDataSourceFactory;
 
 import javax.sql.DataSource;
 import java.io.File;
@@ -17,7 +18,7 @@ public class MysqlSource {
             Properties properties = new Properties();
             InputStream input = MysqlSource.class.getClassLoader().getResourceAsStream(String.format(PROPERTIES_FILE_NAME, System.getenv("--spring.profiles.active")));
             if (input == null) {
-                input = new FileInputStream(new File("src/main/resources/mysql-dev.properties"));
+                input = MysqlSource.class.getClassLoader().getResourceAsStream("mysql-dev.properties");
             }
             properties.load(input);
 

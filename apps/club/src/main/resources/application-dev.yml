@@ -2,12 +2,6 @@ server:
   port: 8090
 
 spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/we_are_player_schema?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Seoul
-    username: we_are_player
-    password: 1234
-
   jpa:
     hibernate:
       ddl-auto: update

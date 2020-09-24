@@ -27,7 +27,7 @@ public class ClubController {
     private final ClubMemberService clubMemberService;
 
     @PostMapping
-    public void createClub(@RequestParam(value = "image") Optional<MultipartFile> image, @RequestBody ClubSaveReqDto dto) throws IOException {
+    public void createClub(@RequestParam(value = "image", required = false) Optional<MultipartFile> image, @RequestBody ClubSaveReqDto dto) throws IOException {
 
         clubService.save(image, dto);
     }

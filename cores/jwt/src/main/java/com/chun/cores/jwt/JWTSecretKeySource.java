@@ -14,7 +14,7 @@ public class JWTSecretKeySource {
             Properties properties = new Properties();
             InputStream input = JWTSecretKeySource.class.getClassLoader().getResourceAsStream(String.format(YAML_FILE_NAME, System.getenv("--spring.profiles.active")));
             if(input == null){
-                input = new FileInputStream(new File("src/main/resources/jwt-dev.properties"));
+                input = JWTSecretKeySource.class.getClassLoader().getResourceAsStream("jwt-dev.properties");
             }
             properties.load(input);
             return properties.getProperty("wap.jwt.cores.secretKey");

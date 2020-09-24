@@ -19,13 +19,13 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping
-    public void signUpClient(@RequestParam("image") MultipartFile image, @RequestBody MemberSaveReqDto dto) throws IOException {
+    public void signUpClient(@RequestParam(value = "image", required = false) MultipartFile image, @RequestBody MemberSaveReqDto dto) throws IOException {
         memberService.signUp(dto, image);
     }
 
     @PostMapping("/admin")
     public void signUpAdmin(@RequestHeader(name = "Authorization") String token
-            , @RequestParam("image") MultipartFile image, @RequestBody MemberSaveReqDto dto) throws IOException {
+            , @RequestParam(value = "image", required = false) MultipartFile image, @RequestBody MemberSaveReqDto dto) throws IOException {
         memberService.signUp(token, dto, image);
     }
 

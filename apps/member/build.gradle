@@ -17,6 +17,7 @@ dependencies {
     implementation project(':modules:aws:modules-aws-s3')
     implementation project(':cores:aws:cores-aws-s3')
     implementation project(':modules:modules-security')
+    implementation project(':cores:db:cores-db-mysql')
     implementation project(':cores:cores-jwt')
     implementation project(':commons')
 

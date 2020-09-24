@@ -4,34 +4,32 @@ import com.chun.apps.match.dtos.params.ClubInfoDateParam;
 import com.chun.apps.match.dtos.params.ClubInfoParam;
 import com.chun.apps.match.dtos.params.ClubsInfoParam;
 import com.chun.apps.match.dtos.params.LocationParam;
+import com.chun.apps.match.dtos.request.MatchSaveReqDto;
+import com.chun.apps.match.dtos.request.MatchScoreUpdateReqDto;
+import com.chun.apps.match.dtos.request.MatchUpdateReqDto;
 import com.chun.commons.dtos.match.MatchDetailsResDto;
 import com.chun.commons.dtos.match.MatchResDto;
-import com.chun.apps.match.dtos.request.MatchSaveReqDto;
-import com.chun.apps.match.dtos.request.MatchUpdateReqDto;
-import com.chun.apps.match.dtos.request.MatchScoreUpdateReqDto;
 import com.chun.commons.enums.MemberRole;
 import com.chun.commons.errors.exception.AccessDeniedAuthenticationException;
 import com.chun.modules.crud.club.dtos.ClubInfoDto;
+import com.chun.modules.crud.club.service.ClubCrudService;
 import com.chun.modules.crud.dtos.MatchLocationDto;
 import com.chun.modules.crud.dtos.MatchTimeDto;
 import com.chun.modules.crud.entity.Match;
 import com.chun.modules.crud.member.entitys.Member;
-import com.chun.modules.crud.member.service.MemberCrudService;
-import com.chun.modules.crud.club.service.ClubCrudService;
 import com.chun.modules.crud.service.MatchCrudService;
 import com.chun.modules.crud.util.MatchConvertor;
 import com.chun.modules.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class MatchService {
     private final ClubCrudService clubCrudService;
-    private final MemberCrudService memberCrudService;
     private final MatchCrudService matchCrudService;
     private final JwtTokenProvider jwtTokenProvider;
 

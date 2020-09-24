@@ -86,12 +86,12 @@ public class InvitationController {
         invitationMatchService.save(dto);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/people/{id}")
     public void deletePeople(@RequestHeader(name = "Authorization") String token, @PathVariable Long id){
         invitationPeopleService.delete(token, id);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/match/{id}")
     public void deleteMatch(@RequestHeader(name = "Authorization") String token, @PathVariable Long id) {
         invitationMatchService.delete(token, id);
     }

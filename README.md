@@ -4,7 +4,7 @@
 
 ## 현재 진행 상황
 ### 시스템 구성도
-![image1](./image/image1.png)
+![image1](./read-me/image1.png)
 
 ### 구현사항
 - 각 도메인(Member, Club, Match, Invitation) 별 crud 구현
@@ -13,6 +13,7 @@
 - Spring Security와 JWT를 통한 인증, 권한 필터링 기능 구현
 - S3를 사용하여 이미지 처리 구현
 - Profile 별 yml 설정
+- 멀티 모듈화
 
 ## 계획
 ### 시스템 구성도

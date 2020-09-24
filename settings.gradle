@@ -35,4 +35,6 @@ findProject(':cores:jwt')?.name = 'cores-jwt'
 
 include 'commons'
 
+include 'modules:db:mysql'
+findProject(':modules:db:mysql')?.name = 'modules-db-mysql'
 

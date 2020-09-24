@@ -1,43 +1,32 @@
-plugins {
-    id 'org.springframework.boot' version '2.3.1.RELEASE'
-    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
-    id "io.franzbecker.gradle-lombok" version "3.0.0"
-    id 'java'
-}
-
-group = 'com.wap'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
-
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
+buildscript {
+    ext {
+        springBootVersion = '2.3.1.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.10.RELEASE"
     }
 }
 
-repositories {
-    mavenCentral()
-}
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
 
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+    group = 'com.wap'
+    version = '0.0.1-SNAPSHOT'
+    sourceCompatibility = '11'
 
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
-
-    testImplementation('org.springframework.boot:spring-boot-starter-test') {
-        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    repositories {
+        mavenCentral()
     }
 
-    testImplementation 'org.springframework.security:spring-security-test'
-
-    compile 'mysql:mysql-connector-java'
+    dependencies{
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
+        compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.11'
+    }
 }
-
-test {
-    useJUnitPlatform()
-}
-

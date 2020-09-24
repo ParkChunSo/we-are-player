@@ -1,0 +1,24 @@
+bootRun {
+    String activeProfile = System.properties['spring.profiles.active']
+    systemProperty "spring.profiles.active", activeProfile
+}
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+    compile 'mysql:mysql-connector-java'
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+
+    implementation project(':modules:crud:crud-club')
+    implementation project(':modules:crud:crud-member')
+    implementation project(':modules:crud:crud-match')
+
+    implementation project(':modules:modules-security')
+    implementation project(':cores:cores-jwt')
+
+    implementation project(':cores:db:cores-db-mysql')
+}

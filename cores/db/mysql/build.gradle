@@ -1,0 +1,11 @@
+bootJar{
+    enabled = false;
+}
+jar {
+    enabled = true;
+}
+
+dependencies {
+    // https://mvnrepository.com/artifact/org.apache.commons/commons-dbcp2
+    compile group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.7.0'
+}

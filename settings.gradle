@@ -1,1 +1,40 @@
-rootProject.name = 'chun'
+rootProject.name = 'wap'
+include 'apps:member'
+findProject(':apps:member')?.name = 'apps-member'
+include 'apps:club'
+findProject(':apps:club')?.name = 'apps-club'
+include 'apps:match'
+findProject(':apps:match')?.name = 'apps-match'
+include 'apps:invitation'
+findProject(':apps:invitation')?.name = 'apps-invitation'
+
+
+include 'modules:crud:club'
+findProject(':modules:crud:club')?.name = 'crud-club'
+include 'modules:crud:member'
+findProject(':modules:crud:member')?.name = 'crud-member'
+include 'modules:crud:match'
+findProject(':modules:crud:match')?.name = 'crud-match'
+include 'modules:crud:invitation-match'
+findProject(':modules:crud:invitation-match')?.name = 'crud-invitation-match'
+include 'modules:crud:invitation-member'
+findProject(':modules:crud:invitation-member')?.name = 'crud-invitation-member'
+
+
+include 'modules:aws:s3'
+findProject(':modules:aws:s3')?.name = 'modules-aws-s3'
+include 'modules:security'
+findProject(':modules:security')?.name = 'modules-security'
+
+include 'cores:aws:s3'
+findProject(':cores:aws:s3')?.name = 'cores-aws-s3'
+include 'cores:db:mysql'
+findProject(':cores:db:mysql')?.name = 'cores-db-mysql'
+include 'cores:jwt'
+findProject(':cores:jwt')?.name = 'cores-jwt'
+
+include 'commons'
+
+include 'modules:db:mysql'
+findProject(':modules:db:mysql')?.name = 'modules-db-mysql'
+

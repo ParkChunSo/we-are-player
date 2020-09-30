@@ -1,0 +1,9 @@
+version: '2'
+services:
+  app-member:
+    build: .
+    image: ${DOCKER_USER_ID}/wap-app
+  production:
+    image: ${DOCKER_USER_ID}/wap-app:${JOB_NAME}+'-'+${BUILD_NUMBER}
+    ports:
+      - 8000:8080

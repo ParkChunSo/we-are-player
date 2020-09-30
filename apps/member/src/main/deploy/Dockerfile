@@ -2,6 +2,9 @@ FROM openjdk:11-jdk
 
 VOLUME /tmp
 
+RUN chmod +x gradlew
+RUN ./gradlew :apps:apps-member:build -x test
+
 EXPOSE 8000
 
 ARG JAR_FILE=./apps/member/build/libs/apps-member-0.0.1-SNAPSHOT.jar

@@ -33,3 +33,7 @@ out/
 
 ### VS Code ###
 .vscode/
+cores/jwt/src/main/resources/jwt-local.yml
+cores/jwt/src/main/resources/jwt-real.yml
+src/main/resources/application-test.yml
+src/main/resources/aws.yml

@@ -1,6 +1,6 @@
 version: '2'
 services:
-  app-member:
+  app:
     build: .
     image: ${DOCKER_USER_ID}/wap-app
   production:

@@ -1,0 +1,29 @@
+node {
+    git poll: true, url: 'https://github.com/iyoungman/simple-board.git'
+
+    withCredentials([[$class: 'UsernamePasswordMultiBinding',
+    credentialsId: 'dockerhub',
+    usernameVariable: 'DOCKER_USER_ID',
+    passwordVariable: 'DOCKER_USER_PASSWORD']]) {
+        stage('Pull') {
+            git credentialsId: '3b815c71-8d42-492d-84b5-727ab435279a', url: 'https://github.com/ParkChunSo/we-are-player.git'
+        }
+        stage('Unit Test') {
+        }
+        stage('Build') {
+            sh(script: 'docker-compose -f apps/member/src/main/deploy/docker-compose.yml build app')
+        }
+        stage('Tag') {
+            sh(script: '''docker tag ${DOCKER_USER_ID}/wap \
+            ${DOCKER_USER_ID}/wap-app:${JOB_NAME}+'-'+${BUILD_NUMBER}''')
+        }
+        stage('Push') {
+            sh(script: 'docker login -u ${DOCKER_USER_ID} -p ${DOCKER_USER_PASSWORD}')
+            sh(script: 'docker push ${DOCKER_USER_ID}/wap-app:${JOB_NAME}+'-'+${BUILD_NUMBER}')
+            // sh(script: 'docker push ${DOCKER_USER_ID}/simple-board:latest')
+        }
+        stage('Deploy') {
+            sh(script: 'docker-compose up -d production')
+        }
+    }
+}

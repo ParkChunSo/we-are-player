@@ -1,9 +1,8 @@
-# We Are Player
+# We Are Player REST API Server
 ## 소개
-각 지역의 축구 클럽끼리 경기를 진행하도록 도와주는 REST API 서버입니다.
+각 지역의 축구 클럽끼리 경기를 진행하는데 필요한 서비스를 제공하는 REST API 서버입니다.
 
-## 현재 진행 상황
-### 시스템 구성도
+## 시스템 구성도
 ![image1](./read-me/image1.png)
 
 ### 구현사항
@@ -13,7 +12,6 @@
 - Spring Security와 JWT를 통한 인증, 권한 필터링 기능 구현
 - S3를 사용하여 이미지 처리 구현
 - Profile 별 yml 설정
-- 멀티 모듈화
 
 ## 계획
 ### 시스템 구성도
@@ -58,6 +56,12 @@
 - 각 도메인 서비스
 # modules
 - 서비스 코드
+# domain
+**각 Entity의 CRUD를 책임지는 모듈**
+- domain-member
+- domain-club
+- domain-match
+- domain-invitation
 # bases
 - 서비스코드 X
 - framework의 의존 필요
@@ -65,3 +69,7 @@
 # cores
 - config 들
 - 각 프로파일의 대한 자동화
+
+## ex
+cores/aws/S3
+    /db/mysql

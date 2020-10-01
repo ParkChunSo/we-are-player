@@ -2,8 +2,11 @@ FROM openjdk:11-jdk
 
 VOLUME /tmp
 
-RUN chmod +x gradlew
-RUN ./gradlew :apps:apps-member:build -x test
+#COPY gradlew .
+#COPY gradle gradle
+#COPY /
+#RUN chmod +x gradlew
+#RUN ./gradlew :apps:apps-member:build -x test
 
 EXPOSE 8000
 
